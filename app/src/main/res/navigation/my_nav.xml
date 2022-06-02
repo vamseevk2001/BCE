@@ -40,4 +40,9 @@
         android:name="com.example.bce.ReviewFragment"
         android:label="fragment_review"
         tools:layout="@layout/fragment_review" />
+    <fragment
+        android:id="@+id/businessLeadDetailFragment"
+        android:name="com.example.bce.BusinessLeadDetailFragment"
+        android:label="fragment_business_lead_detail"
+        tools:layout="@layout/fragment_business_lead_detail" />
 </navigation>
