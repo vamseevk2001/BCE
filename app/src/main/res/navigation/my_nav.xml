@@ -25,4 +25,9 @@
         android:name="com.example.bce.more_frag"
         android:label="fragment_more_frag"
         tools:layout="@layout/fragment_more_frag" />
+    <fragment
+        android:id="@+id/memberDetails"
+        android:name="com.example.bce.MemberDetails"
+        android:label="fragment_member_details"
+        tools:layout="@layout/fragment_member_details" />
 </navigation>
