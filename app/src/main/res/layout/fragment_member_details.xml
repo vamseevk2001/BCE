@@ -241,14 +241,14 @@
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Club: BCE BHUBANESHWAR - IT"
+                android:text="test@example.com"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company: Syflex Techo Solution Pvt. Ltd"
+                android:text="+91 7008 123 456"
                 android:textSize="12sp" />
 
             <TextView
@@ -256,7 +256,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Software Development"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
 
         </LinearLayout>
@@ -317,11 +317,6 @@
                 android:layout_marginBottom="4dp"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
                 />
-
-
-
-
-
 
         </LinearLayout>
 
