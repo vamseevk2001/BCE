@@ -158,6 +158,9 @@ public class MemberDetails extends Fragment {
         if (mobile.length() == 0) {
             mobile.setError("This field is required");
             return false;
+        }else if(mobile.length() != 10){
+            mobile.setError("phone no. must contain 10 digits");
+            return false;
         }
         if (action.length() == 0) {
             action.setError("This field is required");
