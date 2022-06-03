@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.bce.databinding.FragmentHomeFragBinding;
 import com.example.bce.databinding.FragmentMoreFragBinding;
 
 /**
@@ -21,6 +20,7 @@ public class more_frag extends Fragment {
     public more_frag() {
         // Required empty public constructor
     }
+
     public static more_frag newInstance(String param1, String param2) {
         more_frag fragment = new more_frag();
         Bundle args = new Bundle();
