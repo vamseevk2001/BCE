@@ -55,7 +55,7 @@
         android:hint="REMARKS/REQUIREMENTS">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/companyNameInp"
+            android:id="@+id/remarkInpReview"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:inputType="text" />
@@ -63,6 +63,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/newReviewBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="submit"

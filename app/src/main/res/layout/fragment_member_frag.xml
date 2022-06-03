@@ -7,7 +7,7 @@
     tools:context=".member_frag">
 
     <Button
-        android:id="@+id/ReceiveList"
+        android:id="@+id/localSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/SendList"
+        android:id="@+id/globalSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         android:layout_marginEnd="20dp"
         android:backgroundTint="@color/lightGreyFont"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/ReceiveList" />
+        app:layout_constraintTop_toTopOf="@+id/localSearch" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:backgroundTint="@color/white2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ReceiveList" />
+        app:layout_constraintTop_toBottomOf="@id/localSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

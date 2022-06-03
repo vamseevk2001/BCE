@@ -20,11 +20,12 @@ import java.util.Date;
  * Use the {@link profile_frag#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class profile_frag extends Fragment {
 
     private FragmentProfileFragBinding binding;
-    boolean isAllCompanyFeildsChecked = false;
-    boolean isAllLocationFeildsChecked = false;
+    boolean isAllCompanyFieldsChecked = false;
+    boolean isAllLocationFieldsChecked = false;
 
     public profile_frag() {
         // Required empty public constructor
@@ -59,8 +60,8 @@ public class profile_frag extends Fragment {
             @Override
             public void onClick(View view) {
 
-                isAllCompanyFeildsChecked = CheckCompanyFeilds();
-                if (isAllCompanyFeildsChecked) {
+                isAllCompanyFieldsChecked = CheckCompanyFeilds();
+                if (isAllCompanyFieldsChecked) {
                  //add implementation if all fields are checked..
                 }
             }
@@ -70,8 +71,8 @@ public class profile_frag extends Fragment {
             @Override
             public void onClick(View view) {
 
-                isAllLocationFeildsChecked = CheckLocationFeilds();
-                if (isAllCompanyFeildsChecked) {
+                isAllLocationFieldsChecked = CheckLocationFeilds();
+                if (isAllCompanyFieldsChecked) {
                     //add implementation if all fields are checked..
                 }
             }

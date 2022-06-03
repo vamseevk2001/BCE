@@ -14,7 +14,8 @@
         android:id="@+id/member_frag"
         android:name="com.example.bce.member_frag"
         android:label="fragment_member_frag"
-        tools:layout="@layout/fragment_member_frag" />
+        tools:layout="@layout/fragment_member_frag" >
+    </fragment>
     <fragment
         android:id="@+id/profile_frag"
         android:name="com.example.bce.profile_frag"
