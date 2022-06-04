@@ -26,6 +26,9 @@ public class profile_frag extends Fragment {
     private FragmentProfileFragBinding binding;
     boolean isAllCompanyFieldsChecked = false;
     boolean isAllLocationFieldsChecked = false;
+    boolean isAllOtherInfoFieldsChecked = false;
+    boolean isAllNomineeFieldsChecked = false;
+    boolean isAllBasicInfoFieldsChecked = false;
 
     public profile_frag() {
         // Required empty public constructor
@@ -62,7 +65,7 @@ public class profile_frag extends Fragment {
 
                 isAllCompanyFieldsChecked = CheckCompanyFeilds();
                 if (isAllCompanyFieldsChecked) {
-                 //add implementation if all fields are checked..
+                    //add implementation if all fields are checked..
                 }
             }
         });
@@ -77,11 +80,46 @@ public class profile_frag extends Fragment {
                 }
             }
         });
+
+        binding.otherInfoSubmitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                isAllOtherInfoFieldsChecked = CheckOtherFeilds();
+                if (isAllCompanyFieldsChecked) {
+                    //add implementation if all fields are checked..
+                }
+            }
+        });
+
+        binding.nomineeUpdateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                isAllNomineeFieldsChecked = CheckNomineeFeilds();
+                if (isAllCompanyFieldsChecked) {
+                    //add implementation if all fields are checked..
+                }
+            }
+        });
+
+        binding.otherBasicInfoUpdateInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //isAllBasicInfoFieldsChecked = CheckBasicFeilds();
+//                if (isAllCompanyFieldsChecked) {
+//                    //add implementation if all fields are checked..
+//                }
+            }
+        });
+
+
         super.onViewCreated(view, savedInstanceState);
     }
 
 
-    private Boolean CheckCompanyFeilds(){
+    private Boolean CheckCompanyFeilds() {
         if (binding.nameInp.length() == 0) {
             binding.nameInp.setError("This field is required");
             return false;
@@ -93,7 +131,7 @@ public class profile_frag extends Fragment {
         if (binding.PhoneInp.length() == 0) {
             binding.PhoneInp.setError("This field is required");
             return false;
-        }else if (binding.PhoneInp.length() != 10) {
+        } else if (binding.PhoneInp.length() != 10) {
             binding.PhoneInp.setError("Phone no. must be of 10 digits");
             return false;
         }
@@ -130,7 +168,7 @@ public class profile_frag extends Fragment {
         return true;
     }
 
-    private Boolean CheckLocationFeilds(){
+    private Boolean CheckLocationFeilds() {
         if (binding.addressInp.length() == 0) {
             binding.addressInp.setError("This field is required");
             return false;
@@ -154,5 +192,88 @@ public class profile_frag extends Fragment {
         return true;
     }
 
+    private Boolean CheckOtherFeilds() {
+        if (binding.panNoInp.length() == 0) {
+            binding.panNoInp.setError("This field is required");
+            return false;
+        }
+        if (binding.aadharNoInp.length() == 0) {
+            binding.aadharNoInp.setError("This field is required");
+            return false;
+        }
+        if (binding.gstNoInp.length() == 0) {
+            binding.gstNoInp.setError("This field is required");
+            return false;
+        }
+        return true;
+    }
+
+    private Boolean CheckNomineeFeilds() {
+        if (binding.nominee1name.length() == 0) {
+            binding.nominee1name.setError("This field is required");
+            return false;
+        }
+        if (binding.nominee1mobile.length() == 0) {
+            binding.nominee1mobile.setError("This field is required");
+            return false;
+        }else if (binding.nominee1mobile.length() != 10) {
+            binding.nominee1mobile.setError("Phone no. must be of 10 digits");
+            return false;
+        }
+        if (binding.nominee1desig.length() == 0) {
+            binding.nominee1desig.setError("This field is required");
+            return false;
+        }
+
+        if (binding.nominee2name.length() == 0) {
+            binding.nominee2name.setError("This field is required");
+            return false;
+        }
+        if (binding.nominee2mobile.length() == 0) {
+            binding.nominee2mobile.setError("This field is required");
+            return false;
+        }
+        else if (binding.nominee2mobile.length() != 10) {
+            binding.nominee2mobile.setError("Phone no. must be of 10 digits");
+            return false;
+        }
+        if (binding.nominee2desig.length() == 0) {
+            binding.nominee2desig.setError("This field is required");
+            return false;
+        }
+
+        if (binding.nominee3name.length() == 0) {
+            binding.nominee3name.setError("This field is required");
+            return false;
+        }
+        if (binding.nominee3mobile.length() == 0) {
+            binding.nominee3mobile.setError("This field is required");
+            return false;
+        }else if (binding.nominee3mobile.length() != 10) {
+            binding.nominee3mobile.setError("Phone no. must be of 10 digits");
+            return false;
+        }
+        if (binding.nominee3desig.length() == 0) {
+            binding.nominee3desig.setError("This field is required");
+            return false;
+        }
+        return true;
+    }
+
+//    private Boolean CheckBasicFeilds(){
+//        if (binding.otherOrganizationInp.length() == 0) {
+//            binding.otherOrganizationInp.setError("This field is required");
+//            return false;
+//        }
+//        if (binding.businessDetailInp.length() == 0) {
+//            binding.businessDetailInp.setError("This field is required");
+//            return false;
+//        }
+//        if (binding.expInp.length() == 0) {
+//            binding.expInp.setError("This field is required");
+//            return false;
+//        }
+//        return true;
+//    }
 
 }
