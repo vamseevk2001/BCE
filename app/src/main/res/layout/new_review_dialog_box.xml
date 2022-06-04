@@ -58,7 +58,11 @@
             android:id="@+id/remarkInpReview"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:inputType="text" />
+            android:gravity="top"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:inputType="textMultiLine" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
