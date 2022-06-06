@@ -26,26 +26,29 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/profilePicMember"
             app:layout_constraintStart_toEndOf="@id/profilePicMember"
             app:layout_constraintTop_toTopOf="@id/profilePicMember">
 
             <TextView
+                android:id="@+id/memberName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Glenn Maxwell"
-                android:textColor="@color/purpleFont"
+                android:textColor="@color/blue"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/memberClub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="BCE Bhubaneswar"
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/memberDesig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sports Kit Provider"
@@ -55,13 +58,14 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/viewMemberDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="View Details"
             android:textColor="@color/red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="20dp"/>
+            android:layout_margin="10dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

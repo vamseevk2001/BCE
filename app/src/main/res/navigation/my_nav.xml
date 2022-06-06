@@ -15,6 +15,9 @@
         android:name="com.example.bce.member_frag"
         android:label="fragment_member_frag"
         tools:layout="@layout/fragment_member_frag" >
+        <action
+            android:id="@+id/action_member_frag_to_memberDetails"
+            app:destination="@id/memberDetails" />
     </fragment>
     <fragment
         android:id="@+id/profile_frag"

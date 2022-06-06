@@ -59,6 +59,7 @@
         app:layout_constraintTop_toBottomOf="@id/localSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/memberListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,6 +67,7 @@
         android:layout_marginTop="10dp"
         android:padding="10dp"
         tools:listitem="@layout/member_item"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search" />
 
