@@ -59,12 +59,11 @@ public class member_frag extends Fragment {
         ArrayList<Members> membersArrayList = new ArrayList<Members>();
         RecyclerView recyclerView = binding.memberListRecyclerView;
         membersArrayList.add(new Members("https://static1.srcdn.com/wordpress/wp-content/uploads/2021/08/tom-holland-spider-man.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", "Vamsee Krishna", "BCE Bhubaneswar", "Developer"));
-        membersArrayList.add(new Members("https://static1.srcdn.com/wordpress/wp-content/uploads/2021/08/tom-holland-spider-man.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", "Vamsee Krishna", "BCE Bhubaneswar", "Developer"));
-        membersArrayList.add(new Members("https://static1.srcdn.com/wordpress/wp-content/uploads/2021/08/tom-holland-spider-man.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", "Vamsee Krishna", "BCE Bhubaneswar", "Developer"));
-        membersArrayList.add(new Members("https://static1.srcdn.com/wordpress/wp-content/uploads/2021/08/tom-holland-spider-man.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", "Vamsee Krishna", "BCE Bhubaneswar", "Developer"));
-        membersArrayList.add(new Members("https://static1.srcdn.com/wordpress/wp-content/uploads/2021/08/tom-holland-spider-man.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", "Vamsee Krishna", "BCE Bhubaneswar", "Developer"));
-        membersArrayList.add(new Members("https://static1.srcdn.com/wordpress/wp-content/uploads/2021/08/tom-holland-spider-man.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", "Vamsee Krishna", "BCE Bhubaneswar", "Developer"));
-//
+        membersArrayList.add(new Members("https://www.cheatsheet.com/wp-content/uploads/2019/06/RDJ-Tony-Stark.jpg", "Tony Stark", "BCE Bhubaneswar", "Sports kit provider"));
+        membersArrayList.add(new Members("https://i.pinimg.com/736x/25/1b/2c/251b2c0f3e981d06247be49fa9a3fe27.jpg", "Elizabeth Olsen", "BCE Bhubaneswar", "Developer"));
+        membersArrayList.add(new Members("https://i.pinimg.com/originals/64/95/d0/6495d05033eb2029300f4a6fe5151952.jpg", "Emma Watson", "BCE Bhubaneswar", "Developer"));
+        membersArrayList.add(new Members("https://www.pinkvilla.com/imageresize/tom_mission_impossible_0.jpg?width=752&format=webp&t=pvorg", "Tom Cruse", "BCE Bhubaneswar", "Developer"));
+
 //        Members[] memberList = new Members[]{
 //                new Members("https://static1.srcdn.com/wordpress/wp-content/uploads/2021/08/tom-holland-spider-man.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", "Vamsee Krishna", "BCE Bhubaneswar", "Developer"),
 //                new Members("https://static1.srcdn.com/wordpress/wp-content/uploads/2021/08/tom-holland-spider-man.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", "Vamsee Krishna", "BCE Bhubaneswar", "Developer"),

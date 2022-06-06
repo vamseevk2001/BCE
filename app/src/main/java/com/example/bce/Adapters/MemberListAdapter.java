@@ -52,6 +52,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(fragmentView).navigate(R.id.action_member_frag_to_memberDetails);
+
             }
         });
     }
