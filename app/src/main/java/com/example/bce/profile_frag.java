@@ -10,10 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bce.API.RetrofitInstance;
+import com.example.bce.API.SimpleApi;
+import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.databinding.FragmentProfileFragBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +38,10 @@ public class profile_frag extends Fragment {
     boolean isAllOtherInfoFieldsChecked = false;
     boolean isAllNomineeFieldsChecked = false;
     boolean isAllBasicInfoFieldsChecked = false;
+
+    SimpleApi simpleApi;
+
+    String user_id;
 
     public profile_frag() {
         // Required empty public constructor
@@ -53,11 +66,14 @@ public class profile_frag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentProfileFragBinding.inflate(inflater, container, false);
+        MainActivity activity = (MainActivity) getActivity();
+        user_id = activity.getUserId();
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setData();
 
         binding.companyInfoSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,7 +232,7 @@ public class profile_frag extends Fragment {
         if (binding.nominee1mobile.length() == 0) {
             binding.nominee1mobile.setError("This field is required");
             return false;
-        }else if (binding.nominee1mobile.length() != 10) {
+        } else if (binding.nominee1mobile.length() != 10) {
             binding.nominee1mobile.setError("Phone no. must be of 10 digits");
             return false;
         }
@@ -232,8 +248,7 @@ public class profile_frag extends Fragment {
         if (binding.nominee2mobile.length() == 0) {
             binding.nominee2mobile.setError("This field is required");
             return false;
-        }
-        else if (binding.nominee2mobile.length() != 10) {
+        } else if (binding.nominee2mobile.length() != 10) {
             binding.nominee2mobile.setError("Phone no. must be of 10 digits");
             return false;
         }
@@ -249,7 +264,7 @@ public class profile_frag extends Fragment {
         if (binding.nominee3mobile.length() == 0) {
             binding.nominee3mobile.setError("This field is required");
             return false;
-        }else if (binding.nominee3mobile.length() != 10) {
+        } else if (binding.nominee3mobile.length() != 10) {
             binding.nominee3mobile.setError("Phone no. must be of 10 digits");
             return false;
         }
@@ -258,6 +273,35 @@ public class profile_frag extends Fragment {
             return false;
         }
         return true;
+    }
+
+
+    void setData() {
+        simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", user_id);
+        Call<ProfileModalClass> call = simpleApi.getProfile(params);
+        call.enqueue(new Callback<ProfileModalClass>() {
+            @Override
+            public void onResponse(Call<ProfileModalClass> call, Response<ProfileModalClass> response) {
+                if (response.isSuccessful()){
+                    ProfileModalClass profileModalClass = response.body();
+                    binding.nameInp.setText(profileModalClass.getUserInfo().get(0).getUrName());
+                    binding.emailIdInp.setText(profileModalClass.getUserInfo().get(0).getUrEmail());
+                    binding.PhoneInp.setText(profileModalClass.getUserInfo().get(0).getUrMobile());
+                    binding.companyNameInp.setText(profileModalClass.getUserInfo().get(0).getCdCompany());
+                    binding.designationInp.setText(profileModalClass.getUserInfo().get(0).getCdDesig());
+                }else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileModalClass> call, Throwable t) {
+                call.cancel();
+            }
+        });
+
     }
 
 //    private Boolean CheckBasicFeilds(){

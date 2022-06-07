@@ -23,7 +23,12 @@
         android:id="@+id/profile_frag"
         android:name="com.example.bce.profile_frag"
         android:label="fragment_profile_frag"
-        tools:layout="@layout/fragment_profile_frag" />
+        tools:layout="@layout/fragment_profile_frag" >
+        <argument
+            android:name="user_id"
+            app:argType="string"
+            android:defaultValue="0" />
+    </fragment>
     <fragment
         android:id="@+id/more_frag"
         android:name="com.example.bce.more_frag"

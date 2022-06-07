@@ -47,7 +47,6 @@ public class Login extends AppCompatActivity {
 
                     if (isNetworkConnected()) {
                         simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
-                        LoginBody body = new LoginBody(binding.Phone.getText().toString(), binding.password.getText().toString());
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("user_id", binding.Phone.getText().toString());
                         params.put("password", binding.password.getText().toString());
@@ -60,6 +59,7 @@ public class Login extends AppCompatActivity {
                                     LoginModalClass loginDetails = response.body();
                                     Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(Login.this, MainActivity.class);
+                                    intent.putExtra("user_id", response.body().id);
                                     startActivity(intent);
                                     finish();
 

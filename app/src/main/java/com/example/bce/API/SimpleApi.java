@@ -2,6 +2,7 @@ package com.example.bce.API;
 
 import com.example.bce.Models.LoginBody;
 import com.example.bce.Models.LoginModalClass;
+import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.Utils.AppUrls;
 
 import java.util.Map;
@@ -22,6 +23,7 @@ public interface SimpleApi {
     Call<LoginModalClass> forgotPass();
 
     @POST(AppUrls.GetProfile)
-    Call<LoginModalClass> getProfile();
+    @FormUrlEncoded
+    Call<ProfileModalClass> getProfile(@FieldMap Map<String,String> params);
 
 }
