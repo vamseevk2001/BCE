@@ -1,8 +1,9 @@
 package com.example.bce.Utils;
 
 public class AppUrls {
-    public static final String Login = "https://www.apollohospitalsevent.com/badmin/api.php?method=login";
-    public static final String forgetPassword = "https://www.apollohospitalsevent.com/badmin/api.php?method=forgetpassword";
+    public static final String Login = "api.php?method=login";
+    public static final String BASE_URL = "https://www.apollohospitalsevent.com/badmin/";
+    public static final String forgetPassword = "api.php?method=forgetpassword";
     public static final String GetProfile = "https://www.apollohospitalsevent.com/badmin/api.php?method=getProfile";
     public static final String EditProfile = "https://www.apollohospitalsevent.com/badmin/api.php?method=updateProfile";
     public static final String EditProfileLocation = "https://www.apollohospitalsevent.com/badmin/api.php?method=updateProfilelocation";
