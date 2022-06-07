@@ -1,7 +1,6 @@
 package com.example.bce;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 
@@ -42,28 +42,28 @@ public class Login extends AppCompatActivity {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                closeKeyboard();
+                if (validateFields()) {
 
-                if(validateFeilds()){
-                    if(isNetworkConnected()){
+                    if (isNetworkConnected()) {
                         simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
                         LoginBody body = new LoginBody(binding.Phone.getText().toString(), binding.password.getText().toString());
-                        Map<String,String> params = new HashMap<String, String>();
+                        Map<String, String> params = new HashMap<String, String>();
                         params.put("user_id", binding.Phone.getText().toString());
                         params.put("password", binding.password.getText().toString());
                         Call<LoginModalClass> call = simpleApi.login(params);
                         call.enqueue(new Callback<LoginModalClass>() {
                             @Override
                             public void onResponse(Call<LoginModalClass> call, Response<LoginModalClass> response) {
-                                if(response.isSuccessful()){
-                                    Log.d("TAG",response.code()+"");
+                                if (response.isSuccessful()) {
+                                    Log.d("TAG", response.code() + "");
                                     LoginModalClass loginDetails = response.body();
-                                        Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(Login.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                    Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(Login.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
 
-                                }
-                                else {
+                                } else {
                                     Gson gson = new Gson();
                                     LoginErrorModalClass loginErrorModalClass = gson.fromJson(response.errorBody().charStream(), LoginErrorModalClass.class);
                                     Toast.makeText(getApplicationContext(), loginErrorModalClass.getMsg(), Toast.LENGTH_SHORT).show();
@@ -77,8 +77,7 @@ public class Login extends AppCompatActivity {
                                 call.cancel();
                             }
                         });
-                    }
-                    else {
+                    } else {
                         Toast.makeText(getApplicationContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     }
 
@@ -102,7 +101,22 @@ public class Login extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
-    Boolean validateFeilds(){
+    private void closeKeyboard() {
+
+        View view = this.getCurrentFocus();
+
+        if (view != null) {
+            InputMethodManager manager
+                    = (InputMethodManager)
+                    getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+            manager
+                    .hideSoftInputFromWindow(
+                            view.getWindowToken(), 0);
+        }
+    }
+
+    Boolean validateFields() {
         if (binding.Phone.length() == 0) {
             binding.Phone.setError("This field is required");
             return false;
