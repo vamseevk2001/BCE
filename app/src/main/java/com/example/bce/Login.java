@@ -14,6 +14,7 @@ import com.example.bce.databinding.ActivityLoginBinding;
 public class Login extends AppCompatActivity {
 
     ActivityLoginBinding binding;
+    Boolean isAllFieldsFilled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +26,14 @@ public class Login extends AppCompatActivity {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Login.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+
+                if (Login(binding.Phone.toString(), binding.password.toString())){
+                    Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Login.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
 
@@ -39,6 +44,27 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    Boolean validateFeilds(){
+        if (binding.Phone.length() == 0) {
+            binding.Phone.setError("This field is required");
+            return false;
+        }
+        if (binding.password.length() == 0) {
+            binding.password.setError("This field is required");
+            return false;
+        }
+
+        return true;
+    }
+
+    Boolean Login(String phone, String pass){
+        if(validateFeilds()){
+
+        }
+
+        return true;
     }
 
 }
