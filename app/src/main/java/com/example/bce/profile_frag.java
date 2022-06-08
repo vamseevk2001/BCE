@@ -14,6 +14,7 @@ import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
 import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.databinding.FragmentProfileFragBinding;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -286,11 +287,61 @@ public class profile_frag extends Fragment {
             public void onResponse(Call<ProfileModalClass> call, Response<ProfileModalClass> response) {
                 if (response.isSuccessful()){
                     ProfileModalClass profileModalClass = response.body();
+
+                    //profile
+                    Picasso.get().load(profileModalClass.getImg()).into(binding.profileImage);
+                    binding.nameProfile.setText(profileModalClass.getUserInfo().get(0).getUrName());
+                    binding.clubNameProfile.setText("Club: "+profileModalClass.getUserInfo().get(0).getClbName());
+                    binding.CompanyProfile.setText("Company: "+profileModalClass.getUserInfo().get(0).getCdCompany());
+                    binding.locationProfile.setText("Location: "+profileModalClass.getUserInfo().get(0).getDistName()+", "+profileModalClass.getUserInfo().get(0).getCitName());
+
+
+                    //company Info
                     binding.nameInp.setText(profileModalClass.getUserInfo().get(0).getUrName());
                     binding.emailIdInp.setText(profileModalClass.getUserInfo().get(0).getUrEmail());
                     binding.PhoneInp.setText(profileModalClass.getUserInfo().get(0).getUrMobile());
                     binding.companyNameInp.setText(profileModalClass.getUserInfo().get(0).getCdCompany());
                     binding.designationInp.setText(profileModalClass.getUserInfo().get(0).getCdDesig());
+                    binding.websiteInp.setText(profileModalClass.getUserInfo().get(0).getCdWebsite());
+                    binding.tagsInp.setText(profileModalClass.getUserInfo().get(0).getCdTags());
+                    if(profileModalClass.getUserInfo().get(0).getUrDob() != null)
+                        binding.dobInp.setText(profileModalClass.getUserInfo().get(0).getUrDob().toString());
+                    else
+                        binding.dobInp.setText("-");
+                    binding.profilePicInp.setText(profileModalClass.getUserInfo().get(0).getCdPhoto());
+
+                    //Location Info
+                    binding.addressInp.setText(profileModalClass.getUserInfo().get(0).getUrAddress());
+                    binding.districtInp.setText(profileModalClass.getUserInfo().get(0).getDistName());
+                    binding.cityInp.setText(profileModalClass.getUserInfo().get(0).getCitName());
+
+                    //Other Info
+                    binding.panNoInp.setText(profileModalClass.getUserInfo().get(0).getCdPanNo());
+                    binding.aadharNoInp.setText(profileModalClass.getUserInfo().get(0).getCdAadharNo());
+                    binding.gstNoInp.setText(profileModalClass.getUserInfo().get(0).getCdGstNo());
+
+                    //Nominee
+                    binding.nominee1name.setText(profileModalClass.getUserInfo().get(0).getCdNomineeName1());
+                    binding.nominee1mobile.setText(profileModalClass.getUserInfo().get(0).getCdNomineePhone1());
+                    binding.nominee1desig.setText(profileModalClass.getUserInfo().get(0).getCdNomineeRel1());
+
+                    binding.nominee2name.setText(profileModalClass.getUserInfo().get(0).getCdNomineeName2());
+                    binding.nominee2mobile.setText(profileModalClass.getUserInfo().get(0).getCdNomineePhone2());
+                    binding.nominee2desig.setText(profileModalClass.getUserInfo().get(0).getCdNomineeRel2());
+
+                    binding.nominee3name.setText(profileModalClass.getUserInfo().get(0).getCdNomineeName3());
+                    binding.nominee3mobile.setText(profileModalClass.getUserInfo().get(0).getCdNomineePhone3());
+                    binding.nominee3desig.setText(profileModalClass.getUserInfo().get(0).getCdNomineeRel3());
+
+                    //other basic info
+                    binding.otherOrganizationInp.setText(profileModalClass.getUserInfo().get(0).getCdAssorg());
+                    binding.businessDetailInp.setText(profileModalClass.getUserInfo().get(0).getCdBusinessDetail());
+                    binding.expInp.setText(profileModalClass.getUserInfo().get(0).getCdExperiences());
+
+
+
+
+
                 }else {
 
                 }

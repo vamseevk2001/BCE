@@ -70,10 +70,10 @@ public class UserInfoModalClass {
     private String urAddress;
     @SerializedName("ur_dob")
     @Expose
-    private Object urDob;
+    private String urDob;
     @SerializedName("ur_otp")
     @Expose
-    private Object urOtp;
+    private String urOtp;
     @SerializedName("cit_id")
     @Expose
     private String citId;
@@ -142,7 +142,7 @@ public class UserInfoModalClass {
     private String cdGstNo;
     @SerializedName("cd_date")
     @Expose
-    private Object cdDate;
+    private String cdDate;
     @SerializedName("cd_website")
     @Expose
     private String cdWebsite;
@@ -405,7 +405,7 @@ public class UserInfoModalClass {
         return urAbout;
     }
 
-    public void setUrAbout(Object urAbout) {
+    public void setUrAbout(String urAbout) {
         this.urAbout = urAbout;
     }
 
@@ -417,19 +417,19 @@ public class UserInfoModalClass {
         this.urAddress = urAddress;
     }
 
-    public Object getUrDob() {
+    public String getUrDob() {
         return urDob;
     }
 
-    public void setUrDob(Object urDob) {
-        this.urDob = urDob;
+    public void setUrDob(String urDob) {
+        this.urDob = (String) urDob;
     }
 
     public Object getUrOtp() {
         return urOtp;
     }
 
-    public void setUrOtp(Object urOtp) {
+    public void setUrOtp(String urOtp) {
         this.urOtp = urOtp;
     }
 
@@ -613,7 +613,7 @@ public class UserInfoModalClass {
         return cdDate;
     }
 
-    public void setCdDate(Object cdDate) {
+    public void setCdDate(String cdDate) {
         this.cdDate = cdDate;
     }
 
