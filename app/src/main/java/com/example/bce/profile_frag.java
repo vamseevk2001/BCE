@@ -156,8 +156,41 @@ public class profile_frag extends Fragment {
             public void onClick(View view) {
 
                 isAllNomineeFieldsChecked = CheckNomineeFeilds();
-                if (isAllCompanyFieldsChecked) {
+                if (isAllNomineeFieldsChecked) {
                     //add implementation if all fields are checked..
+                    closeKeyboard();
+
+                    simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+                    Map<String, String> params = new HashMap<>();
+
+                    params.put("ur_id", user_id);
+                    params.put("cd_nominee_name1", binding.nominee1name.getText().toString());
+                    params.put("cd_nominee_phone1", binding.nominee1mobile.getText().toString());
+                    params.put("cd_nominee_rel1", binding.nominee1desig.getText().toString());
+
+                    params.put("cd_nominee_name2", binding.nominee2name.getText().toString());
+                    params.put("cd_nominee_phone2", binding.nominee2mobile.getText().toString());
+                    params.put("cd_nominee_rel2", binding.nominee2desig.getText().toString());
+
+                    params.put("cd_nominee_name3", binding.nominee3name.getText().toString());
+                    params.put("cd_nominee_phone3", binding.nominee3mobile.getText().toString());
+                    params.put("cd_nominee_rel3", binding.nominee3desig.getText().toString());
+
+                    Call<LoginErrorModalClass> call = simpleApi.updateNominee(params);
+                    call.enqueue(new Callback<LoginErrorModalClass>() {
+                        @Override
+                        public void onResponse(Call<LoginErrorModalClass> call, Response<LoginErrorModalClass> response) {
+                            if (response.isSuccessful()){
+                                Toast.makeText(getContext(), response.body().getMsg(),Toast.LENGTH_SHORT).show();
+                                setData();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<LoginErrorModalClass> call, Throwable t) {
+                            call.cancel();
+                        }
+                    });
                 }
             }
         });

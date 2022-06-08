@@ -35,4 +35,8 @@ public interface SimpleApi {
     @FormUrlEncoded
     Call<LoginErrorModalClass> updateOtherBasic(@FieldMap Map<String,String> params);
 
+    @POST(AppUrls.UpdateProfileNominee)
+    @FormUrlEncoded
+    Call<LoginErrorModalClass> updateNominee(@FieldMap Map<String,String> params);
+
 }
