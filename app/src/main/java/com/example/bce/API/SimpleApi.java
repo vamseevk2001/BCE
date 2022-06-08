@@ -1,6 +1,7 @@
 package com.example.bce.API;
 
 import com.example.bce.Models.LoginBody;
+import com.example.bce.Models.LoginErrorModalClass;
 import com.example.bce.Models.LoginModalClass;
 import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.Utils.AppUrls;
@@ -25,5 +26,13 @@ public interface SimpleApi {
     @POST(AppUrls.GetProfile)
     @FormUrlEncoded
     Call<ProfileModalClass> getProfile(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.EditProfile)
+    @FormUrlEncoded
+    Call<LoginErrorModalClass> editProfile(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.UpdateOtherBasic)
+    @FormUrlEncoded
+    Call<LoginErrorModalClass> updateOtherBasic(@FieldMap Map<String,String> params);
 
 }
