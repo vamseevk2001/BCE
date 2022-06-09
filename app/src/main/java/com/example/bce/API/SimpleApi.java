@@ -1,5 +1,6 @@
 package com.example.bce.API;
 
+import com.example.bce.Models.MembersList;
 import com.example.bce.Models.ResponseModalClass;
 import com.example.bce.Models.LoginModalClass;
 import com.example.bce.Models.ProfileModalClass;
@@ -37,5 +38,9 @@ public interface SimpleApi {
     @POST(AppUrls.UpdateProfileNominee)
     @FormUrlEncoded
     Call<ResponseModalClass> updateNominee(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.filterMembershipList)
+    @FormUrlEncoded
+    Call<MembersList> membershipList(@FieldMap Map<String,String> params);
 
 }

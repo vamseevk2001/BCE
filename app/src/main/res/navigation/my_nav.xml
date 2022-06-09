@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_member_frag_to_memberDetails"
             app:destination="@id/memberDetails" />
+        <argument
+            android:name="memberId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/profile_frag"

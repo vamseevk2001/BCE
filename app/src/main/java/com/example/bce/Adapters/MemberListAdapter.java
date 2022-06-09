@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.bce.Models.Members;
+import com.example.bce.Models.Membership;
 import com.example.bce.R;
 import com.squareup.picasso.Picasso;
 
@@ -22,12 +23,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.MemberListViewHolder> {
 
-    private ArrayList<Members> MemberItemList;
+    private ArrayList<Membership> MemberItemList = new ArrayList<Membership>();
 
     private Context con;
     private View fragmentView;
 
-    public MemberListAdapter(ArrayList<Members> memberItemList, Context con, View fragmentView) {
+    public MemberListAdapter(ArrayList<Membership> memberItemList, Context con, View fragmentView) {
         this.MemberItemList = memberItemList;
         this.con = con;
         this.fragmentView = fragmentView;
@@ -46,13 +47,12 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
     public void onBindViewHolder(@NonNull MemberListViewHolder holder, int position) {
         holder.memberName.setText(MemberItemList.get(position).getName().toString());
         holder.memberClub.setText(MemberItemList.get(position).getClubName());
-        holder.memberDesig.setText(MemberItemList.get(position).getDesignation());
-        Picasso.get().load(MemberItemList.get(position).getProfilePic()).into(holder.profilePic);
+        holder.memberDesig.setText(MemberItemList.get(position).getCategory() + "-" + MemberItemList.get(position).getSubCategory());
+        //Picasso.get().load(MemberItemList.get(position).getProfilePic()).into(holder.profilePic);
         holder.viewDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(fragmentView).navigate(R.id.action_member_frag_to_memberDetails);
-
             }
         });
     }
@@ -63,9 +63,10 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
         return MemberItemList.size();
     }
 
-    public void updateMemberList(ArrayList<Members> members) {
-        MemberItemList.clear();
-        MemberItemList.addAll(members);
+    public void updateMemberList(Membership members) {
+        //MemberItemList.clear();
+        if (!MemberItemList.contains(members))
+            MemberItemList.add(members);
         notifyDataSetChanged();
     }
 

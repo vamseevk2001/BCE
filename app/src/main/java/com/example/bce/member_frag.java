@@ -9,24 +9,36 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.bce.API.RetrofitInstance;
+import com.example.bce.API.SimpleApi;
 import com.example.bce.Adapters.MemberListAdapter;
 import com.example.bce.Models.Members;
+import com.example.bce.Models.MembersList;
+import com.example.bce.Models.Membership;
 import com.example.bce.databinding.FragmentBusinessLeadDetailBinding;
 import com.example.bce.databinding.FragmentMemberFragBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class member_frag extends Fragment {
 
     private FragmentMemberFragBinding binding;
     MemberListAdapter mAdapter;
-    //ArrayList<Members> membersArrayList;
+    SimpleApi simpleApi;
+    ArrayList<Membership> membersArrayList = new ArrayList<>();
 
     public member_frag() {
         // Required empty public constructor
@@ -56,13 +68,13 @@ public class member_frag extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ArrayList<Members> membersArrayList = new ArrayList<Members>();
+        //ArrayList<Members> membersArrayList = new ArrayList<Members>();
         RecyclerView recyclerView = binding.memberListRecyclerView;
-        membersArrayList.add(new Members("https://static1.srcdn.com/wordpress/wp-content/uploads/2021/08/tom-holland-spider-man.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", "Vamsee Krishna", "BCE Bhubaneswar", "Developer"));
-        membersArrayList.add(new Members("https://www.cheatsheet.com/wp-content/uploads/2019/06/RDJ-Tony-Stark.jpg", "Tony Stark", "BCE Bhubaneswar", "Sports kit provider"));
-        membersArrayList.add(new Members("https://i.pinimg.com/736x/25/1b/2c/251b2c0f3e981d06247be49fa9a3fe27.jpg", "Elizabeth Olsen", "BCE Bhubaneswar", "Developer"));
-        membersArrayList.add(new Members("https://i.pinimg.com/originals/64/95/d0/6495d05033eb2029300f4a6fe5151952.jpg", "Emma Watson", "BCE Bhubaneswar", "Developer"));
-        membersArrayList.add(new Members("https://www.pinkvilla.com/imageresize/tom_mission_impossible_0.jpg?width=752&format=webp&t=pvorg", "Tom Cruse", "BCE Bhubaneswar", "Developer"));
+//        membersArrayList.add(new Members("https://static1.srcdn.com/wordpress/wp-content/uploads/2021/08/tom-holland-spider-man.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", "Vamsee Krishna", "BCE Bhubaneswar", "Developer"));
+//        membersArrayList.add(new Members("https://www.cheatsheet.com/wp-content/uploads/2019/06/RDJ-Tony-Stark.jpg", "Tony Stark", "BCE Bhubaneswar", "Sports kit provider"));
+//        membersArrayList.add(new Members("https://i.pinimg.com/736x/25/1b/2c/251b2c0f3e981d06247be49fa9a3fe27.jpg", "Elizabeth Olsen", "BCE Bhubaneswar", "Developer"));
+//        membersArrayList.add(new Members("https://i.pinimg.com/originals/64/95/d0/6495d05033eb2029300f4a6fe5151952.jpg", "Emma Watson", "BCE Bhubaneswar", "Developer"));
+//        membersArrayList.add(new Members("https://www.pinkvilla.com/imageresize/tom_mission_impossible_0.jpg?width=752&format=webp&t=pvorg", "Tom Cruse", "BCE Bhubaneswar", "Developer"));
 
 //        Members[] memberList = new Members[]{
 //                new Members("https://static1.srcdn.com/wordpress/wp-content/uploads/2021/08/tom-holland-spider-man.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", "Vamsee Krishna", "BCE Bhubaneswar", "Developer"),
@@ -75,6 +87,31 @@ public class member_frag extends Fragment {
         //Toast.makeText(getContext(), String.valueOf(membersArrayList.size()), Toast.LENGTH_SHORT).show();
 
         MemberListAdapter mAdapter = new MemberListAdapter(membersArrayList, getContext(), binding.getRoot());
+
+        simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        Call<MembersList> call = simpleApi.membershipList(params);
+        call.enqueue(new Callback<MembersList>() {
+            @Override
+            public void onResponse(Call<MembersList> call, Response<MembersList> response) {
+                if(response.isSuccessful()){
+                    for(Membership member : response.body().getMembershipList()){
+                        Log.d("VAMSEE KRISHNA", response.body().getMembershipList().get(0).getName());
+                        membersArrayList.add(member);
+                        mAdapter.updateMemberList(member);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MembersList> call, Throwable t) {
+                call.cancel();
+            }
+        });
+
+        //Log.d("VAMEEE KRISHNA", membersArrayList.get(0).getAddress());
+
+
         //mAdapter.updateMemberList(membersArrayList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
