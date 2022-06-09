@@ -1,7 +1,6 @@
 package com.example.bce.API;
 
-import com.example.bce.Models.LoginBody;
-import com.example.bce.Models.LoginErrorModalClass;
+import com.example.bce.Models.ResponseModalClass;
 import com.example.bce.Models.LoginModalClass;
 import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.Utils.AppUrls;
@@ -9,7 +8,6 @@ import com.example.bce.Utils.AppUrls;
 import java.util.Map;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -21,7 +19,8 @@ public interface SimpleApi {
     Call<LoginModalClass> login(@FieldMap Map<String,String> params);
 
     @POST(AppUrls.forgetPassword)
-    Call<LoginModalClass> forgotPass();
+    @FormUrlEncoded
+    Call<ResponseModalClass> forgotPass(@FieldMap Map<String,String> params);
 
     @POST(AppUrls.GetProfile)
     @FormUrlEncoded
@@ -29,14 +28,14 @@ public interface SimpleApi {
 
     @POST(AppUrls.EditProfile)
     @FormUrlEncoded
-    Call<LoginErrorModalClass> editProfile(@FieldMap Map<String,String> params);
+    Call<ResponseModalClass> editProfile(@FieldMap Map<String,String> params);
 
     @POST(AppUrls.UpdateOtherBasic)
     @FormUrlEncoded
-    Call<LoginErrorModalClass> updateOtherBasic(@FieldMap Map<String,String> params);
+    Call<ResponseModalClass> updateOtherBasic(@FieldMap Map<String,String> params);
 
     @POST(AppUrls.UpdateProfileNominee)
     @FormUrlEncoded
-    Call<LoginErrorModalClass> updateNominee(@FieldMap Map<String,String> params);
+    Call<ResponseModalClass> updateNominee(@FieldMap Map<String,String> params);
 
 }

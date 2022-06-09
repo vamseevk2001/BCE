@@ -3,7 +3,7 @@ package com.example.bce.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginErrorModalClass {
+public class ResponseModalClass {
 
     @SerializedName("success")
     @Expose

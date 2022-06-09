@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
-import com.example.bce.Models.LoginErrorModalClass;
+import com.example.bce.Models.ResponseModalClass;
 import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.databinding.FragmentProfileFragBinding;
 import com.squareup.picasso.Picasso;
@@ -110,10 +110,10 @@ public class profile_frag extends Fragment {
                     params.put("ur_dob", binding.dobInp.getText().toString());
                     params.put("cd_photo", binding.companyLogoInp.getText().toString());
                     params.put("ur_photo", binding.profilePicInp.getText().toString());
-                    Call<LoginErrorModalClass> call = simpleApi.editProfile(params);
-                    call.enqueue(new Callback<LoginErrorModalClass>() {
+                    Call<ResponseModalClass> call = simpleApi.editProfile(params);
+                    call.enqueue(new Callback<ResponseModalClass>() {
                         @Override
-                        public void onResponse(Call<LoginErrorModalClass> call, Response<LoginErrorModalClass> response) {
+                        public void onResponse(Call<ResponseModalClass> call, Response<ResponseModalClass> response) {
                             if(response.isSuccessful()){
                                 Toast.makeText(getContext(), response.body().getMsg(),Toast.LENGTH_SHORT).show();
                                 setData();
@@ -121,7 +121,7 @@ public class profile_frag extends Fragment {
                         }
 
                         @Override
-                        public void onFailure(Call<LoginErrorModalClass> call, Throwable t) {
+                        public void onFailure(Call<ResponseModalClass> call, Throwable t) {
                             call.cancel();
                         }
                     });
@@ -176,10 +176,10 @@ public class profile_frag extends Fragment {
                     params.put("cd_nominee_phone3", binding.nominee3mobile.getText().toString());
                     params.put("cd_nominee_rel3", binding.nominee3desig.getText().toString());
 
-                    Call<LoginErrorModalClass> call = simpleApi.updateNominee(params);
-                    call.enqueue(new Callback<LoginErrorModalClass>() {
+                    Call<ResponseModalClass> call = simpleApi.updateNominee(params);
+                    call.enqueue(new Callback<ResponseModalClass>() {
                         @Override
-                        public void onResponse(Call<LoginErrorModalClass> call, Response<LoginErrorModalClass> response) {
+                        public void onResponse(Call<ResponseModalClass> call, Response<ResponseModalClass> response) {
                             if (response.isSuccessful()){
                                 Toast.makeText(getContext(), response.body().getMsg(),Toast.LENGTH_SHORT).show();
                                 setData();
@@ -187,7 +187,7 @@ public class profile_frag extends Fragment {
                         }
 
                         @Override
-                        public void onFailure(Call<LoginErrorModalClass> call, Throwable t) {
+                        public void onFailure(Call<ResponseModalClass> call, Throwable t) {
                             call.cancel();
                         }
                     });
@@ -209,10 +209,10 @@ public class profile_frag extends Fragment {
                 params.put("cd_business_detail", binding.businessDetailInp.getText().toString());
                 params.put("cd_experiences", binding.expInp.getText().toString());
 
-                Call<LoginErrorModalClass> call = simpleApi.updateOtherBasic(params);
-                call.enqueue(new Callback<LoginErrorModalClass>() {
+                Call<ResponseModalClass> call = simpleApi.updateOtherBasic(params);
+                call.enqueue(new Callback<ResponseModalClass>() {
                     @Override
-                    public void onResponse(Call<LoginErrorModalClass> call, Response<LoginErrorModalClass> response) {
+                    public void onResponse(Call<ResponseModalClass> call, Response<ResponseModalClass> response) {
                         if (response.isSuccessful()){
                             Toast.makeText(getContext(), response.body().getMsg(),Toast.LENGTH_SHORT).show();
                             setData();
@@ -220,7 +220,7 @@ public class profile_frag extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<LoginErrorModalClass> call, Throwable t) {
+                    public void onFailure(Call<ResponseModalClass> call, Throwable t) {
                             call.cancel();
                     }
                 });

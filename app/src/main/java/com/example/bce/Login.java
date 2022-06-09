@@ -14,8 +14,7 @@ import android.widget.Toast;
 
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
-import com.example.bce.Models.LoginBody;
-import com.example.bce.Models.LoginErrorModalClass;
+import com.example.bce.Models.ResponseModalClass;
 import com.example.bce.Models.LoginModalClass;
 import com.example.bce.databinding.ActivityLoginBinding;
 import com.google.gson.Gson;
@@ -38,6 +37,7 @@ public class Login extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        getSupportActionBar().hide();
 
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +65,8 @@ public class Login extends AppCompatActivity {
 
                                 } else {
                                     Gson gson = new Gson();
-                                    LoginErrorModalClass loginErrorModalClass = gson.fromJson(response.errorBody().charStream(), LoginErrorModalClass.class);
-                                    Toast.makeText(getApplicationContext(), loginErrorModalClass.getMsg(), Toast.LENGTH_SHORT).show();
+                                    ResponseModalClass responseModalClass = gson.fromJson(response.errorBody().charStream(), ResponseModalClass.class);
+                                    Toast.makeText(getApplicationContext(), responseModalClass.getMsg(), Toast.LENGTH_SHORT).show();
 
                                 }
 
