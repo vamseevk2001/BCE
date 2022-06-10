@@ -24,14 +24,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.MemberListViewHolder> {
 
     private ArrayList<Membership> MemberItemList = new ArrayList<Membership>();
+    private ViewMemberDetailInterface viewMemberDetailInterface;
 
     private Context con;
     private View fragmentView;
 
-    public MemberListAdapter(ArrayList<Membership> memberItemList, Context con, View fragmentView) {
+    public MemberListAdapter(ArrayList<Membership> memberItemList, Context con, View fragmentView, ViewMemberDetailInterface viewMemberDetailInterface) {
         this.MemberItemList = memberItemList;
         this.con = con;
         this.fragmentView = fragmentView;
+        this.viewMemberDetailInterface = viewMemberDetailInterface;
     }
 
     @NonNull
@@ -39,7 +41,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
     public MemberListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem = layoutInflater.inflate(R.layout.member_item, parent, false);
-        MemberListViewHolder viewHolder = new MemberListViewHolder(listItem);
+        MemberListViewHolder viewHolder = new MemberListViewHolder(listItem, viewMemberDetailInterface);
         return viewHolder;
     }
 
@@ -49,12 +51,12 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
         holder.memberClub.setText(MemberItemList.get(position).getClubName());
         holder.memberDesig.setText(MemberItemList.get(position).getCategory() + "-" + MemberItemList.get(position).getSubCategory());
         //Picasso.get().load(MemberItemList.get(position).getProfilePic()).into(holder.profilePic);
-        holder.viewDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(fragmentView).navigate(R.id.action_member_frag_to_memberDetails);
-            }
-        });
+//        holder.viewDetails.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Navigation.findNavController(fragmentView).navigate(R.id.action_member_frag_to_memberDetails);
+//            }
+//        });
     }
 
 
@@ -70,26 +72,38 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
         notifyDataSetChanged();
     }
 
-    public static class MemberListViewHolder extends RecyclerView.ViewHolder {
+    public static class MemberListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public CircleImageView profilePic;
         public TextView memberName, memberClub, memberDesig;
         public TextView viewDetails;
+        ViewMemberDetailInterface viewMemberDetailInterface;
 
-        public MemberListViewHolder(@NonNull View itemView) {
+        public MemberListViewHolder(@NonNull View itemView, ViewMemberDetailInterface viewMemberDetailInterface) {
             super(itemView);
             this.profilePic = itemView.findViewById(R.id.profilePicMember);
             this.memberName = (TextView) itemView.findViewById(R.id.memberName);
             this.memberClub = itemView.findViewById(R.id.memberClub);
             this.memberDesig = itemView.findViewById(R.id.memberDesig);
             this.viewDetails = itemView.findViewById(R.id.viewMemberDetails);
+            this.viewMemberDetailInterface = viewMemberDetailInterface;
+            viewDetails.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+
+            viewMemberDetailInterface.viewMemberDetails(getAdapterPosition());
+
+        }
+    }
+
+    public interface ViewMemberDetailInterface{
+        void viewMemberDetails(int position);
     }
 
 
 }
 
-//interface ViewMemberDetailInterface{
-//    void viewMemberDetails(Members member);
-//}
+
 

@@ -64,6 +64,10 @@ public class MemberDetails extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        String memberId = MemberDetailsArgs.fromBundle(getArguments()).getMemberID();
+
+        binding.nameProfile.setText(memberId);
         binding.businessLeadLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
