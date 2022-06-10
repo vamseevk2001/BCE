@@ -12,9 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.bce.API.RetrofitInstance;
+import com.example.bce.API.SimpleApi;
+import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.databinding.FragmentBusinessLeadDetailBinding;
 import com.example.bce.databinding.FragmentMemberDetailsBinding;
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,14 +77,13 @@ public class MemberDetails extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         String memberId = MemberDetailsArgs.fromBundle(getArguments()).getMemberID();
-
-        binding.nameProfile.setText(memberId);
+        setData(memberId);
         binding.businessLeadLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 final AlertDialog.Builder sendNewBusinessLeadAlert = new AlertDialog.Builder(getContext());
-                View newBusinessLeadView = getLayoutInflater().inflate(R.layout.new_business_lead_dialog_box,null);
+                View newBusinessLeadView = getLayoutInflater().inflate(R.layout.new_business_lead_dialog_box, null);
                 name = newBusinessLeadView.findViewById(R.id.nameInp);
                 mobile = newBusinessLeadView.findViewById(R.id.mobileInp);
                 action = newBusinessLeadView.findViewById(R.id.businessLeadInp);
@@ -102,7 +112,7 @@ public class MemberDetails extends Fragment {
             public void onClick(View view) {
 
                 final AlertDialog.Builder thankNoteAlert = new AlertDialog.Builder(getContext());
-                View thankNoteView = getLayoutInflater().inflate(R.layout.thanks_note_dialog_box,null);
+                View thankNoteView = getLayoutInflater().inflate(R.layout.thanks_note_dialog_box, null);
                 amount = thankNoteView.findViewById(R.id.amountInp);
                 invoice = thankNoteView.findViewById(R.id.invoiceFile);
                 remarksThanksNote = thankNoteView.findViewById(R.id.remarkInpThank);
@@ -130,7 +140,7 @@ public class MemberDetails extends Fragment {
             public void onClick(View view) {
 
                 final AlertDialog.Builder sendNewReviewAlert = new AlertDialog.Builder(getContext());
-                View newReviewView = getLayoutInflater().inflate(R.layout.new_review_dialog_box,null);
+                View newReviewView = getLayoutInflater().inflate(R.layout.new_review_dialog_box, null);
 
                 remarksReview = newReviewView.findViewById(R.id.remarkInpReview);
                 newReviewBtn = newReviewView.findViewById(R.id.newReviewBtn);
@@ -154,7 +164,48 @@ public class MemberDetails extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private Boolean CheckBusinessLeadFields(){
+    void setData(String memberId) {
+        SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", memberId);
+        Call<ProfileModalClass> call = simpleApi.getProfile(params);
+        call.enqueue(new Callback<ProfileModalClass>() {
+            @Override
+            public void onResponse(Call<ProfileModalClass> call, Response<ProfileModalClass> response) {
+                if (response.isSuccessful()) {
+
+                    ProfileModalClass profileModalClass = response.body();
+
+                    if (!profileModalClass.getImg().isEmpty())
+                        Picasso.get().load(profileModalClass.getImg()).into(binding.memberProfilePic);
+                    else
+                        Picasso.get().load("https://www.freeiconspng.com/uploads/customers-icon-3.png").into(binding.memberProfilePic);
+                    binding.nameProfile.setText(profileModalClass.getUserInfo().get(0).getUrName());
+                    binding.clubNameProfile.setText("Club: " + profileModalClass.getUserInfo().get(0).getClbName());
+                    binding.CompanyProfile.setText("Company: " + profileModalClass.getUserInfo().get(0).getCdCompany());
+                    binding.memberDesignation.setText(profileModalClass.getUserInfo().get(0).getCdDesig());
+
+                    binding.address.setText(profileModalClass.getUserInfo().get(0).getUrAddress());
+                    binding.email.setText(profileModalClass.getUserInfo().get(0).getUrEmail());
+                    binding.phone.setText(profileModalClass.getUserInfo().get(0).getUrMobile());
+                    binding.designation.setText(profileModalClass.getUserInfo().get(0).getCdDesig());
+
+                    binding.otherOrganization.setText(profileModalClass.getUserInfo().get(0).getCdAssorg());
+                    binding.businessDetail.setText(profileModalClass.getUserInfo().get(0).getCdBusinessDetail());
+                    binding.exp.setText(profileModalClass.getUserInfo().get(0).getCdExperiences());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileModalClass> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private Boolean CheckBusinessLeadFields() {
         if (name.length() == 0) {
             name.setError("This field is required");
             return false;
@@ -162,7 +213,7 @@ public class MemberDetails extends Fragment {
         if (mobile.length() == 0) {
             mobile.setError("This field is required");
             return false;
-        }else if(mobile.length() != 10){
+        } else if (mobile.length() != 10) {
             mobile.setError("phone no. must contain 10 digits");
             return false;
         }
@@ -179,7 +230,7 @@ public class MemberDetails extends Fragment {
 
     }
 
-    private Boolean CheckThankNoteFields(){
+    private Boolean CheckThankNoteFields() {
         if (amount.length() == 0) {
             amount.setError("This field is required");
             return false;
@@ -196,7 +247,7 @@ public class MemberDetails extends Fragment {
 
     }
 
-    private Boolean CheckReviewFields(){
+    private Boolean CheckReviewFields() {
 
         if (remarksReview.length() == 0) {
             remarksReview.setError("This field is required");

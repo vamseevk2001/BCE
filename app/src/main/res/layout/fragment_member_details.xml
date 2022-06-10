@@ -23,6 +23,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/memberProfilePic"
                 android:layout_width="106dp"
                 android:layout_height="106dp"
                 android:layout_margin="10dp"
@@ -34,7 +35,6 @@
                 android:id="@+id/name_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ranjeet Kumar Sahoo"
                 android:textColor="@color/blue"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -43,21 +43,18 @@
                 android:id="@+id/clubName_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Club: BCE BHUBANESHWAR - IT"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/Company_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company: Syflex Techo Solution Pvt. Ltd"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/location_profile"
+                android:id="@+id/memberDesignation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Software Development"
                 android:textSize="10sp" />
 
         </LinearLayout>
@@ -232,7 +229,10 @@
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Khordha, Bhubaneswar, Odisha, India"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginEnd="2dp"
+                android:layout_marginStart="2dp"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -241,21 +241,18 @@
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="test@example.com"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+91 7008 123 456"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/profileName"
+                android:id="@+id/designation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Software Development"
                 android:textSize="12sp" />
 
 
@@ -281,11 +278,11 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/otherOrganization"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
                 />
 
             <TextView
@@ -296,11 +293,11 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/businessDetail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
                 />
 
             <TextView
@@ -311,11 +308,11 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/exp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
                 />
 
         </LinearLayout>

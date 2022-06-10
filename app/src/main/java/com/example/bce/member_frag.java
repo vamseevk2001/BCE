@@ -106,11 +106,5 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     public void viewMemberDetails(int position) {
         NavDirections action = member_fragDirections.actionMemberFragToMemberDetails(membersArrayList.get(position).getId());
         Navigation.findNavController(binding.getRoot()).navigate(action);
-//        Bundle bundle = new Bundle();
-//        bundle.putString("MEMBER_ID", membersArrayList.get(position).getId());
-//
-//        MemberDetails memberDetails = new MemberDetails();
-//        memberDetails.setArguments(bundle);
-
     }
 }
