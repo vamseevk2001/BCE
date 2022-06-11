@@ -1,20 +1,33 @@
 package com.example.bce;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.AlertDialog;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.autofill.AutofillManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
+import com.example.bce.Models.DialogBoxModalClass;
 import com.example.bce.Models.ProfileModalClass;
+import com.example.bce.Models.SendReviewModalClass;
 import com.example.bce.databinding.FragmentBusinessLeadDetailBinding;
 import com.example.bce.databinding.FragmentMemberDetailsBinding;
 import com.google.android.material.textfield.TextInputEditText;
@@ -40,11 +53,18 @@ public class MemberDetails extends Fragment {
     TextInputEditText action;
     TextInputEditText remarks;
 
+    SimpleApi simpleApi;
+
     TextInputEditText amount;
     TextInputEditText invoice;
     TextInputEditText remarksThanksNote;
 
     TextInputEditText remarksReview;
+    RatingBar reviewRating;
+    TextView ratingText;
+
+    String user_id;
+    String member_ID;
 
 
     Button newLeadBtn;
@@ -76,8 +96,9 @@ public class MemberDetails extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        String memberId = MemberDetailsArgs.fromBundle(getArguments()).getMemberID();
-        setData(memberId);
+        member_ID = MemberDetailsArgs.fromBundle(getArguments()).getMemberID();
+        setData(member_ID);
+
         binding.businessLeadLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,13 +142,37 @@ public class MemberDetails extends Fragment {
                 final AlertDialog alertDialog = thankNoteAlert.create();
                 alertDialog.setCanceledOnTouchOutside(true);
 
+
+
                 thankNoteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         isAllThankNoteFieldChecked = CheckThankNoteFields();
                         if (isAllThankNoteFieldChecked) {
-                            //
+                            simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+                            Map<String, String> params = new HashMap<>();
+                            params.put("user_id", user_id);
+                            params.put("tl_to_urid", member_ID);
+                            params.put("tl_amount", amount.getText().toString());
+                            params.put("tl_remark", remarksThanksNote.getText().toString());
+
+                            Call<DialogBoxModalClass> call = simpleApi.sendThankNote(params);
+                            call.enqueue(new Callback<DialogBoxModalClass>() {
+                                @Override
+                                public void onResponse(Call<DialogBoxModalClass> call, Response<DialogBoxModalClass> response) {
+                                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, "onResponse: "+response.body().getMessage());
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<DialogBoxModalClass> call, Throwable t) {
+                                    call.cancel();
+                                }
+                            });
+
                             alertDialog.dismiss();
+
                         }
                     }
                 });
@@ -143,18 +188,48 @@ public class MemberDetails extends Fragment {
                 View newReviewView = getLayoutInflater().inflate(R.layout.new_review_dialog_box, null);
 
                 remarksReview = newReviewView.findViewById(R.id.remarkInpReview);
+                reviewRating = newReviewView.findViewById(R.id.reviewRating);
                 newReviewBtn = newReviewView.findViewById(R.id.newReviewBtn);
+                ratingText = newReviewView.findViewById(R.id.ratingNumber);
                 sendNewReviewAlert.setView(newReviewView);
                 final AlertDialog alertDialog = sendNewReviewAlert.create();
                 alertDialog.setCanceledOnTouchOutside(true);
+                reviewRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                    @Override
+                    public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                        ratingText.setText(String.valueOf((int) ratingBar.getRating()) + "/5");
+                    }
+                });
 
                 newReviewBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         isAllReviewFieldsChecked = CheckReviewFields();
                         if (isAllReviewFieldsChecked) {
-                            //
-                            alertDialog.dismiss();
+                            closeKeyboard();
+                            Map<String, String> reviewParams = new HashMap<>();
+                            reviewParams.put("user_id", user_id);
+                            reviewParams.put("rv_to_urid", member_ID);
+                            reviewParams.put("rv_rating", String.valueOf((int) reviewRating.getRating()));
+                            reviewParams.put("rv_remark", remarksReview.getText().toString());
+
+                            SendReviewModalClass sendReviewModalClass = new SendReviewModalClass(user_id, member_ID,
+                                    String.valueOf((int) reviewRating.getRating()), remarksReview.getText().toString());
+
+                            Call<DialogBoxModalClass> call = simpleApi.sendReview(reviewParams);
+                            call.enqueue(new Callback<DialogBoxModalClass>() {
+                                @Override
+                                public void onResponse(Call<DialogBoxModalClass> call, Response<DialogBoxModalClass> response) {
+                                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onFailure(Call<DialogBoxModalClass> call, Throwable t) {
+                                    call.cancel();
+                                }
+                            });
+
+
                         }
                     }
                 });
@@ -199,7 +274,7 @@ public class MemberDetails extends Fragment {
 
             @Override
             public void onFailure(Call<ProfileModalClass> call, Throwable t) {
-
+                call.cancel();
             }
         });
 
@@ -257,11 +332,19 @@ public class MemberDetails extends Fragment {
 
     }
 
+    private void closeKeyboard() {
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        MainActivity activity = (MainActivity) getActivity();
+        user_id = activity.getUserId();
+        simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         binding = FragmentMemberDetailsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }

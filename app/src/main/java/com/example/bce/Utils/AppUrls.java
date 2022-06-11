@@ -7,7 +7,7 @@ public class AppUrls {
     public static final String GetProfile = "api.php?method=getProfile";
     public static final String EditProfile = "https://www.apollohospitalsevent.com/badmin/api.php?method=updateProfile";
     public static final String EditProfileLocation = "https://www.apollohospitalsevent.com/badmin/api.php?method=updateProfilelocation";
-    public static final String UpdateProfileOtherInfo = "https://www.apollohospitalsevent.com/badmin/api.php?method=updateothe";
+    public static final String UpdateProfileOtherInfo = "https://www.apollohospitalsevent.com/badmin/api.php?method=updateother";
     public static final String UpdateProfileNominee = "https://www.apollohospitalsevent.com/badmin/api.php?method=updatenominee";
     public static final String UpdateOtherBasic = "https://www.apollohospitalsevent.com/badmin/api.php?method=updateotherbasic";
 
@@ -26,6 +26,7 @@ public class AppUrls {
     public static final String paymentList = "https://www.apollohospitalsevent.com/badmin/api.php?method=paymentlist";
     public static final String memberAsk = "https://www.apollohospitalsevent.com/badmin/api.php?method=memberasklist";
     public static final String filterMembershipList = "https://www.apollohospitalsevent.com/badmin/api.php?method=filtermemberlist";
+    public static final String membeershipList = "https://www.apollohospitalsevent.com/badmin/api.php?method=membershiplist";
     public static final String askHistoryList = "https://www.apollohospitalsevent.com/badmin/api.php?method=askhistory";
     public static final String submitAsk = "https://www.apollohospitalsevent.com/badmin/api.php?method=asksubmit";
 

@@ -189,14 +189,14 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="10dp"
-                    android:src="@drawable/ic_connection_request" />
+                    android:src="@drawable/ic_review" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Connection Request"
+                    android:text="Review"
                     android:textColor="@color/white" />
 
             </LinearLayout>

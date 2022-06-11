@@ -136,6 +136,30 @@ public class profile_frag extends Fragment {
                 isAllLocationFieldsChecked = CheckLocationFeilds();
                 if (isAllCompanyFieldsChecked) {
                     //add implementation if all fields are checked..
+                    closeKeyboard();
+
+                    simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+                    Map<String, String> params = new HashMap<>();
+
+                    params.put("ur_id", user_id);
+                    params.put("cd_address", binding.addressInp.getText().toString()+" "
+                            +binding.stateInp.getText().toString());
+
+                    Call<ResponseModalClass> call = simpleApi.editLocation(params);
+                    call.enqueue(new Callback<ResponseModalClass>() {
+                        @Override
+                        public void onResponse(Call<ResponseModalClass> call, Response<ResponseModalClass> response) {
+                            if (response.isSuccessful()){
+                                Toast.makeText(getContext(), response.body().getMsg(),Toast.LENGTH_SHORT).show();
+                                setData();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseModalClass> call, Throwable t) {
+                            call.cancel();
+                        }
+                    });
                 }
             }
         });
@@ -147,6 +171,31 @@ public class profile_frag extends Fragment {
                 isAllOtherInfoFieldsChecked = CheckOtherFeilds();
                 if (isAllCompanyFieldsChecked) {
                     //add implementation if all fields are checked..
+                    closeKeyboard();
+
+                    simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+                    Map<String, String> params = new HashMap<>();
+
+                    params.put("ur_id", user_id);
+                    params.put("cd_pan_no", binding.panNoInp.getText().toString());
+                    params.put("cd_aadhar_no", binding.aadharNoInp.getText().toString());
+                    params.put("cd_gst_no", binding.gstNoInp.getText().toString());
+
+                    Call<ResponseModalClass> call = simpleApi.updateOtherProfile(params);
+                    call.enqueue(new Callback<ResponseModalClass>() {
+                        @Override
+                        public void onResponse(Call<ResponseModalClass> call, Response<ResponseModalClass> response) {
+                            if (response.isSuccessful()){
+                                Toast.makeText(getContext(), response.body().getMsg(),Toast.LENGTH_SHORT).show();
+                                setData();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseModalClass> call, Throwable t) {
+                            call.cancel();
+                        }
+                    });
                 }
             }
         });
