@@ -36,15 +36,16 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         holder.date.setText(reviewList.get(position).getDate());
-        holder.remark.setText("Remarks: "+reviewList.get(position).getRemark());
+        holder.remark.setText("Remarks: " + reviewList.get(position).getRemark());
         holder.rating.setRating(Float.parseFloat(reviewList.get(position).getRating()));
         holder.name.setText(reviewList.get(position).getReceiveFrom().getName());
         holder.company.setText(reviewList.get(position).getReceiveFrom().getCompany());
-        holder.club.setText(reviewList.get(position).getReceiveFrom().getClub()+" - "+reviewList.get(position).getReceiveFrom().getCategory());
+        holder.club.setText(reviewList.get(position).getReceiveFrom().getClub() + " - " + reviewList.get(position).getReceiveFrom().getCategory());
     }
 
     @Override
     public int getItemCount() {
+
         return reviewList.size();
     }
 
