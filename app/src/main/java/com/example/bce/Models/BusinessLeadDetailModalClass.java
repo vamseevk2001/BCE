@@ -169,17 +169,17 @@ public class BusinessLeadDetailModalClass {
 
     public static class DateInfo {
         @SerializedName("date")
-        private Object date;
+        private String date;
         @SerializedName("title")
         private String title;
         @SerializedName("rating")
         private String rating;
 
-        public Object getDate() {
+        public String getDate() {
             return date;
         }
 
-        public void setDate(Object date) {
+        public void setDate(String date) {
             this.date = date;
         }
 
