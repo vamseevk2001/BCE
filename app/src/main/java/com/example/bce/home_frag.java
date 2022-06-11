@@ -49,6 +49,14 @@ public class home_frag extends Fragment {
                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_reviewFragment);
             }
         });
+
+        binding.businessReceivedLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_businessLeadDetailFragment);
+            }
+        });
+
         super.onViewCreated(view, savedInstanceState);
     }
 

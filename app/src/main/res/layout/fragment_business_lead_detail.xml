@@ -31,6 +31,7 @@
         app:layout_constraintTop_toTopOf="@+id/localSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/businessLeadDetailRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="10dp"

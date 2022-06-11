@@ -70,7 +70,9 @@ public class ReviewFragment extends Fragment {
         simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         Map<String, String> params = new HashMap<>();
         params.put("user_id", user_id);
+
         Call<ReviewListModalClass> call = simpleApi.reviewList(params);
+
         call.enqueue(new Callback<ReviewListModalClass>() {
             @Override
             public void onResponse(Call<ReviewListModalClass> call, Response<ReviewListModalClass> response) {

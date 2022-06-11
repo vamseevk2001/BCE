@@ -183,7 +183,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:clickable="false"
 
                 android:hint="STATUS"
                 app:layout_constraintStart_toStartOf="parent">
@@ -192,6 +191,8 @@
                     android:id="@+id/BusinessStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>

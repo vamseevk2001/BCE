@@ -51,7 +51,7 @@ public class BusinessLeadDetailAdapter extends RecyclerView.Adapter<BusinessLead
         return businessLead.size();
     }
 
-    void updateBusinessLead(BusinessLeadDetailModalClass.BusinessReceiveList item){
+    public void updateBusinessLead(BusinessLeadDetailModalClass.BusinessReceiveList item){
         if (!businessLead.contains(item))
             businessLead.add(item);
         notifyDataSetChanged();
