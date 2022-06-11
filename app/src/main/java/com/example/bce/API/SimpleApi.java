@@ -5,6 +5,7 @@ import com.example.bce.Models.MembersList;
 import com.example.bce.Models.ResponseModalClass;
 import com.example.bce.Models.LoginModalClass;
 import com.example.bce.Models.ProfileModalClass;
+import com.example.bce.Models.ReviewListModalClass;
 import com.example.bce.Models.SendReviewModalClass;
 import com.example.bce.Utils.AppUrls;
 
@@ -68,5 +69,9 @@ public interface SimpleApi {
     @POST(AppUrls.SendLead)
     @FormUrlEncoded
     Call<DialogBoxModalClass> SendLead(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.reviewList)
+    @FormUrlEncoded
+    Call<ReviewListModalClass> reviewList(@FieldMap Map<String,String> params);
 
 }

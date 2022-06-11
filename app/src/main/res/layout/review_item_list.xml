@@ -14,6 +14,7 @@
         android:padding="10dp">
 
         <TextView
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Date"
@@ -21,6 +22,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/reviewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="03-04-2022" />
@@ -45,6 +47,7 @@
 
 
             <RatingBar
+                android:id="@+id/reviewRating"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -56,6 +59,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/reviewRemarks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Remarks: Dynamic" />
@@ -68,16 +72,19 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/reveiveFromName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Smruthi Ranjan" />
 
         <TextView
+            android:id="@+id/receiveFromCompany"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="HDFC ERGP &amp; Chola Ms" />
 
         <TextView
+            android:id="@+id/receiveFromClub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BCE Bhubaneswar - Insurance" />

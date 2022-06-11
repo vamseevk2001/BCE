@@ -9,7 +9,17 @@
         android:id="@+id/home_frag"
         android:name="com.example.bce.home_frag"
         android:label="fragment_home_frag"
-        tools:layout="@layout/fragment_home_frag" />
+        tools:layout="@layout/fragment_home_frag" >
+        <action
+            android:id="@+id/action_home_frag_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
+        <action
+            android:id="@+id/action_home_frag_to_guestList"
+            app:destination="@id/guestList" />
+        <action
+            android:id="@+id/action_home_frag_to_businessLeadDetailFragment"
+            app:destination="@id/businessLeadDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/member_frag"
         android:name="com.example.bce.member_frag"
