@@ -57,6 +57,14 @@ public class home_frag extends Fragment {
             }
         });
 
+        binding.guestLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_guestList);
+            }
+        });
+
+
         super.onViewCreated(view, savedInstanceState);
     }
 

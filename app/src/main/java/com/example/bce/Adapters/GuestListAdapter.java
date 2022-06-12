@@ -17,6 +17,10 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
 
     ArrayList<GuestListModalClass.Guest> guestList = new ArrayList<>();
 
+    public GuestListAdapter(ArrayList<GuestListModalClass.Guest> guestList) {
+        this.guestList = guestList;
+    }
+
     @NonNull
     @Override
     public GuestListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -80,7 +80,7 @@ public class BusinessLeadDetailFragment extends Fragment {
 
             @Override
             public void onFailure(Call<BusinessLeadDetailModalClass> call, Throwable t) {
-
+                call.cancel();
             }
         });
 
