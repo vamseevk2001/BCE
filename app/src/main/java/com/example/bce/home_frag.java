@@ -11,7 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.bce.databinding.FragmentHomeFragBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +27,7 @@ import com.example.bce.databinding.FragmentHomeFragBinding;
 public class home_frag extends Fragment {
 
     FragmentHomeFragBinding binding;
+
 
     public home_frag() {
         // Required empty public constructor
@@ -43,6 +50,22 @@ public class home_frag extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        String img_url1 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiTVNHhNbyNuGl2NnIeaC72wk4zvapPEYOjcu6Wf3xYjPUaNpdWWdp-EI80NUsvVSzLw&usqp=CAU";
+        String img_url2 = "https://thumbs.dreamstime.com/b/business-development-to-success-growth-banking-financial-global-network-businessman-hold-pointing-arrow-up-graph-227718315.jpg";
+        String img_url3 = "https://www.silworld.in/wp-content/uploads/2019/10/career-banner-compressor.jpg";
+        String img_url4 = "https://www.investni.com/sites/default/files/2020-06/business_support_investment_banner_904x466.jpg";
+        String img_url5 = "https://researchleap.com/wp-content/uploads/2019/10/shutterstock_718547992-min-e1571736994121.jpg";
+
+        ImageSlider imageSlider = binding.viewPager;
+        List<SlideModel> imageList = new ArrayList<SlideModel>();
+        imageList.add(new SlideModel(img_url1, ScaleTypes.FIT));
+        imageList.add(new SlideModel(img_url2, ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel(img_url3, ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel(img_url4, ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel(img_url5, ScaleTypes.CENTER_CROP));
+        imageSlider.setImageList(imageList);
+
+
         binding.reviewLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

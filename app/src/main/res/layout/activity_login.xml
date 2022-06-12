@@ -77,6 +77,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:backgroundTint="@color/red"
             android:text="LOGIN" />
     </LinearLayout>
