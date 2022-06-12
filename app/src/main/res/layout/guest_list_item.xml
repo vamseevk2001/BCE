@@ -30,14 +30,14 @@
             android:layout_marginStart="14dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/ic_briefcase"
-            app:layout_constraintBottom_toBottomOf="@id/profileName"
+            app:layout_constraintBottom_toBottomOf="@id/business"
             app:layout_constraintEnd_toStartOf="@id/phone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/profileName" />
+            app:layout_constraintTop_toTopOf="@id/business" />
 
 
         <TextView
-            android:id="@+id/profileName"
+            android:id="@+id/business"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -58,7 +58,7 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/mobileImg"
-            app:layout_constraintTop_toBottomOf="@id/profileName"
+            app:layout_constraintTop_toBottomOf="@id/business"
              />
 
         <ImageView
