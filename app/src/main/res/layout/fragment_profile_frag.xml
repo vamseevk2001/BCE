@@ -467,6 +467,7 @@
             app:layout_constraintTop_toBottomOf="@id/locationLayout" />
 
         <ImageView
+            android:id="@+id/editOtherInfo"
             android:layout_width="15dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -531,6 +532,8 @@
                     android:id="@+id/panNoInp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -547,6 +550,8 @@
                     android:id="@+id/aadharNoInp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -563,6 +568,8 @@
                     android:id="@+id/gstNoInp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>

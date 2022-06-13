@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -95,6 +97,17 @@ public class home_frag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+
+       // activity.getSupportActionBar().setTitle("BCE Bhubaneswar");
+        activity.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        activity.getSupportActionBar().setIcon(R.drawable.logo);
+
+        activity.getSupportActionBar().setDisplayShowCustomEnabled(true);
+        activity.getSupportActionBar().setCustomView(R.layout.custom_home_action_bar);
+
+        //activity.getSupportActionBar().setLogo(R.drawable.logo);
+
         binding = FragmentHomeFragBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }

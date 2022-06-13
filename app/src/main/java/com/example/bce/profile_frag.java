@@ -82,6 +82,20 @@ public class profile_frag extends Fragment {
 
         setData();
 
+        binding.editOtherInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.panNoInp.setFocusable(true);
+                binding.aadharNoInp.setFocusable(true);
+                binding.gstNoInp.setFocusable(true);
+
+                binding.panNoInp.setClickable(true);
+                binding.aadharNoInp.setClickable(true);
+                binding.gstNoInp.setClickable(true);
+
+            }
+        });
+
         binding.companyInfoEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
