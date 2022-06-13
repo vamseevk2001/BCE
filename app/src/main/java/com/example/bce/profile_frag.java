@@ -73,6 +73,14 @@ public class profile_frag extends Fragment {
         binding = FragmentProfileFragBinding.inflate(inflater, container, false);
         MainActivity activity = (MainActivity) getActivity();
         user_id = activity.getUserId();
+        binding.toolbar.setTitle("Profile");
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back);
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         //setEditableFalse();
         return binding.getRoot();
     }

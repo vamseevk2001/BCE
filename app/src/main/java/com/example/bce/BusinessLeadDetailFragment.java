@@ -98,6 +98,14 @@ public class BusinessLeadDetailFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         user_id = activity.getUserId();
         binding = FragmentBusinessLeadDetailBinding.inflate(inflater, container, false);
+        binding.toolbar.setTitle("Business Lead Details");
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back);
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         return binding.getRoot();
     }
 }

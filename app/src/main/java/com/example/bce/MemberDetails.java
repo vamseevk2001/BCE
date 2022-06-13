@@ -346,6 +346,14 @@ public class MemberDetails extends Fragment {
         user_id = activity.getUserId();
         simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         binding = FragmentMemberDetailsBinding.inflate(inflater, container, false);
+        binding.toolbar.setTitle("Member Detals");
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back);
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         return binding.getRoot();
     }
 }

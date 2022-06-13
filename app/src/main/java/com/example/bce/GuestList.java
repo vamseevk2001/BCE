@@ -103,6 +103,14 @@ public class GuestList extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         user_id = activity.getUserId();
         binding = FragmentGuestListBinding.inflate(inflater, container, false);
+        binding.toolbar.setTitle("Guest List");
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back);
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         return binding.getRoot();
     }
 }

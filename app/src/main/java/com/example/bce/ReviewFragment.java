@@ -105,6 +105,15 @@ public class ReviewFragment extends Fragment {
         binding = FragmentReviewBinding.inflate(inflater, container, false);
         MainActivity activity = (MainActivity) getActivity();
         user_id = activity.getUserId();
+
+        binding.toolbar.setTitle("Reviews");
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back);
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         return binding.getRoot();
     }
 }
