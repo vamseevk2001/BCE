@@ -37,7 +37,6 @@ public class Login extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        getSupportActionBar().hide();
 
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

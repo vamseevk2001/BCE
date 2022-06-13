@@ -97,14 +97,11 @@ public class home_frag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-
-       // activity.getSupportActionBar().setTitle("BCE Bhubaneswar");
-        activity.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//        activity.getSupportActionBar().setIcon(R.drawable.logo);
-
-        activity.getSupportActionBar().setDisplayShowCustomEnabled(true);
-        activity.getSupportActionBar().setCustomView(R.layout.custom_home_action_bar);
+//        AppCompatActivity activity = (AppCompatActivity) getActivity();
+//        activity.getSupportActionBar().setTitle("BCE Bhubaneswar");
+//        activity.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        activity.getSupportActionBar().setDisplayShowCustomEnabled(true);
+//        activity.getSupportActionBar().setCustomView(R.layout.custom_home_action_bar);
 
         //activity.getSupportActionBar().setLogo(R.drawable.logo);
 
