@@ -119,6 +119,9 @@ public class Login extends AppCompatActivity {
         if (binding.Phone.length() == 0) {
             binding.Phone.setError("This field is required");
             return false;
+        }else if(binding.Phone.length() < 10){
+            binding.Phone.setError("Mobile no. should be of 10 digits");
+            return false;
         }
         if (binding.password.length() == 0) {
             binding.password.setError("This field is required");
