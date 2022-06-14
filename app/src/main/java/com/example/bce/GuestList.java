@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.arch.core.internal.SafeIterableMap;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -92,6 +94,17 @@ public class GuestList extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(mAdapter);
+
+
+        binding.addGuestFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity activity = (MainActivity) getActivity();
+                user_id = activity.getUserId();
+                NavDirections navDirections = GuestListDirections.actionGuestListToAddGuest(user_id);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_guestList_to_addGuest);
+            }
+        });
 
         super.onViewCreated(view, savedInstanceState);
     }

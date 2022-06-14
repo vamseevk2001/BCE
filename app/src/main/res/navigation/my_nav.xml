@@ -52,7 +52,11 @@
         android:id="@+id/guestList"
         android:name="com.example.bce.GuestList"
         android:label="fragment_guest_list"
-        tools:layout="@layout/fragment_guest_list" />
+        tools:layout="@layout/fragment_guest_list" >
+        <action
+            android:id="@+id/action_guestList_to_addGuest"
+            app:destination="@id/addGuest" />
+    </fragment>
     <fragment
         android:id="@+id/reviewFragment"
         android:name="com.example.bce.ReviewFragment"
@@ -63,4 +67,16 @@
         android:name="com.example.bce.BusinessLeadDetailFragment"
         android:label="fragment_business_lead_detail"
         tools:layout="@layout/fragment_business_lead_detail" />
+    <fragment
+        android:id="@+id/addGuest"
+        android:name="com.example.bce.AddGuest"
+        android:label="fragment_add_guest"
+        tools:layout="@layout/fragment_add_guest" >
+        <action
+            android:id="@+id/action_addGuest_to_guestList"
+            app:destination="@id/guestList" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
 </navigation>

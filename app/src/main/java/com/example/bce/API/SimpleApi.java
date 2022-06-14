@@ -83,6 +83,10 @@ public interface SimpleApi {
     @FormUrlEncoded
     Call<GuestListModalClass> guestList(@FieldMap Map<String,String> params);
 
+    @POST(AppUrls.addGuestList)
+    @FormUrlEncoded
+    Call<DialogBoxModalClass> addGuest(@FieldMap Map<String,String> params);
+
 
 
 }
