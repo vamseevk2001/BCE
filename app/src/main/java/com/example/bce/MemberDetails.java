@@ -143,7 +143,6 @@ public class MemberDetails extends Fragment {
                 alertDialog.setCanceledOnTouchOutside(true);
 
 
-
                 thankNoteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -161,7 +160,7 @@ public class MemberDetails extends Fragment {
                                 @Override
                                 public void onResponse(Call<DialogBoxModalClass> call, Response<DialogBoxModalClass> response) {
                                     Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                    Log.d(TAG, "onResponse: "+response.body().getMessage());
+                                    Log.d(TAG, "onResponse: " + response.body().getMessage());
 
                                 }
 
@@ -206,7 +205,6 @@ public class MemberDetails extends Fragment {
                     public void onClick(View view) {
                         isAllReviewFieldsChecked = CheckReviewFields();
                         if (isAllReviewFieldsChecked) {
-                            closeKeyboard();
                             Map<String, String> reviewParams = new HashMap<>();
                             reviewParams.put("user_id", user_id);
                             reviewParams.put("rv_to_urid", member_ID);
@@ -228,6 +226,8 @@ public class MemberDetails extends Fragment {
                                     call.cancel();
                                 }
                             });
+
+                            alertDialog.dismiss();
 
 
                         }

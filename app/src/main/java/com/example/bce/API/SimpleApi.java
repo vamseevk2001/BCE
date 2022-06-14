@@ -60,11 +60,11 @@ public interface SimpleApi {
     Call<MembersList> membershipList(@FieldMap Map<String,String> params);
 
     //@GET(AppUrls.sendReview)
-    @HTTP(method = "GET", path = AppUrls.sendReview, hasBody = true)
+    @POST(AppUrls.sendReview)
     @FormUrlEncoded
     Call<DialogBoxModalClass> sendReview(@FieldMap Map<String,String> params);
 
-    @GET(AppUrls.sendThanksNote)
+    @POST(AppUrls.sendThanksNote)
     @FormUrlEncoded
     Call<DialogBoxModalClass> sendThankNote(@FieldMap Map<String,String> params);
 
