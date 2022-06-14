@@ -10,6 +10,7 @@ import com.example.bce.Models.LoginModalClass;
 import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.Models.ReviewListModalClass;
 import com.example.bce.Models.SendReviewModalClass;
+import com.example.bce.Models.TenderListModalClass;
 import com.example.bce.Utils.AppUrls;
 
 import java.util.Map;
@@ -91,6 +92,9 @@ public interface SimpleApi {
     @POST(AppUrls.home)
     @FormUrlEncoded
     Call<HomeModalClass> getHome(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.tenderList)
+    Call<TenderListModalClass> tenderList();
 
 
 

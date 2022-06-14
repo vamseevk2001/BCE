@@ -3,6 +3,7 @@ package com.example.bce.Utils;
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
 import com.example.bce.Models.ProfileModalClass;
+import com.example.bce.Models.TenderListModalClass;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -46,6 +47,25 @@ public class ApiCalls {
         void success(ProfileModalClass profileModalClass);
         void error(Throwable t);
     }
+
+
+    void getTenderList(){
+        SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Call<TenderListModalClass> call = simpleApi.tenderList();
+        call.enqueue(new Callback<TenderListModalClass>() {
+            @Override
+            public void onResponse(Call<TenderListModalClass> call, Response<TenderListModalClass> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<TenderListModalClass> call, Throwable t) {
+
+            }
+        });
+    }
+
+
 
 
 
