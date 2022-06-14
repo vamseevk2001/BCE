@@ -52,6 +52,8 @@ public class MemberDetails extends Fragment {
     TextInputEditText mobile;
     TextInputEditText action;
     TextInputEditText remarks;
+    RatingBar sendLeadRating;
+    TextView leadRatingText;
 
     SimpleApi simpleApi;
 
@@ -110,16 +112,48 @@ public class MemberDetails extends Fragment {
                 action = newBusinessLeadView.findViewById(R.id.businessLeadInp);
                 remarks = newBusinessLeadView.findViewById(R.id.remarkInp);
                 newLeadBtn = newBusinessLeadView.findViewById(R.id.sendNewBusinessLeadBtn);
+                sendLeadRating = newBusinessLeadView.findViewById(R.id.LeadRating);
+                leadRatingText = newBusinessLeadView.findViewById(R.id.leadRatingText);
                 sendNewBusinessLeadAlert.setView(newBusinessLeadView);
                 final AlertDialog alertDialog = sendNewBusinessLeadAlert.create();
                 alertDialog.setCanceledOnTouchOutside(true);
+                sendLeadRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                    @Override
+                    public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                        leadRatingText.setText(String.valueOf((int) ratingBar.getRating()) + "/5");
+                    }
+                });
 
                 newLeadBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         isAllBusinessLeadFieldChecked = CheckBusinessLeadFields();
                         if (isAllBusinessLeadFieldChecked) {
-                            //
+
+                            simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+                            Map<String, String> params = new HashMap<>();
+                            params.put("user_id", user_id);
+                            params.put("ref_to_urid", member_ID);
+                            params.put("ref_title", action.getText().toString());
+                            params.put("ref_name", name.getText().toString());
+                            params.put("ref_mobile", mobile.getText().toString());
+                            params.put("ref_rating", String.valueOf((int) sendLeadRating.getRating()));
+                            params.put("ref_remark", remarks.getText().toString());
+
+                            Call<DialogBoxModalClass> call = simpleApi.SendLead(params);
+                            call.enqueue(new Callback<DialogBoxModalClass>() {
+                                @Override
+                                public void onResponse(Call<DialogBoxModalClass> call, Response<DialogBoxModalClass> response) {
+                                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onFailure(Call<DialogBoxModalClass> call, Throwable t) {
+                                    call.cancel();
+                                }
+                            });
+
+
                             alertDialog.dismiss();
                         }
                     }
@@ -160,7 +194,6 @@ public class MemberDetails extends Fragment {
                                 @Override
                                 public void onResponse(Call<DialogBoxModalClass> call, Response<DialogBoxModalClass> response) {
                                     Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                    Log.d(TAG, "onResponse: " + response.body().getMessage());
 
                                 }
 

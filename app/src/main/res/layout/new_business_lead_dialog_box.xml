@@ -68,14 +68,23 @@
         android:layout_marginBottom="4dp">
 
         <RatingBar
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/LeadRating"
             android:layout_width="wrap_content"
-            style="@style/Widget.AppCompat.RatingBar.Indicator"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:scaleX=".8"
+            android:stepSize="1"
+            android:scaleY=".8"
+            android:transformPivotX="0dp"
+            style="@style/Base.Widget.AppCompat.RatingBar"
+            android:transformPivotY="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
+            android:id="@+id/leadRatingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
