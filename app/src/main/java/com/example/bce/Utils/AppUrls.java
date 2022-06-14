@@ -29,6 +29,7 @@ public class AppUrls {
     public static final String membeershipList = "api.php?method=membershiplist";
     public static final String askHistoryList = "api.php?method=askhistory";
     public static final String submitAsk = "api.php?method=asksubmit";
+    public static final String home = "api.php?method=asksubmit";
 
 
 }
