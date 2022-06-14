@@ -3,6 +3,7 @@ package com.example.bce.API;
 import com.example.bce.Models.BusinessLeadDetailModalClass;
 import com.example.bce.Models.DialogBoxModalClass;
 import com.example.bce.Models.GuestListModalClass;
+import com.example.bce.Models.HomeModalClass;
 import com.example.bce.Models.MembersList;
 import com.example.bce.Models.ResponseModalClass;
 import com.example.bce.Models.LoginModalClass;
@@ -86,6 +87,10 @@ public interface SimpleApi {
     @POST(AppUrls.addGuestList)
     @FormUrlEncoded
     Call<DialogBoxModalClass> addGuest(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.home)
+    @FormUrlEncoded
+    Call<HomeModalClass> getHome(@FieldMap Map<String,String> params);
 
 
 

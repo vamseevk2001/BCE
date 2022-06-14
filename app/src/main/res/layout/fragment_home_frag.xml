@@ -6,34 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".home_frag">
 
-    <!--    <com.google.android.material.appbar.AppBarLayout-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent">-->
-
-    <!--            <androidx.appcompat.widget.Toolbar-->
-    <!--                android:id="@+id/toolbar"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:background="?attr/colorPrimary"-->
-    <!--                android:minHeight="?attr/actionBarSize"-->
-    <!--                android:theme="?attr/actionBarTheme"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent"-->
-    <!--                app:title="BCE Bhubaneswar"-->
-    <!--                tools:layout_editor_absoluteX="0dp"-->
-    <!--                tools:layout_editor_absoluteY="0dp" />-->
-    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-    <!--    </com.google.android.material.appbar.AppBarLayout>-->
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -227,6 +199,7 @@
                         android:layout_marginStart="10dp"
                         android:text="10"
                         android:textColor="@color/white2"
+                        android:lines="1"
                         android:textSize="48sp"
                         android:textStyle="bold" />
 
@@ -273,6 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="18"
+                        android:lines="1"
                         android:textColor="@color/white2"
                         android:textSize="48sp"
                         android:textStyle="bold" />

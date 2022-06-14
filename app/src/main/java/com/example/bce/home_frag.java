@@ -16,10 +16,20 @@ import android.view.ViewGroup;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.bce.API.RetrofitInstance;
+import com.example.bce.API.SimpleApi;
+import com.example.bce.Models.HomeModalClass;
+import com.example.bce.Models.ResponseModalClass;
 import com.example.bce.databinding.FragmentHomeFragBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +39,7 @@ import java.util.List;
 public class home_frag extends Fragment {
 
     FragmentHomeFragBinding binding;
+    String user_id;
 
 
     public home_frag() {
@@ -52,6 +63,7 @@ public class home_frag extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setData();
         String img_url1 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiTVNHhNbyNuGl2NnIeaC72wk4zvapPEYOjcu6Wf3xYjPUaNpdWWdp-EI80NUsvVSzLw&usqp=CAU";
         String img_url2 = "https://thumbs.dreamstime.com/b/business-development-to-success-growth-banking-financial-global-network-businessman-hold-pointing-arrow-up-graph-227718315.jpg";
         String img_url3 = "https://www.silworld.in/wp-content/uploads/2019/10/career-banner-compressor.jpg";
@@ -93,6 +105,33 @@ public class home_frag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    void setData() {
+        SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", user_id);
+        Call<HomeModalClass> call = simpleApi.getHome(params);
+        call.enqueue(new Callback<HomeModalClass>() {
+            @Override
+            public void onResponse(Call<HomeModalClass> call, Response<HomeModalClass> response) {
+                if (response.isSuccessful()) {
+                    HomeModalClass homeModalClass = response.body();
+                    binding.nextMeetingDate.setText(response.body().getMeetingwise().getUpcomingMeetingDt());
+                    binding.businessGiven.setText(String.valueOf((int) Double.parseDouble(homeModalClass.getTotalinfo().getTotalBusinessGiven())));
+                    binding.businessReceived.setText(String.valueOf((int) Double.parseDouble(homeModalClass.getTotalinfo().getTotalBusinessReceive())));
+                    binding.leadGiven.setText((homeModalClass.getTotalinfo().getNoOfLeadGiven()));
+                    binding.review.setText((homeModalClass.getTotalinfo().getTotalReview()));
+                    binding.guest.setText((homeModalClass.getTotalinfo().getTotalGuestList()));
+                    binding.requestAlert.setText((homeModalClass.getMeetingwise().getRequestAlert()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomeModalClass> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -106,6 +145,8 @@ public class home_frag extends Fragment {
         //activity.getSupportActionBar().setLogo(R.drawable.logo);
 
         binding = FragmentHomeFragBinding.inflate(inflater, container, false);
+        MainActivity activity = (MainActivity) getActivity();
+        user_id = activity.getUserId();
         return binding.getRoot();
     }
 }
