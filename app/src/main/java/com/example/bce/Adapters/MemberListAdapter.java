@@ -1,6 +1,9 @@
 package com.example.bce.Adapters;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.bce.Models.Members;
 import com.example.bce.Models.Membership;
+import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.R;
+import com.example.bce.Utils.ApiCalls;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.MemberListViewHolder> {
+public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.MemberListViewHolder> implements ApiCalls.APIResult {
 
     private ArrayList<Membership> MemberItemList = new ArrayList<Membership>();
     private ViewMemberDetailInterface viewMemberDetailInterface;
 
+    private String profile = "";
     private Context con;
     private View fragmentView;
 
@@ -57,6 +63,18 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
 //                Navigation.findNavController(fragmentView).navigate(R.id.action_member_frag_to_memberDetails);
 //            }
 //        });
+
+        ApiCalls apiCalls = new ApiCalls();
+        ProfileModalClass profileModalClass = apiCalls.getProfile(MemberItemList.get(position).getId(), this);
+      //Picasso.get().load(profile).into(holder.profilePic);
+
+        if (!profile.isEmpty())
+            Picasso.get().load(profile).into(holder.profilePic);
+        else
+            Picasso.get().load("https://www.freeiconspng.com/uploads/customers-icon-3.png").into(holder.profilePic);
+
+        Log.d("VAMSEE KRISHANANAAANANA", "onBindViewHolder: "+profile.toString());
+
     }
 
 
@@ -70,6 +88,16 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
         if (!MemberItemList.contains(members))
             MemberItemList.add(members);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void success(ProfileModalClass profileModalClass) {
+        this.profile = profileModalClass.getImg();
+    }
+
+    @Override
+    public void error(Throwable t) {
+
     }
 
     public static class MemberListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

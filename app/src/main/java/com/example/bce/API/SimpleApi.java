@@ -5,6 +5,7 @@ import com.example.bce.Models.DialogBoxModalClass;
 import com.example.bce.Models.GuestListModalClass;
 import com.example.bce.Models.HomeModalClass;
 import com.example.bce.Models.MembersList;
+import com.example.bce.Models.PaymentModalClass;
 import com.example.bce.Models.ResponseModalClass;
 import com.example.bce.Models.LoginModalClass;
 import com.example.bce.Models.ProfileModalClass;
@@ -95,6 +96,10 @@ public interface SimpleApi {
 
     @POST(AppUrls.tenderList)
     Call<TenderListModalClass> tenderList();
+
+    @POST(AppUrls.paymentList)
+    @FormUrlEncoded
+    Call<PaymentModalClass> getPayment(@FieldMap Map<String,String> params);
 
 
 

@@ -2,6 +2,7 @@ package com.example.bce.Utils;
 
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
+import com.example.bce.Models.PaymentModalClass;
 import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.Models.TenderListModalClass;
 import com.squareup.picasso.Picasso;
@@ -17,7 +18,7 @@ public class ApiCalls {
 
     public ProfileModalClass profileModalClass;
 
-    public ProfileModalClass getProfile(String id, APIResult result){
+    public ProfileModalClass getProfile(String id, APIResult result) {
 
         final ProfileModalClass[] profileModalClass = new ProfileModalClass[1];
 
@@ -43,13 +44,13 @@ public class ApiCalls {
         return profileModalClass[0];
     }
 
-    public interface APIResult{
+    public interface APIResult {
         void success(ProfileModalClass profileModalClass);
+
         void error(Throwable t);
     }
 
-
-    void getTenderList(){
+    void getTenderList() {
         SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         Call<TenderListModalClass> call = simpleApi.tenderList();
         call.enqueue(new Callback<TenderListModalClass>() {
@@ -60,13 +61,28 @@ public class ApiCalls {
 
             @Override
             public void onFailure(Call<TenderListModalClass> call, Throwable t) {
-
+                call.cancel();
             }
         });
     }
 
+    void getPaymentList(String id) {
+        SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", id);
+        Call<PaymentModalClass> call = simpleApi.getPayment(params);
+        call.enqueue(new Callback<PaymentModalClass>() {
+            @Override
+            public void onResponse(Call<PaymentModalClass> call, Response<PaymentModalClass> response) {
 
+            }
 
+            @Override
+            public void onFailure(Call<PaymentModalClass> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
 
 
 }
