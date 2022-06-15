@@ -39,7 +39,7 @@ public class ReviewFragment extends Fragment {
     SimpleApi simpleApi;
     String user_id;
     ReviewListAdapter mReviewAdapter;
-    ArrayList<ReviewItem> reviewList = new ArrayList<>();
+
 
 
     public ReviewFragment() {
@@ -64,6 +64,32 @@ public class ReviewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        sentReviewList();
+
+        binding.receiveList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setBackgroundColor(getResources().getColor(R.color.red));
+                binding.sendList.setBackgroundColor(getResources().getColor(R.color.darkGreyFont));
+                receivedReviewList();
+            }
+        });
+
+        binding.sendList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setBackgroundColor(getResources().getColor(R.color.red));
+                binding.receiveList.setBackgroundColor(getResources().getColor(R.color.darkGreyFont));
+                sentReviewList();
+            }
+        });
+
+
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    void sentReviewList() {
+        ArrayList<ReviewItem> reviewList = new ArrayList<>();
         RecyclerView recyclerView = binding.reviewsRecyclerView;
         mReviewAdapter = new ReviewListAdapter(reviewList);
 
@@ -76,8 +102,8 @@ public class ReviewFragment extends Fragment {
         call.enqueue(new Callback<ReviewListModalClass>() {
             @Override
             public void onResponse(Call<ReviewListModalClass> call, Response<ReviewListModalClass> response) {
-                if(response.isSuccessful()){
-                    for(ReviewItem reviewItem : response.body().getSendList()){
+                if (response.isSuccessful()) {
+                    for (ReviewItem reviewItem : response.body().getSendList()) {
                         reviewList.add(reviewItem);
                         mReviewAdapter.updateReview(reviewItem);
                     }
@@ -86,16 +112,46 @@ public class ReviewFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ReviewListModalClass> call, Throwable t) {
-
+                call.cancel();
             }
         });
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(mReviewAdapter);
+    }
 
+    void receivedReviewList() {
+        ArrayList<ReviewItem> reviewList = new ArrayList<>();
+        RecyclerView recyclerView = binding.reviewsRecyclerView;
+        mReviewAdapter = new ReviewListAdapter(reviewList);
 
-        super.onViewCreated(view, savedInstanceState);
+        simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", user_id);
+
+        Call<ReviewListModalClass> call = simpleApi.reviewList(params);
+
+        call.enqueue(new Callback<ReviewListModalClass>() {
+            @Override
+            public void onResponse(Call<ReviewListModalClass> call, Response<ReviewListModalClass> response) {
+                if (response.isSuccessful()) {
+                    for (ReviewItem reviewItem : response.body().getReceiveList()) {
+                        reviewList.add(reviewItem);
+                        mReviewAdapter.updateReview(reviewItem);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReviewListModalClass> call, Throwable t) {
+                call.cancel();
+            }
+        });
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setAdapter(mReviewAdapter);
     }
 
     @Override

@@ -108,4 +108,8 @@ public class BusinessLeadDetailFragment extends Fragment {
         });
         return binding.getRoot();
     }
+
+    void businessGiven(){
+
+    }
 }

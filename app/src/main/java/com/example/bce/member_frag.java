@@ -43,6 +43,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     SimpleApi simpleApi;
     String user_id;
     ArrayList<Membership> membersArrayList = new ArrayList<>();
+    ArrayList<Membership> localMembersArrayList = new ArrayList<>();
 
     public member_frag() {
         // Required empty public constructor
@@ -108,7 +109,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     void localMemberList(){
         RecyclerView recyclerView = binding.memberListRecyclerView;
 
-        MemberListAdapter mAdapter = new MemberListAdapter(membersArrayList, getContext(), binding.getRoot(), this);
+        MemberListAdapter mAdapter = new MemberListAdapter(localMembersArrayList, getContext(), binding.getRoot(), this);
 
         simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         Map<String, String> params = new HashMap<>();
@@ -120,7 +121,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
                 if(response.isSuccessful()){
                     for(Membership member : response.body().getMembershipList()){
                         //Log.d("listsize", String.valueOf(response.body().getMembershipList().size()));
-                        membersArrayList.add(member);
+                        localMembersArrayList.add(member);
                         mAdapter.updateMemberList(member);
                     }
                 }
