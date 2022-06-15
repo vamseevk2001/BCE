@@ -68,12 +68,12 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
         ProfileModalClass profileModalClass = apiCalls.getProfile(MemberItemList.get(position).getId(), this);
       //Picasso.get().load(profile).into(holder.profilePic);
 
-        if (!profile.isEmpty())
-            Picasso.get().load(profile).into(holder.profilePic);
-        else
-            Picasso.get().load("https://www.freeiconspng.com/uploads/customers-icon-3.png").into(holder.profilePic);
-
-        Log.d("VAMSEE KRISHANANAAANANA", "onBindViewHolder: "+profile.toString());
+//        if (!profile.isEmpty())
+//            Picasso.get().load(profile).into(holder.profilePic);
+//        else
+//            Picasso.get().load("https://www.freeiconspng.com/uploads/customers-icon-3.png").into(holder.profilePic);
+//
+//        Log.d("VAMSEE KRISHANANAAANANA", "onBindViewHolder: "+profile.toString());
 
     }
 

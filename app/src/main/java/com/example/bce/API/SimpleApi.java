@@ -63,6 +63,10 @@ public interface SimpleApi {
     @FormUrlEncoded
     Call<MembersList> membershipList(@FieldMap Map<String,String> params);
 
+    @POST(AppUrls.localmemberlist)
+    @FormUrlEncoded
+    Call<MembersList> localmemberlist(@FieldMap Map<String,String> params);
+
     @POST(AppUrls.sendReview)
     @FormUrlEncoded
     Call<DialogBoxModalClass> sendReview(@FieldMap Map<String,String> params);

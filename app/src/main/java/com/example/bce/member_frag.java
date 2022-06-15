@@ -41,6 +41,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     private FragmentMemberFragBinding binding;
     MemberListAdapter mAdapter;
     SimpleApi simpleApi;
+    String user_id;
     ArrayList<Membership> membersArrayList = new ArrayList<>();
 
     public member_frag() {
@@ -64,12 +65,10 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        AppCompatActivity activity = (AppCompatActivity) getActivity();
-//        activity.getSupportActionBar().setTitle("Members");
-        //activity.getSupportActionBar().setCustomView(R.layout.custom_home_action_bar);
-        binding = FragmentMemberFragBinding.inflate(inflater, container, false);
 
+        binding = FragmentMemberFragBinding.inflate(inflater, container, false);
+        MainActivity activity = (MainActivity) getActivity();
+        user_id = activity.getUserId();
         binding.toolbar.setTitle("Members");
         binding.toolbar.setNavigationIcon(R.drawable.ic_back);
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -84,6 +83,61 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //ArrayList<Members> membersArrayList = new ArrayList<Members>();
+        localMemberList();
+      binding.globalSearch.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              view.setBackgroundColor(getResources().getColor(R.color.red));
+              binding.localSearch.setBackgroundColor(getResources().getColor(R.color.darkGreyFont));
+              globalMemberList();
+
+          }
+      });
+
+        binding.localSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setBackgroundColor(getResources().getColor(R.color.red));
+                binding.globalSearch.setBackgroundColor(getResources().getColor(R.color.darkGreyFont));
+                localMemberList();
+            }
+        });
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    void localMemberList(){
+        RecyclerView recyclerView = binding.memberListRecyclerView;
+
+        MemberListAdapter mAdapter = new MemberListAdapter(membersArrayList, getContext(), binding.getRoot(), this);
+
+        simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", user_id);
+        Call<MembersList> call = simpleApi.localmemberlist(params);
+        call.enqueue(new Callback<MembersList>() {
+            @Override
+            public void onResponse(Call<MembersList> call, Response<MembersList> response) {
+                if(response.isSuccessful()){
+                    for(Membership member : response.body().getMembershipList()){
+                        //Log.d("listsize", String.valueOf(response.body().getMembershipList().size()));
+                        membersArrayList.add(member);
+                        mAdapter.updateMemberList(member);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MembersList> call, Throwable t) {
+                call.cancel();
+            }
+        });
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setAdapter(mAdapter);
+    }
+
+    void globalMemberList(){
         RecyclerView recyclerView = binding.memberListRecyclerView;
 
         MemberListAdapter mAdapter = new MemberListAdapter(membersArrayList, getContext(), binding.getRoot(), this);
@@ -112,8 +166,9 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(mAdapter);
-        super.onViewCreated(view, savedInstanceState);
     }
+
+
 
 
     @Override

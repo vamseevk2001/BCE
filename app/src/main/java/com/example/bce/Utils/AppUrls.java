@@ -28,6 +28,7 @@ public class AppUrls {
     public static final String memberAsk = "api.php?method=memberasklist";
     public static final String filterMembershipList = "api.php?method=filtermemberlist";
     public static final String membeershipList = "api.php?method=membershiplist";
+    public static final String localmemberlist = "api.php?method=localmemberlist";
     public static final String askHistoryList = "api.php?method=askhistory";
     public static final String submitAsk = "api.php?method=asksubmit";
     public static final String home = "api.php?method=gethome";

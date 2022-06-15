@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="new Help"
+        android:text="New Help"
         android:textColor="@color/blue"
         android:textStyle="bold"
         android:textSize="18sp"
