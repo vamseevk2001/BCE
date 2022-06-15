@@ -42,6 +42,12 @@
         <action
             android:id="@+id/action_more_frag_to_tenderList"
             app:destination="@id/tenderList" />
+        <action
+            android:id="@+id/action_more_frag_to_paymentTransaction"
+            app:destination="@id/paymentTransaction" />
+        <action
+            android:id="@+id/action_more_frag_to_helpDesk"
+            app:destination="@id/helpDesk" />
     </fragment>
     <fragment
         android:id="@+id/memberDetails"
@@ -88,4 +94,14 @@
         android:name="com.example.bce.TenderList"
         android:label="fragment_tender_list"
         tools:layout="@layout/fragment_tender_list" />
+    <fragment
+        android:id="@+id/paymentTransaction"
+        android:name="com.example.bce.PaymentTransaction"
+        android:label="fragment_payment_transaction"
+        tools:layout="@layout/fragment_payment_transaction" />
+    <fragment
+        android:id="@+id/helpDesk"
+        android:name="com.example.bce.HelpDesk"
+        android:label="fragment_help_desk"
+        tools:layout="@layout/fragment_help_desk" />
 </navigation>

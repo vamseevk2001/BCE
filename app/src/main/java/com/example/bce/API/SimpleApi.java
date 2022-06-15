@@ -3,6 +3,7 @@ package com.example.bce.API;
 import com.example.bce.Models.BusinessLeadDetailModalClass;
 import com.example.bce.Models.DialogBoxModalClass;
 import com.example.bce.Models.GuestListModalClass;
+import com.example.bce.Models.HelpDeskModalClass;
 import com.example.bce.Models.HomeModalClass;
 import com.example.bce.Models.MembersList;
 import com.example.bce.Models.PaymentModalClass;
@@ -100,6 +101,14 @@ public interface SimpleApi {
     @POST(AppUrls.paymentList)
     @FormUrlEncoded
     Call<PaymentModalClass> getPayment(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.helpdesklist)
+    @FormUrlEncoded
+    Call<HelpDeskModalClass> helpdesklist(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.helpDeskSubmit)
+    @FormUrlEncoded
+    Call<DialogBoxModalClass> helpDeskSubmit(@FieldMap Map<String,String> params);
 
 
 
