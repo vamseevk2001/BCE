@@ -1,5 +1,6 @@
 package com.example.bce;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -116,6 +117,9 @@ public class profile_frag extends Fragment {
             @Override
             public void onClick(View view) {
 
+                ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.show();
 
                 isAllCompanyFieldsChecked = CheckCompanyFeilds();
                 if (isAllCompanyFieldsChecked) {
@@ -137,6 +141,9 @@ public class profile_frag extends Fragment {
                         @Override
                         public void onResponse(Call<ResponseModalClass> call, Response<ResponseModalClass> response) {
                             if(response.isSuccessful()){
+
+                                progressDialog.dismiss();
+
                                 Toast.makeText(getContext(), response.body().getMsg(),Toast.LENGTH_SHORT).show();
                                 setData();
                             }
@@ -145,6 +152,8 @@ public class profile_frag extends Fragment {
                         @Override
                         public void onFailure(Call<ResponseModalClass> call, Throwable t) {
                             call.cancel();
+
+                            progressDialog.dismiss();
                         }
                     });
                 }
@@ -397,6 +406,7 @@ public class profile_frag extends Fragment {
     }
 
     private Boolean CheckNomineeFeilds() {
+
         if (binding.nominee1name.length() == 0) {
             binding.nominee1name.setError("This field is required");
             return false;
@@ -449,6 +459,12 @@ public class profile_frag extends Fragment {
 
 
     void setData() {
+
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Getting Your Details Please Wait...");
+        progressDialog.show();
+
+
         simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         Map<String, String> params = new HashMap<>();
         params.put("user_id", user_id);
@@ -457,6 +473,7 @@ public class profile_frag extends Fragment {
             @Override
             public void onResponse(Call<ProfileModalClass> call, Response<ProfileModalClass> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
                     ProfileModalClass profileModalClass = response.body();
 
                     //profile
@@ -513,12 +530,15 @@ public class profile_frag extends Fragment {
 
                 } else {
 
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<ProfileModalClass> call, Throwable t) {
                 call.cancel();
+
+                progressDialog.dismiss();
             }
         });
 

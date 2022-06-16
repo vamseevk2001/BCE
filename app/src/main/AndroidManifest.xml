@@ -11,13 +11,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BCE">
+        android:theme="@style/Theme.BCE"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".verifyOTP"
             android:exported="false" />
         <activity
             android:name=".ForgotPassword"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Login"
             android:exported="false"></activity>

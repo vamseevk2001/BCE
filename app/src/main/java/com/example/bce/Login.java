@@ -2,6 +2,7 @@ package com.example.bce;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -12,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 
+import com.example.SessionManager;
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
 import com.example.bce.Models.ResponseModalClass;
@@ -31,6 +33,9 @@ public class Login extends AppCompatActivity {
     ActivityLoginBinding binding;
     SimpleApi simpleApi;
 
+    SessionManager sessionManager;
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,57 +43,161 @@ public class Login extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        sessionManager = new SessionManager(this);
+
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                closeKeyboard();
-                if (validateFields()) {
 
-                    if (isNetworkConnected()) {
-                        simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id", binding.Phone.getText().toString());
-                        params.put("password", binding.password.getText().toString());
-                        Call<LoginModalClass> call = simpleApi.login(params);
-                        call.enqueue(new Callback<LoginModalClass>() {
-                            @Override
-                            public void onResponse(Call<LoginModalClass> call, Response<LoginModalClass> response) {
-                                if (response.isSuccessful()) {
-                                    Log.d("TAG", response.code() + "");
-                                    LoginModalClass loginDetails = response.body();
-                                    Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(Login.this, MainActivity.class);
-                                    intent.putExtra("user_id", response.body().id);
-                                    intent.putExtra("club_id", response.body().id);
-                                    startActivity(intent);
-                                    finish();
+                String str_MobileNumber = binding.Phone.getText().toString();
 
-                                } else {
-                                    Gson gson = new Gson();
-                                    ResponseModalClass responseModalClass = gson.fromJson(response.errorBody().charStream(), ResponseModalClass.class);
-                                    Toast.makeText(getApplicationContext(), responseModalClass.getMsg(), Toast.LENGTH_SHORT).show();
+                if(str_MobileNumber.matches("^[0-9]*$")){
+
+                    if(str_MobileNumber.length() == 10){
+
+                        progressDialog = new ProgressDialog(Login.this);
+                        progressDialog.setMessage("Login Please Wait...");
+                        progressDialog.show();
+
+                        closeKeyboard();
+
+                        if (validateFields()) {
+
+                            if (isNetworkConnected()) {
+                                simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("user_id", binding.Phone.getText().toString());
+                                params.put("password", binding.password.getText().toString());
+                                Call<LoginModalClass> call = simpleApi.login(params);
+                                call.enqueue(new Callback<LoginModalClass>() {
+                                    @Override
+                                    public void onResponse(Call<LoginModalClass> call, Response<LoginModalClass> response) {
+                                        if (response.isSuccessful()) {
+
+                                            progressDialog.dismiss();
+
+                                            Log.d("TAG", response.code() + "");
+                                            LoginModalClass loginDetails = response.body();
+                                            Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+
+                                            sessionManager.setUSERID(response.body().id);
+                                            sessionManager.setUSERNAME(response.body().name);
+                                            sessionManager.setUSERMOBILENO(response.body().contact_no);
+                                            sessionManager.setUSEREMAIL(response.body().email);
+                                            sessionManager.setLogin();
+
+                                            Intent intent = new Intent(Login.this, MainActivity.class);
+                                            intent.putExtra("user_id", response.body().id);
+                                            intent.putExtra("club_id", response.body().id);
+                                            startActivity(intent);
+                                            finish();
+
+                                        } else {
+
+                                            progressDialog.dismiss();
+
+                                            Gson gson = new Gson();
+                                            ResponseModalClass responseModalClass = gson.fromJson(response.errorBody().charStream(), ResponseModalClass.class);
+                                            Toast.makeText(getApplicationContext(), responseModalClass.getMsg(), Toast.LENGTH_SHORT).show();
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<LoginModalClass> call, Throwable t) {
+
+                                        progressDialog.dismiss();
+
+                                        call.cancel();
+                                    }
+                                });
+                            } else {
+
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                    }else{
+
+                        Toast.makeText(Login.this, "Enter 10 Digit Mobile No", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+
+                    progressDialog = new ProgressDialog(Login.this);
+                    progressDialog.setMessage("Login Please Wait...");
+                    progressDialog.show();
+
+                    closeKeyboard();
+                    if (validateFields()) {
+
+                        if (isNetworkConnected()) {
+                            simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("user_id", binding.Phone.getText().toString());
+                            params.put("password", binding.password.getText().toString());
+                            Call<LoginModalClass> call = simpleApi.login(params);
+                            call.enqueue(new Callback<LoginModalClass>() {
+                                @Override
+                                public void onResponse(Call<LoginModalClass> call, Response<LoginModalClass> response) {
+                                    if (response.isSuccessful()) {
+
+                                        progressDialog.dismiss();
+
+                                        Log.d("TAG", response.code() + "");
+                                        LoginModalClass loginDetails = response.body();
+                                        Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+
+                                        sessionManager.setUSERID(response.body().id);
+                                        sessionManager.setUSERNAME(response.body().name);
+                                        sessionManager.setUSERMOBILENO(response.body().contact_no);
+                                        sessionManager.setUSEREMAIL(response.body().email);
+                                        sessionManager.setLogin();
+
+                                        Intent intent = new Intent(Login.this, MainActivity.class);
+                                        intent.putExtra("user_id", response.body().id);
+                                        intent.putExtra("club_id", response.body().id);
+                                        startActivity(intent);
+                                        finish();
+
+                                    } else {
+
+                                        progressDialog.dismiss();
+
+                                        Gson gson = new Gson();
+                                        ResponseModalClass responseModalClass = gson.fromJson(response.errorBody().charStream(), ResponseModalClass.class);
+                                        Toast.makeText(getApplicationContext(), responseModalClass.getMsg(), Toast.LENGTH_SHORT).show();
+
+                                    }
 
                                 }
 
-                            }
+                                @Override
+                                public void onFailure(Call<LoginModalClass> call, Throwable t) {
 
-                            @Override
-                            public void onFailure(Call<LoginModalClass> call, Throwable t) {
-                                call.cancel();
-                            }
-                        });
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+
+                                    call.cancel();
+                                }
+                            });
+                        } else {
+
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
-
                 }
-
             }
         });
 
         binding.forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(Login.this, ForgotPassword.class);
                 startActivity(intent);
             }
@@ -120,10 +229,12 @@ public class Login extends AppCompatActivity {
         if (binding.Phone.length() == 0) {
             binding.Phone.setError("This field is required");
             return false;
-        }else if(binding.Phone.length() != 10){
+
+        }/*else if(binding.Phone.length() != 10){
             binding.Phone.setError("Mobile no. should be of 10 digits");
             return false;
-        }
+        }*/
+
         if (binding.password.length() == 0) {
             binding.password.setError("This field is required");
             return false;
@@ -132,4 +243,23 @@ public class Login extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(sessionManager.isLogin()){
+
+            startActivity(new Intent(Login.this,MainActivity.class));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
+    }
 }

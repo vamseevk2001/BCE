@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.SessionManager;
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
 import com.example.bce.Models.HomeModalClass;
@@ -40,6 +41,7 @@ public class home_frag extends Fragment {
 
     FragmentHomeFragBinding binding;
     String user_id;
+    SessionManager sessionManager;
 
 
     public home_frag() {
@@ -98,6 +100,16 @@ public class home_frag extends Fragment {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_guestList);
+            }
+        });
+
+        binding.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                sessionManager = new SessionManager(getActivity());
+                sessionManager.logoutUser();
+
             }
         });
 

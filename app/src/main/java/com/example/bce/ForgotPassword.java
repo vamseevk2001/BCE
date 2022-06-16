@@ -33,7 +33,7 @@ public class ForgotPassword extends AppCompatActivity {
         binding = ActivityForgotPasswordBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         binding.backButtonForgotPwd.setOnClickListener(new View.OnClickListener() {
             @Override
