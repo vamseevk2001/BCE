@@ -44,6 +44,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     String user_id;
     ArrayList<Membership> membersArrayList = new ArrayList<>();
     ArrayList<Membership> localMembersArrayList = new ArrayList<>();
+    boolean onLocalList = false;
 
     public member_frag() {
         // Required empty public constructor
@@ -85,15 +86,15 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //ArrayList<Members> membersArrayList = new ArrayList<Members>();
         localMemberList();
-      binding.globalSearch.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              view.setBackgroundColor(getResources().getColor(R.color.red));
-              binding.localSearch.setBackgroundColor(getResources().getColor(R.color.darkGreyFont));
-              globalMemberList();
+        binding.globalSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setBackgroundColor(getResources().getColor(R.color.red));
+                binding.localSearch.setBackgroundColor(getResources().getColor(R.color.darkGreyFont));
+                globalMemberList();
 
-          }
-      });
+            }
+        });
 
         binding.localSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +107,8 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
         super.onViewCreated(view, savedInstanceState);
     }
 
-    void localMemberList(){
+    void localMemberList() {
+        onLocalList = true;
         RecyclerView recyclerView = binding.memberListRecyclerView;
 
         MemberListAdapter mAdapter = new MemberListAdapter(localMembersArrayList, getContext(), binding.getRoot(), this);
@@ -118,8 +120,8 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
         call.enqueue(new Callback<MembersList>() {
             @Override
             public void onResponse(Call<MembersList> call, Response<MembersList> response) {
-                if(response.isSuccessful()){
-                    for(Membership member : response.body().getMembershipList()){
+                if (response.isSuccessful()) {
+                    for (Membership member : response.body().getMembershipList()) {
                         //Log.d("listsize", String.valueOf(response.body().getMembershipList().size()));
                         localMembersArrayList.add(member);
                         mAdapter.updateMemberList(member);
@@ -138,7 +140,8 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
         recyclerView.setAdapter(mAdapter);
     }
 
-    void globalMemberList(){
+    void globalMemberList() {
+        onLocalList = false;
         RecyclerView recyclerView = binding.memberListRecyclerView;
 
         MemberListAdapter mAdapter = new MemberListAdapter(membersArrayList, getContext(), binding.getRoot(), this);
@@ -149,8 +152,8 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
         call.enqueue(new Callback<MembersList>() {
             @Override
             public void onResponse(Call<MembersList> call, Response<MembersList> response) {
-                if(response.isSuccessful()){
-                    for(Membership member : response.body().getMembershipList()){
+                if (response.isSuccessful()) {
+                    for (Membership member : response.body().getMembershipList()) {
                         //Log.d("listsize", String.valueOf(response.body().getMembershipList().size()));
                         membersArrayList.add(member);
                         mAdapter.updateMemberList(member);
@@ -170,11 +173,16 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     }
 
 
-
-
     @Override
     public void viewMemberDetails(int position) {
-        NavDirections action = member_fragDirections.actionMemberFragToMemberDetails(membersArrayList.get(position).getId());
-        Navigation.findNavController(binding.getRoot()).navigate(action);
+
+        if (onLocalList) {
+            NavDirections action = member_fragDirections.actionMemberFragToMemberDetails(localMembersArrayList.get(position).getId());
+            Navigation.findNavController(binding.getRoot()).navigate(action);
+        }
+        else {
+            NavDirections action = member_fragDirections.actionMemberFragToMemberDetails(membersArrayList.get(position).getId());
+            Navigation.findNavController(binding.getRoot()).navigate(action);
+        }
     }
 }
