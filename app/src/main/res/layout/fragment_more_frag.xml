@@ -10,23 +10,52 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_margin="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
     <Button
         android:id="@+id/tenderList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="tenderlist"
-        android:layout_margin="10dp"
+        android:layout_height="60dp"
+        android:text="tender list"
+        android:textColor="@color/blue"
+        android:gravity="start|center_vertical"
+        android:drawableRight="@drawable/ic_baseline_navigate_next_24"
+        android:backgroundTint="@color/white"
          />
 
         <Button
             android:id="@+id/helpDesk"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Help desk"
-            android:layout_margin="10dp"
+            android:layout_height="60dp"
+            android:text="Help Desk"
+            android:textColor="@color/blue"
+            android:gravity="start|center_vertical"
+            android:drawableRight="@drawable/ic_baseline_navigate_next_24"
+            android:backgroundTint="@color/white"
+            />
+
+        <Button
+            android:id="@+id/memberAsk"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Member ask"
+            android:textColor="@color/blue"
+            android:gravity="start|center_vertical"
+            android:drawableRight="@drawable/ic_baseline_navigate_next_24"
+            android:backgroundTint="@color/white"
+            />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Logout"
+            android:textColor="@color/blue"
+            android:gravity="start|center_vertical"
+            android:drawableRight="@drawable/ic_baseline_exit_to_app_24"
+            android:backgroundTint="@color/white"
             />
 
     </LinearLayout>
