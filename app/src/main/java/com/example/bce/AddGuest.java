@@ -1,17 +1,21 @@
 package com.example.bce;
 
+import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.example.bce.API.RetrofitInstance;
@@ -19,7 +23,11 @@ import com.example.bce.API.SimpleApi;
 import com.example.bce.Models.DialogBoxModalClass;
 import com.example.bce.databinding.FragmentAddGuestBinding;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -37,6 +45,9 @@ public class AddGuest extends Fragment {
     String user_id;
     SimpleApi simpleApi;
     Boolean isAllFieldsChecked;
+    DatePickerDialog.OnDateSetListener setListener;
+    int year, month, day, hour, minute;
+    String value, date, time;
 
     public AddGuest() {
         // Required empty public constructor
@@ -58,7 +69,35 @@ public class AddGuest extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        binding.date.setMinDate(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
+
+        date = new SimpleDateFormat("dd/mm/yyyy", Locale.getDefault()).format(new Date());
+        time = new SimpleDateFormat("hh:mm aa", Locale.getDefault()).format(new Date());
+
+        setListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                month = month+1;
+                String date = year+"/"+month+"/"+day;
+                //String date = year+"-"+month+"-"+day;
+                binding.datatime.setText(date);
+
+            }
+        };
+
+        binding.datatime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                showCalender1();
+            }
+        });
 
         binding.addGuestButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +105,12 @@ public class AddGuest extends Fragment {
 
                 isAllFieldsChecked = CheckOtherFeilds();
                 if (isAllFieldsChecked) {
+
+                    ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setMessage("Please Wait...");
+                    progressDialog.show();
+
+
                     closeKeyboard();
                    // user_id = AddGuestArgs.fromBundle(getArguments()).getUserId();
                     MainActivity activity = (MainActivity) getActivity();
@@ -77,12 +122,15 @@ public class AddGuest extends Fragment {
                     params.put("g_email", binding.gmailInp.getText().toString());
                     params.put("g_phone", binding.phoneInp.getText().toString());
                     params.put("g_business", binding.businessInp.getText().toString());
-                    params.put("g_meeting_dt", binding.date.getDayOfMonth() + "-" + binding.date.getMonth() + "-" + binding.date.getYear());
+                    params.put("g_meeting_dt", binding.datatime.getText().toString().trim());
                     Call<DialogBoxModalClass> call = simpleApi.addGuest(params);
 
                     call.enqueue(new Callback<DialogBoxModalClass>() {
                         @Override
                         public void onResponse(Call<DialogBoxModalClass> call, Response<DialogBoxModalClass> response) {
+
+                            progressDialog.dismiss();
+
                             if (response.isSuccessful()) {
                                 Toast.makeText(getContext(), response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
                                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_addGuest_to_guestList);
@@ -95,6 +143,8 @@ public class AddGuest extends Fragment {
                         @Override
                         public void onFailure(Call<DialogBoxModalClass> call, Throwable t) {
                             call.cancel();
+
+                            progressDialog.dismiss();
                         }
                     });
                 }
@@ -109,7 +159,20 @@ public class AddGuest extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentAddGuestBinding.inflate(inflater, container, false);
+
+        binding.toolbar.setTitle("Add Guest List");
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back);
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getActivity().finish();
+            }
+        });
+
         return binding.getRoot();
+
+
     }
 
     private Boolean CheckOtherFeilds() {
@@ -144,6 +207,36 @@ public class AddGuest extends Fragment {
     private void closeKeyboard() {
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+    }
+
+    public void showCalender1(){
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+
+                month = month+1;
+
+                String fmonth=""+month;
+                String fDate=""+dayOfMonth;
+
+                if(month<10){
+                    fmonth ="0"+month;
+                }
+                if (dayOfMonth<10){
+                    fDate="0"+dayOfMonth;
+                }
+
+                String date = year+"-"+fmonth+"-"+fDate;
+                //String date = year+"-"+month+"-"+day;
+                binding.datatime.setText(date);
+
+            }
+        },year,month,day);
+
+        datePickerDialog.show();
     }
 
 }

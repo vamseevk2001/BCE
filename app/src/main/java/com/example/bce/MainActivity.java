@@ -10,11 +10,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.example.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     private Boolean exit = false;
+
+    SessionManager sessionManager;
+    String userId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +29,13 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         NavController navController = Navigation.findNavController(this, R.id.fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+        sessionManager = new SessionManager(this);
+        userId = sessionManager.getUSERID();
     }
 
-
-
     public String getUserId(){
-        return getIntent().getStringExtra("user_id");
+        return userId;
     }
 
         @Override

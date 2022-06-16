@@ -1,16 +1,20 @@
 package com.example.bce;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
@@ -57,36 +61,71 @@ public class BusinessLeadDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        mAdapter = new BusinessLeadDetailAdapter(businessLead);
+        mAdapter = new BusinessLeadDetailAdapter(getActivity(),businessLead);
         RecyclerView recyclerView = binding.businessLeadDetailRecyclerView;
 
-        simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
-        Map<String, String> params = new HashMap<>();
-        params.put("user_id", user_id);
+        Button btn_SendList = binding.btnSendList;
+        Button btn_ReceiveList = binding.btnReceiveList;
 
-        Call<BusinessLeadDetailModalClass> call = simpleApi.businessRecieve(params);
-
-        call.enqueue(new Callback<BusinessLeadDetailModalClass>() {
+        btn_SendList.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<BusinessLeadDetailModalClass> call, Response<BusinessLeadDetailModalClass> response) {
-                if (response.isSuccessful()){
-                    for(BusinessLeadDetailModalClass.BusinessReceiveList businessReceiveList : response.body().getReceiveList()){
+            public void onClick(View view) {
 
-                        businessLead.add(businessReceiveList);
-                        mAdapter.updateBusinessLead(businessReceiveList);
-                    }
-                }
-            }
+                btn_ReceiveList.setBackgroundColor(btn_ReceiveList.getContext().getResources().getColor(R.color.lightGreyFont));
+                btn_SendList.setBackgroundColor(btn_SendList.getContext().getResources().getColor(R.color.red));
 
-            @Override
-            public void onFailure(Call<BusinessLeadDetailModalClass> call, Throwable t) {
-                call.cancel();
+                recyclerView.setVisibility(View.GONE);
             }
         });
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(mAdapter);
+        btn_ReceiveList.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View view) {
+
+                ProgressDialog progressDialog = new ProgressDialog(getContext());
+                progressDialog.setMessage("Data Retrived Please Wait...");
+                progressDialog.show();
+
+                recyclerView.setVisibility(View.VISIBLE);
+
+                btn_ReceiveList.setBackgroundColor(btn_ReceiveList.getContext().getResources().getColor(R.color.red));
+                btn_SendList.setBackgroundColor(btn_SendList.getContext().getResources().getColor(R.color.lightGreyFont));
+
+                simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id);
+
+                Call<BusinessLeadDetailModalClass> call = simpleApi.businessRecieve(params);
+
+                call.enqueue(new Callback<BusinessLeadDetailModalClass>() {
+                    @Override
+                    public void onResponse(Call<BusinessLeadDetailModalClass> call, Response<BusinessLeadDetailModalClass> response) {
+                        if (response.isSuccessful()){
+
+                            progressDialog.dismiss();
+                            for(BusinessLeadDetailModalClass.BusinessReceiveList businessReceiveList : response.body().getReceiveList()){
+
+                                businessLead.add(businessReceiveList);
+                                mAdapter.updateBusinessLead(businessReceiveList);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<BusinessLeadDetailModalClass> call, Throwable t) {
+                        call.cancel();
+
+                        progressDialog.dismiss();
+                    }
+                });
+
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                recyclerView.setAdapter(mAdapter);
+
+            }
+        });
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -103,7 +142,10 @@ public class BusinessLeadDetailFragment extends Fragment {
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();
+               // getActivity().onBackPressed();
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment,new home_frag()).commit();
             }
         });
         return binding.getRoot();

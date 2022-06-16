@@ -384,7 +384,7 @@ public class MemberDetails extends Fragment {
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();
+                //getActivity().onBackPressed();
             }
         });
         return binding.getRoot();

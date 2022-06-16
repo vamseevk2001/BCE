@@ -105,8 +105,8 @@
 
                 <ImageView
                     android:id="@+id/avatarImg"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="@dimen/fifteen"
+                    android:layout_height="@dimen/fifteen"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="4dp"
                     android:src="@drawable/ic_briefcase"
@@ -141,17 +141,19 @@
                      />
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="0dp"
+                    android:id="@+id/imageCalling"
+                    android:layout_width="@dimen/forty"
+                    android:layout_height="@dimen/twenty"
                     android:src="@drawable/ic_call"
+                    android:onClick="imageCalling"
                     app:layout_constraintBottom_toBottomOf="@id/phone"
                     app:layout_constraintStart_toEndOf="@id/phone"
                     app:layout_constraintTop_toTopOf="@id/phone" />
 
                 <ImageView
                     android:id="@+id/mobileImg"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="@dimen/fifteen"
+                    android:layout_height="@dimen/fifteen"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_mobile"
                     app:layout_constraintBottom_toBottomOf="@id/phone"
@@ -201,8 +203,9 @@
                 android:id="@+id/amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="11sp"
+                android:textSize="@dimen/edittextsize"
                 android:layout_marginTop="8dp"
+                android:textStyle="bold"
                 android:text="Amount: 5000"/>
 
 

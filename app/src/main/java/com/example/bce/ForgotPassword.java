@@ -2,6 +2,7 @@ package com.example.bce;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,6 +48,11 @@ public class ForgotPassword extends AppCompatActivity {
         binding.submitBtnForgotPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                ProgressDialog progressDialog = new ProgressDialog(ForgotPassword.this);
+                progressDialog.setMessage("Processing...");
+                progressDialog.show();
+
                 closeKeyboard();
                 if (binding.PhoneForgotPwd.getText().toString().length() != 0) {
                     simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
@@ -58,12 +64,18 @@ public class ForgotPassword extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<ResponseModalClass> call, Response<ResponseModalClass> response) {
                             if (response.isSuccessful()) {
+
+                                progressDialog.dismiss();
+
                                 Toast.makeText(getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(ForgotPassword.this, verifyOTP.class);
                                 intent.putExtra("email", binding.PhoneForgotPwd.getText().toString());
                                 startActivity(intent);
                                 finish();
+
                             } else {
+
+                                progressDialog.dismiss();
                                 //Toast.makeText(getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                                 Gson gson = new Gson();
                                 ResponseModalClass responseModalClass = gson.fromJson(response.errorBody().charStream(), ResponseModalClass.class);
@@ -75,11 +87,15 @@ public class ForgotPassword extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<ResponseModalClass> call, Throwable t) {
                             call.cancel();
+
+                            progressDialog.dismiss();
                         }
                     });
 
                 } else {
                     binding.PhoneForgotPwd.setError("This field is required!");
+
+                    progressDialog.dismiss();
                 }
 
             }

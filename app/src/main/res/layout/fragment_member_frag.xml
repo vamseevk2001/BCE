@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="Local Search"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="@dimen/fifteen"
         android:backgroundTint="@color/red"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         android:text="global search"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="@dimen/fifteen"
         android:backgroundTint="@color/lightGreyFont"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/localSearch" />

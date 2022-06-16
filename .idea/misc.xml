@@ -4,6 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.33645833333333336" />
+        <entry key="..\:/Bce/app/src/main/res/layout/activity_forgot_password.xml" value="0.22083333333333333" />
+        <entry key="..\:/Bce/app/src/main/res/layout/activity_main.xml" value="0.22083333333333333" />
+        <entry key="..\:/Bce/app/src/main/res/layout/activity_verify_otp.xml" value="0.22083333333333333" />
+        <entry key="..\:/Bce/app/src/main/res/layout/business_lead_item.xml" value="0.22" />
+        <entry key="..\:/Bce/app/src/main/res/layout/fragment_add_guest.xml" value="0.22083333333333333" />
+        <entry key="..\:/Bce/app/src/main/res/layout/fragment_business_lead_detail.xml" value="0.22083333333333333" />
+        <entry key="..\:/Bce/app/src/main/res/layout/fragment_guest_list.xml" value="0.22083333333333333" />
+        <entry key="..\:/Bce/app/src/main/res/layout/fragment_member_details.xml" value="0.22083333333333333" />
+        <entry key="..\:/Bce/app/src/main/res/layout/fragment_member_frag.xml" value="0.22083333333333333" />
+        <entry key="..\:/Bce/app/src/main/res/layout/fragment_more_frag.xml" value="0.22083333333333333" />
+        <entry key="..\:/Bce/app/src/main/res/layout/fragment_payment_transaction.xml" value="0.22083333333333333" />
+        <entry key="..\:/Bce/app/src/main/res/layout/fragment_profile_frag.xml" value="0.22" />
+        <entry key="..\:/Bce/app/src/main/res/layout/member_item.xml" value="0.1" />
+        <entry key="..\:/Bce/app/src/main/res/layout/relative.xml" value="0.22083333333333333" />
         <entry key="..\:/Newfolder/BCE/app/src/main/res/layout/activity_login.xml" value="0.22083333333333333" />
         <entry key="..\:/Newfolder/BCE/app/src/main/res/layout/activity_main.xml" value="0.22083333333333333" />
         <entry key="..\:/Newfolder/BCE/app/src/main/res/layout/activity_splash_screen.xml" value="0.22083333333333333" />

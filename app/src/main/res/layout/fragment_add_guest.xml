@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,12 +15,34 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:titleTextColor="@color/white"
+            android:layout_marginBottom="@dimen/twenty"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <!--        <ImageView-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:src="@drawable/ic_bell"-->
+            <!--            android:layout_gravity="end"/>-->
+
+        </androidx.appcompat.widget.Toolbar>
+
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:hint="GUEST NAME"
+
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -77,6 +101,23 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:hint="MEETING DATE :"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/datatime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:drawableRight="@drawable/calendar"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 <!--    <com.google.android.material.textfield.TextInputLayout-->
 <!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
 <!--        android:layout_width="match_parent"-->
@@ -98,14 +139,14 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:layout_margin="4dp"
-        android:text="Meeting Date :"/>
+        android:text=""/>
 
-    <DatePicker
+   <!-- <DatePicker
         android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_margin="4dp"
         android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"/>-->
 
     <Button
         android:id="@+id/addGuestButton"

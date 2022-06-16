@@ -1,11 +1,13 @@
 package com.example.bce;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.arch.core.internal.SafeIterableMap;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -65,6 +67,10 @@ public class GuestList extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Retrive Guest List Please Wait....");
+        progressDialog.show();
+
         RecyclerView recyclerView = binding.guestListRecyclerView;
         mAdapter = new GuestListAdapter(guestList);
 
@@ -77,6 +83,11 @@ public class GuestList extends Fragment {
             @Override
             public void onResponse(Call<GuestListModalClass> call, Response<GuestListModalClass> response) {
                 if (response.isSuccessful()) {
+
+                    progressDialog.dismiss();
+
+                    guestList.clear();
+
                     for (GuestListModalClass.Guest guest : response.body().getGuestList()) {
 
                         guestList.add(guest);
@@ -88,13 +99,14 @@ public class GuestList extends Fragment {
             @Override
             public void onFailure(Call<GuestListModalClass> call, Throwable t) {
                 call.cancel();
+
+                progressDialog.dismiss();
             }
         });
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(mAdapter);
-
 
         binding.addGuestFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +133,11 @@ public class GuestList extends Fragment {
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();
+
+                getActivity().finish();
+
+               /*  FragmentTransaction ft = getFragmentManager().beginTransaction();
+                 ft.replace(R.id.fragment, new home_frag()).commit();*/
             }
         });
         return binding.getRoot();

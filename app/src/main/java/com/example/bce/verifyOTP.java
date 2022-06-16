@@ -2,6 +2,7 @@ package com.example.bce;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ public class verifyOTP extends AppCompatActivity {
         binding = ActivityVerifyOtpBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         if (getIntent().hasExtra("email"))
             email = getIntent().getStringExtra("email");
@@ -45,6 +46,11 @@ public class verifyOTP extends AppCompatActivity {
         binding.updatePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                ProgressDialog progressDialog = new ProgressDialog(verifyOTP.this);
+                progressDialog.setMessage("Processing...");
+                progressDialog.show();
+
                 closeKeyboard();
                 isAllFieldsChecked = CheckFeilds();
                 if (isAllFieldsChecked) {
@@ -59,7 +65,12 @@ public class verifyOTP extends AppCompatActivity {
                     call.enqueue(new Callback<ResponseModalClass>() {
                         @Override
                         public void onResponse(Call<ResponseModalClass> call, Response<ResponseModalClass> response) {
+
+                            progressDialog.dismiss();
+
                             if (response.isSuccessful()) {
+
+
                                 //Toast.makeText(getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                                 otpVerified = true;
                                 finish();
@@ -74,10 +85,18 @@ public class verifyOTP extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<ResponseModalClass> call, Throwable t) {
                             call.cancel();
+
+                            progressDialog.dismiss();
                         }
                     });
 
                     if (otpVerified) {
+
+
+                        ProgressDialog progressDialog1 = new ProgressDialog(verifyOTP.this);
+                        progressDialog.setMessage("Processing...");
+                        progressDialog.show();
+
                         Map<String, String> params2 = new HashMap<>();
                         params2.put("type", "update_password");
                         params2.put("email", email);
@@ -86,6 +105,9 @@ public class verifyOTP extends AppCompatActivity {
                         call2.enqueue(new Callback<ResponseModalClass>() {
                             @Override
                             public void onResponse(Call<ResponseModalClass> call, Response<ResponseModalClass> response) {
+
+                                progressDialog1.dismiss();
+
                                 if (response.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), Login.class);
@@ -101,6 +123,8 @@ public class verifyOTP extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<ResponseModalClass> call, Throwable t) {
                                 call.cancel();
+
+                                progressDialog1.dismiss();
                             }
                         });
 

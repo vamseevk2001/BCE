@@ -1,5 +1,6 @@
 package com.example.bce;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -118,6 +119,11 @@ public class home_frag extends Fragment {
     }
 
     void setData() {
+
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Home Page Details Please Wait...");
+        progressDialog.show();
+
         SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         Map<String, String> params = new HashMap<>();
         params.put("user_id", user_id);
@@ -126,6 +132,9 @@ public class home_frag extends Fragment {
             @Override
             public void onResponse(Call<HomeModalClass> call, Response<HomeModalClass> response) {
                 if (response.isSuccessful()) {
+
+                    progressDialog.dismiss();
+
                     HomeModalClass homeModalClass = response.body();
                     binding.nextMeetingDate.setText(response.body().getMeetingwise().getUpcomingMeetingDt());
                     binding.businessGiven.setText(String.valueOf((int) Double.parseDouble(homeModalClass.getTotalinfo().getTotalBusinessGiven())));
@@ -140,6 +149,8 @@ public class home_frag extends Fragment {
             @Override
             public void onFailure(Call<HomeModalClass> call, Throwable t) {
                 call.cancel();
+
+                progressDialog.dismiss();
             }
         });
     }
