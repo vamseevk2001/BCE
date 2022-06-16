@@ -4,30 +4,6 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.33645833333333336" />
-        <entry key="..\:/Bce/app/src/main/res/layout/activity_forgot_password.xml" value="0.22083333333333333" />
-        <entry key="..\:/Bce/app/src/main/res/layout/activity_main.xml" value="0.22083333333333333" />
-        <entry key="..\:/Bce/app/src/main/res/layout/activity_verify_otp.xml" value="0.22083333333333333" />
-        <entry key="..\:/Bce/app/src/main/res/layout/business_lead_item.xml" value="0.22" />
-        <entry key="..\:/Bce/app/src/main/res/layout/fragment_add_guest.xml" value="0.22083333333333333" />
-        <entry key="..\:/Bce/app/src/main/res/layout/fragment_business_lead_detail.xml" value="0.22083333333333333" />
-        <entry key="..\:/Bce/app/src/main/res/layout/fragment_guest_list.xml" value="0.22083333333333333" />
-        <entry key="..\:/Bce/app/src/main/res/layout/fragment_member_details.xml" value="0.22083333333333333" />
-        <entry key="..\:/Bce/app/src/main/res/layout/fragment_member_frag.xml" value="0.22083333333333333" />
-        <entry key="..\:/Bce/app/src/main/res/layout/fragment_more_frag.xml" value="0.22083333333333333" />
-        <entry key="..\:/Bce/app/src/main/res/layout/fragment_payment_transaction.xml" value="0.22083333333333333" />
-        <entry key="..\:/Bce/app/src/main/res/layout/fragment_profile_frag.xml" value="0.22" />
-        <entry key="..\:/Bce/app/src/main/res/layout/member_item.xml" value="0.1" />
-        <entry key="..\:/Bce/app/src/main/res/layout/relative.xml" value="0.22083333333333333" />
-        <entry key="..\:/Newfolder/BCE/app/src/main/res/layout/activity_login.xml" value="0.22083333333333333" />
-        <entry key="..\:/Newfolder/BCE/app/src/main/res/layout/activity_main.xml" value="0.22083333333333333" />
-        <entry key="..\:/Newfolder/BCE/app/src/main/res/layout/activity_splash_screen.xml" value="0.22083333333333333" />
-        <entry key="..\:/Newfolder/BCE/app/src/main/res/layout/fragment_business_lead_detail.xml" value="0.22083333333333333" />
-        <entry key="..\:/Newfolder/BCE/app/src/main/res/layout/fragment_home_frag.xml" value="0.22083333333333333" />
-        <entry key="..\:/Newfolder/BCE/app/src/main/res/layout/fragment_member_frag.xml" value="0.22083333333333333" />
-        <entry key="..\:/Newfolder/BCE/app/src/main/res/layout/fragment_profile_frag.xml" value="0.22083333333333333" />
-        <entry key="..\:/Newfolder/BCE/app/src/main/res/layout/new_business_lead_dialog_box.xml" value="0.22083333333333333" />
-        <entry key="..\:/Newfolder/BCE/app/src/main/res/menu/bottom_menu.xml" value="0.22083333333333333" />
-        <entry key="..\:/Newfolder/BCE/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/ic_baseline_navigate_next_24.xml" value="0.2615" />
@@ -49,13 +25,14 @@
         <entry key="app/src/main/res/layout/fragment_home_frag.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_member_details.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_member_frag.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/fragment_more_frag.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_more_frag.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_payment_transaction.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_profile_frag.xml" value="0.238" />
         <entry key="app/src/main/res/layout/fragment_review.xml" value="0.2741912841796875" />
         <entry key="app/src/main/res/layout/fragment_tender_list.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/guest_list_item.xml" value="0.5" />
         <entry key="app/src/main/res/layout/help_desk_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/member_ask_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/member_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/new_business_lead_dialog_box.xml" value="0.33" />
         <entry key="app/src/main/res/layout/new_review_dialog_box.xml" value="0.33" />
