@@ -119,6 +119,9 @@ public interface SimpleApi {
     @FormUrlEncoded
     Call<MemberAskListModal> memberAsk(@FieldMap Map<String,String> params);
 
+    @POST(AppUrls.submitAsk)
+    @FormUrlEncoded
+    Call<DialogBoxModalClass> submitAsk(@FieldMap Map<String,String> params);
 
 
 }
