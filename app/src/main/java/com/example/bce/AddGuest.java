@@ -165,8 +165,7 @@ public class AddGuest extends Fragment {
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                getActivity().finish();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new GuestList()).commit();
             }
         });
 

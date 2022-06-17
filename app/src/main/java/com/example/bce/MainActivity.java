@@ -1,5 +1,6 @@
 package com.example.bce;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -8,18 +9,21 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.SessionManager;
+import com.example.bce.databinding.FragmentHomeFragBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     private Boolean exit = false;
 
     SessionManager sessionManager;
     String userId;
 
+    static String member_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +31,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
-        NavController navController = Navigation.findNavController(this, R.id.fragment);
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.home_frag);
+//        NavController navController = Navigation.findNavController(this, R.id.fragment);
+//        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
+
+
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()){
+//                    case R.id.home_frag :
+//                        setCurrentFragment
+//                }
+//
+//                return false;
+//            }
+//        });
         sessionManager = new SessionManager(this);
         userId = sessionManager.getUSERID();
     }
@@ -66,5 +85,32 @@ public class MainActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);*/
 
+    }
+
+    home_frag home_frag = new home_frag();
+    profile_frag profile_frag = new profile_frag();
+    member_frag member_frag = new member_frag();
+    more_frag more_frag = new more_frag();
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home_frag:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, home_frag).commit();
+                return true;
+
+            case R.id.profile_frag:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, profile_frag).commit();
+                return true;
+
+            case R.id.more_frag:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, more_frag).commit();
+                return true;
+
+            case R.id.member_frag:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, member_frag).commit();
+                return true;
+        }
+        return false;
     }
 }

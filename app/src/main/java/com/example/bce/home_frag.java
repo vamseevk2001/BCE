@@ -86,21 +86,28 @@ public class home_frag extends Fragment {
         binding.reviewLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_reviewFragment);
+//                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_reviewFragment);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new ReviewFragment()).commit();
             }
         });
 
         binding.businessReceivedLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_businessLeadDetailFragment);
+//                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_businessLeadDetailFragment);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new BusinessLeadDetailFragment()).commit();
             }
         });
 
         binding.guestLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_guestList);
+//                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_guestList);
+//                getActivity().getSupportFragmentManager().popBackStack();
+
+                GuestList guestList = new GuestList();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, guestList).addToBackStack(null).commit();
+
             }
         });
 

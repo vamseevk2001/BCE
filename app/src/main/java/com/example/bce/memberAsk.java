@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -202,6 +203,17 @@ public class memberAsk extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         user_id = activity.getUserId();
         binding = FragmentMemberAskBinding.inflate(inflater, container, false);
+        binding.toolbar.setTitle("Member Ask");
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back);
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //getActivity().onBackPressed();
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment,new more_frag()).commit();
+            }
+        });
         return binding.getRoot();
     }
 

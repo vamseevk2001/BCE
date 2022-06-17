@@ -1,5 +1,7 @@
 package com.example.bce;
 
+import static com.example.bce.MainActivity.member_id;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -183,12 +185,16 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     public void viewMemberDetails(int position) {
 
         if (onLocalList) {
-            NavDirections action = member_fragDirections.actionMemberFragToMemberDetails(localMembersArrayList.get(position).getId());
-            Navigation.findNavController(binding.getRoot()).navigate(action);
+//            NavDirections action = member_fragDirections.actionMemberFragToMemberDetails(localMembersArrayList.get(position).getId());
+//            Navigation.findNavController(binding.getRoot()).navigate(action);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new MemberDetails()).commit();
+            member_id = localMembersArrayList.get(position).getId();
         }
         else {
-            NavDirections action = member_fragDirections.actionMemberFragToMemberDetails(membersArrayList.get(position).getId());
-            Navigation.findNavController(binding.getRoot()).navigate(action);
+//            NavDirections action = member_fragDirections.actionMemberFragToMemberDetails(membersArrayList.get(position).getId());
+//            Navigation.findNavController(binding.getRoot()).navigate(action);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new MemberDetails()).commit();
+            member_id = localMembersArrayList.get(position).getId();
         }
     }
 }

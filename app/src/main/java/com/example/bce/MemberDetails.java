@@ -2,6 +2,8 @@ package com.example.bce;
 
 import static android.content.ContentValues.TAG;
 
+import static com.example.bce.MainActivity.member_id;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
@@ -98,7 +100,8 @@ public class MemberDetails extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        member_ID = MemberDetailsArgs.fromBundle(getArguments()).getMemberID();
+//        member_ID = MemberDetailsArgs.fromBundle(getArguments()).getMemberID();
+        member_ID = member_id;
         setData(member_ID);
 
         binding.businessLeadLayout.setOnClickListener(new View.OnClickListener() {
@@ -385,6 +388,7 @@ public class MemberDetails extends Fragment {
             @Override
             public void onClick(View v) {
                 //getActivity().onBackPressed();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new member_frag()).commit();
             }
         });
         return binding.getRoot();

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -65,6 +66,17 @@ public class TenderList extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentTenderListBinding.inflate(inflater, container, false);
+        binding.toolbar.setTitle("Tender List");
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back);
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //getActivity().onBackPressed();
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment,new more_frag()).commit();
+            }
+        });
         return binding.getRoot();
     }
 

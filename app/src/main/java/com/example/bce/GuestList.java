@@ -114,7 +114,10 @@ public class GuestList extends Fragment {
                 MainActivity activity = (MainActivity) getActivity();
                 user_id = activity.getUserId();
                 NavDirections navDirections = GuestListDirections.actionGuestListToAddGuest(user_id);
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_guestList_to_addGuest);
+                AddGuest addGuest = new AddGuest();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, addGuest).commit();
+
+//                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_guestList_to_addGuest);
             }
         });
 
