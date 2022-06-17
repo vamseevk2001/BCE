@@ -131,7 +131,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/helpDeskMessage"
+                    android:id="@+id/askReason"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:clickable="false"
@@ -179,7 +179,7 @@
                     android:layout_marginStart="10dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/profilePicMember"
-                    app:layout_constraintEnd_toStartOf="@+id/viewMemberDetails"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/profilePicMember"
                     app:layout_constraintTop_toTopOf="@id/profilePicMember">
 
@@ -202,10 +202,10 @@
                         android:id="@+id/memberDesig"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
                         android:text="Sports Kit Provider"
                         android:textSize="12sp"
-                        android:maxLines="2"
-                        android:ellipsize="end"
                         android:textStyle="bold" />
 
                 </LinearLayout>

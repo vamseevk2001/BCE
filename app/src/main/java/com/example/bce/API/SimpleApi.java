@@ -5,6 +5,7 @@ import com.example.bce.Models.DialogBoxModalClass;
 import com.example.bce.Models.GuestListModalClass;
 import com.example.bce.Models.HelpDeskModalClass;
 import com.example.bce.Models.HomeModalClass;
+import com.example.bce.Models.MemberAskListModal;
 import com.example.bce.Models.MembersList;
 import com.example.bce.Models.PaymentModalClass;
 import com.example.bce.Models.ResponseModalClass;
@@ -113,6 +114,10 @@ public interface SimpleApi {
     @POST(AppUrls.helpDeskSubmit)
     @FormUrlEncoded
     Call<DialogBoxModalClass> helpDeskSubmit(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.memberAsk)
+    @FormUrlEncoded
+    Call<MemberAskListModal> memberAsk(@FieldMap Map<String,String> params);
 
 
 

@@ -53,6 +53,13 @@ public class more_frag extends Fragment {
                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_more_frag_to_helpDesk);
             }
         });
+
+        binding.memberAsk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_more_frag_to_memberAsk2);
+            }
+        });
         super.onViewCreated(view, savedInstanceState);
     }
 

@@ -48,6 +48,10 @@
         <action
             android:id="@+id/action_more_frag_to_helpDesk"
             app:destination="@id/helpDesk" />
+        <action
+            android:id="@+id/action_more_frag_to_memberAsk2"
+            app:destination="@id/memberAsk2" />
+
     </fragment>
     <fragment
         android:id="@+id/memberDetails"
@@ -104,4 +108,9 @@
         android:name="com.example.bce.HelpDesk"
         android:label="fragment_help_desk"
         tools:layout="@layout/fragment_help_desk" />
+    <fragment
+        android:id="@+id/memberAsk2"
+        android:name="com.example.bce.memberAsk"
+        android:label="fragment_member_ask"
+        tools:layout="@layout/fragment_member_ask" />
 </navigation>
