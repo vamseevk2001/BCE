@@ -59,7 +59,7 @@ public class BusinessLeadDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        sendAdapter = new BusinessLeadSendAdapter(businessLeadSend);
+        sendAdapter = new BusinessLeadSendAdapter(getActivity(), businessLeadSend);
         mAdapter = new BusinessLeadDetailAdapter(getActivity(), businessLeadReceive);
         RecyclerView recyclerView = binding.businessLeadDetailRecyclerView;
         RecyclerView recyclerView2 = binding.businessLeadSend;
