@@ -51,9 +51,9 @@ public class Login extends AppCompatActivity {
 
                 String str_MobileNumber = binding.Phone.getText().toString();
 
-                if(str_MobileNumber.matches("^[0-9]*$")){
+                if (str_MobileNumber.matches("^[0-9]*$")) {
 
-                    if(str_MobileNumber.length() == 10){
+                    if (str_MobileNumber.length() == 10) {
 
                         progressDialog = new ProgressDialog(Login.this);
                         progressDialog.setMessage("Login Please Wait...");
@@ -120,12 +120,12 @@ public class Login extends AppCompatActivity {
 
                         }
 
-                    }else{
+                    } else {
 
                         Toast.makeText(Login.this, "Enter 10 Digit Mobile No", Toast.LENGTH_SHORT).show();
                     }
 
-                }else{
+                } else {
 
                     progressDialog = new ProgressDialog(Login.this);
                     progressDialog.setMessage("Login Please Wait...");
@@ -247,9 +247,9 @@ public class Login extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        if(sessionManager.isLogin()){
+        if (sessionManager.isLogin()) {
 
-            startActivity(new Intent(Login.this,MainActivity.class));
+            startActivity(new Intent(Login.this, MainActivity.class));
         }
     }
 

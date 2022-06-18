@@ -28,14 +28,15 @@ import java.util.ArrayList;
 
 public class BusinessLeadDetailAdapter extends RecyclerView.Adapter<BusinessLeadDetailAdapter.BusinessLeadDetailViewHolder> {
 
-    ArrayList<BusinessLeadDetailModalClass.BusinessReceiveList> businessLead = new ArrayList<>();
+    ArrayList<BusinessLeadDetailModalClass.Receive> businessLead = new ArrayList<>();
     Context context;
     private static final int REQUEST_PHONE_CALL = 1001;
 
-    public BusinessLeadDetailAdapter(FragmentActivity activity, ArrayList<BusinessLeadDetailModalClass.BusinessReceiveList> businessLead) {
+    public BusinessLeadDetailAdapter(FragmentActivity activity, ArrayList<BusinessLeadDetailModalClass.Receive> businessLead) {
         this.businessLead = businessLead;
         this.context = activity;
     }
+
 
     @NonNull
     @Override
@@ -84,7 +85,7 @@ public class BusinessLeadDetailAdapter extends RecyclerView.Adapter<BusinessLead
         return businessLead.size();
     }
 
-    public void updateBusinessLead(BusinessLeadDetailModalClass.BusinessReceiveList item){
+    public void updateBusinessLead(BusinessLeadDetailModalClass.Receive item){
         if (!businessLead.contains(item))
             businessLead.add(item);
         notifyDataSetChanged();

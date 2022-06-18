@@ -63,6 +63,16 @@
         tools:listitem="@layout/business_lead_item"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/businessLeadSend"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/btnReceiveList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"

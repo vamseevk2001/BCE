@@ -19,13 +19,9 @@ import android.widget.Button;
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
 import com.example.bce.Adapters.BusinessLeadDetailAdapter;
+import com.example.bce.Adapters.BusinessLeadSendAdapter;
 import com.example.bce.Models.BusinessLeadDetailModalClass;
-import com.example.bce.Models.ReviewItem;
-import com.example.bce.Models.ReviewListModalClass;
-import com.example.bce.databinding.BusinessLeadItemBinding;
 import com.example.bce.databinding.FragmentBusinessLeadDetailBinding;
-import com.example.bce.databinding.FragmentGuestListBinding;
-import com.example.bce.databinding.FragmentHomeFragBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +40,9 @@ public class BusinessLeadDetailFragment extends Fragment {
 
     FragmentBusinessLeadDetailBinding binding;
     BusinessLeadDetailAdapter mAdapter;
-    ArrayList<BusinessLeadDetailModalClass.BusinessReceiveList> businessLead = new ArrayList<>();
+    BusinessLeadSendAdapter sendAdapter;
+    ArrayList<BusinessLeadDetailModalClass.Receive> businessLeadReceive = new ArrayList<>();
+    ArrayList<BusinessLeadDetailModalClass.Send> businessLeadSend = new ArrayList<>();
     SimpleApi simpleApi;
     String user_id;
 
@@ -61,20 +59,62 @@ public class BusinessLeadDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        mAdapter = new BusinessLeadDetailAdapter(getActivity(),businessLead);
+        sendAdapter = new BusinessLeadSendAdapter(businessLeadSend);
+        mAdapter = new BusinessLeadDetailAdapter(getActivity(), businessLeadReceive);
         RecyclerView recyclerView = binding.businessLeadDetailRecyclerView;
+        RecyclerView recyclerView2 = binding.businessLeadSend;
 
         Button btn_SendList = binding.btnSendList;
         Button btn_ReceiveList = binding.btnReceiveList;
+
+        businessLeadSendList();
 
         btn_SendList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                ProgressDialog progressDialog = new ProgressDialog(getContext());
+                progressDialog.setMessage("Data Retrived Please Wait...");
+                progressDialog.show();
+
+                recyclerView.setVisibility(View.GONE);
+                recyclerView2.setVisibility(View.VISIBLE);
+
                 btn_ReceiveList.setBackgroundColor(btn_ReceiveList.getContext().getResources().getColor(R.color.lightGreyFont));
                 btn_SendList.setBackgroundColor(btn_SendList.getContext().getResources().getColor(R.color.red));
 
-                recyclerView.setVisibility(View.GONE);
+                simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id);
+
+                Call<BusinessLeadDetailModalClass> call = simpleApi.businessRecieve(params);
+
+                call.enqueue(new Callback<BusinessLeadDetailModalClass>() {
+                    @Override
+                    public void onResponse(Call<BusinessLeadDetailModalClass> call, Response<BusinessLeadDetailModalClass> response) {
+                        if (response.isSuccessful()){
+
+                            progressDialog.dismiss();
+                            for(BusinessLeadDetailModalClass.Send businessReceiveList : response.body().getSendList()){
+
+                                businessLeadSend.add(businessReceiveList);
+                                sendAdapter.updateBusinessLead(businessReceiveList);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<BusinessLeadDetailModalClass> call, Throwable t) {
+                        call.cancel();
+
+                        progressDialog.dismiss();
+                    }
+                });
+
+                recyclerView2.setHasFixedSize(true);
+                recyclerView2.setLayoutManager(new LinearLayoutManager(requireContext()));
+                recyclerView2.setAdapter(sendAdapter);
+
             }
         });
 
@@ -87,6 +127,7 @@ public class BusinessLeadDetailFragment extends Fragment {
                 progressDialog.setMessage("Data Retrived Please Wait...");
                 progressDialog.show();
 
+                recyclerView2.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
 
                 btn_ReceiveList.setBackgroundColor(btn_ReceiveList.getContext().getResources().getColor(R.color.red));
@@ -104,9 +145,9 @@ public class BusinessLeadDetailFragment extends Fragment {
                         if (response.isSuccessful()){
 
                             progressDialog.dismiss();
-                            for(BusinessLeadDetailModalClass.BusinessReceiveList businessReceiveList : response.body().getReceiveList()){
+                            for(BusinessLeadDetailModalClass.Receive businessReceiveList : response.body().getReceiveList()){
 
-                                businessLead.add(businessReceiveList);
+                                businessLeadReceive.add(businessReceiveList);
                                 mAdapter.updateBusinessLead(businessReceiveList);
                             }
                         }
@@ -151,7 +192,48 @@ public class BusinessLeadDetailFragment extends Fragment {
         return binding.getRoot();
     }
 
-    void businessGiven(){
+    void businessLeadSendList(){
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Data Retrived Please Wait...");
+        progressDialog.show();
+
+        binding.businessLeadDetailRecyclerView.setVisibility(View.GONE);
+        binding.businessLeadSend.setVisibility(View.VISIBLE);
+
+        binding.btnReceiveList.setBackgroundColor(binding.btnReceiveList.getContext().getResources().getColor(R.color.lightGreyFont));
+        binding.btnSendList.setBackgroundColor(binding.btnSendList.getContext().getResources().getColor(R.color.red));
+
+        simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", user_id);
+
+        Call<BusinessLeadDetailModalClass> call = simpleApi.businessRecieve(params);
+
+        call.enqueue(new Callback<BusinessLeadDetailModalClass>() {
+            @Override
+            public void onResponse(Call<BusinessLeadDetailModalClass> call, Response<BusinessLeadDetailModalClass> response) {
+                if (response.isSuccessful()){
+
+                    progressDialog.dismiss();
+                    for(BusinessLeadDetailModalClass.Send businessReceiveList : response.body().getSendList()){
+
+                        businessLeadSend.add(businessReceiveList);
+                        sendAdapter.updateBusinessLead(businessReceiveList);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BusinessLeadDetailModalClass> call, Throwable t) {
+                call.cancel();
+
+                progressDialog.dismiss();
+            }
+        });
+
+        binding.businessLeadSend.setHasFixedSize(true);
+        binding.businessLeadSend.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.businessLeadSend.setAdapter(sendAdapter);
 
     }
 }
