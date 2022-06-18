@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.SessionManager;
 import com.example.bce.databinding.FragmentMoreFragBinding;
 
 /**
@@ -64,6 +65,18 @@ public class more_frag extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new memberAsk()).commit();
             }
         });
+
+        binding.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                SessionManager sessionManager = new SessionManager(getActivity());
+                sessionManager.logoutUser();
+
+            }
+        });
+
+
         super.onViewCreated(view, savedInstanceState);
     }
 
