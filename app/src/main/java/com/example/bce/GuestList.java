@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
@@ -84,15 +85,22 @@ public class GuestList extends Fragment {
             public void onResponse(Call<GuestListModalClass> call, Response<GuestListModalClass> response) {
                 if (response.isSuccessful()) {
 
-                    progressDialog.dismiss();
-
-                    guestList.clear();
-
-                    for (GuestListModalClass.Guest guest : response.body().getGuestList()) {
-
-                        guestList.add(guest);
-                        mAdapter.updateGuestList(guest);
+                    if (response.body().getGuestList().isEmpty()){
+                        progressDialog.dismiss();
+                        Toast.makeText(getContext(), "No guests", Toast.LENGTH_SHORT).show();
                     }
+                else {
+                        progressDialog.dismiss();
+
+                        guestList.clear();
+
+                        for (GuestListModalClass.Guest guest : response.body().getGuestList()) {
+
+                            guestList.add(guest);
+                            mAdapter.updateGuestList(guest);
+                        }
+                    }
+
                 }
             }
 

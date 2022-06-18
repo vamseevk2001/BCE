@@ -95,6 +95,7 @@ public class BusinessLeadDetailFragment extends Fragment {
                         if (response.isSuccessful()){
 
                             progressDialog.dismiss();
+                            businessLeadSend.clear();
                             for(BusinessLeadDetailModalClass.Send businessReceiveList : response.body().getSendList()){
 
                                 businessLeadSend.add(businessReceiveList);
@@ -145,6 +146,7 @@ public class BusinessLeadDetailFragment extends Fragment {
                         if (response.isSuccessful()){
 
                             progressDialog.dismiss();
+                            businessLeadReceive.clear();
                             for(BusinessLeadDetailModalClass.Receive businessReceiveList : response.body().getReceiveList()){
 
                                 businessLeadReceive.add(businessReceiveList);

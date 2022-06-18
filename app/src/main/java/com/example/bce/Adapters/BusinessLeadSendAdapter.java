@@ -1,6 +1,7 @@
 package com.example.bce.Adapters;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -53,7 +54,7 @@ public class BusinessLeadSendAdapter extends RecyclerView.Adapter<BusinessLeadSe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BusinessLeadDetailSendViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BusinessLeadDetailSendViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.date.setText(businessLeadSend.get(position).getDateInfo().getDate());
         holder.stars.setText(businessLeadSend.get(position).getDateInfo().getRating());
         holder.title.setText(businessLeadSend.get(position).getDateInfo().getTitle());
