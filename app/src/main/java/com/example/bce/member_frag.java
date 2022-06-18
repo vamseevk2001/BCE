@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavDirections;
@@ -33,6 +34,7 @@ import com.example.bce.databinding.FragmentMemberFragBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -43,11 +45,13 @@ import retrofit2.Response;
 public class member_frag extends Fragment implements MemberListAdapter.ViewMemberDetailInterface {
 
     private FragmentMemberFragBinding binding;
-    MemberListAdapter mAdapter;
     SimpleApi simpleApi;
     String user_id;
     ArrayList<Membership> membersArrayList = new ArrayList<>();
     ArrayList<Membership> localMembersArrayList = new ArrayList<>();
+    MemberListAdapter globalAdapter;
+    MemberListAdapter localAdapter;
+
     boolean onLocalList = false;
 
     public member_frag() {
@@ -84,10 +88,25 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
                 //getActivity().onBackPressed();
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment,new home_frag()).commit();
+                ft.replace(R.id.fragment, new home_frag()).commit();
 
             }
         });
+
+        binding.search.setSubmitButtonEnabled(true);
+        binding.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                applySearch(newText);
+                return false;
+            }
+        });
+
         return binding.getRoot();
     }
 
@@ -122,7 +141,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrieved Please Wait...");
         progressDialog.show();
-        MemberListAdapter mAdapter = new MemberListAdapter(localMembersArrayList, getContext(), binding.getRoot(), this);
+        localAdapter = new MemberListAdapter(localMembersArrayList, getContext(), binding.getRoot(), this);
 
         simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         Map<String, String> params = new HashMap<>();
@@ -136,7 +155,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
                     for (Membership member : response.body().getMembershipList()) {
                         //Log.d("listsize", String.valueOf(response.body().getMembershipList().size()));
                         localMembersArrayList.add(member);
-                        mAdapter.updateMemberList(member);
+                        localAdapter.updateMemberList(member);
                     }
                 }
             }
@@ -150,7 +169,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(localAdapter);
     }
 
     void globalMemberList() {
@@ -159,7 +178,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrieved Please Wait...");
         progressDialog.show();
-        MemberListAdapter mAdapter = new MemberListAdapter(membersArrayList, getContext(), binding.getRoot(), this);
+        globalAdapter = new MemberListAdapter(membersArrayList, getContext(), binding.getRoot(), this);
 
         simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         Map<String, String> params = new HashMap<>();
@@ -172,7 +191,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
                     for (Membership member : response.body().getMembershipList()) {
                         //Log.d("listsize", String.valueOf(response.body().getMembershipList().size()));
                         membersArrayList.add(member);
-                        mAdapter.updateMemberList(member);
+                        globalAdapter.updateMemberList(member);
                     }
                 }
             }
@@ -186,24 +205,70 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(globalAdapter);
     }
 
 
-    @Override
-    public void viewMemberDetails(int position) {
 
+//    @Override
+//    public boolean onQueryTextSubmit(String query) {
+//        if (query != null) {
+//            applySearch(query);
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onQueryTextChange(String newText) {
+//        if (newText != null) {
+//            applySearch(newText);
+//        }
+//        return true;
+//    }
+
+    void applySearch(String searchString) {
+        if (onLocalList) {
+            ArrayList<Membership> searchLocalMembersArrayList = new ArrayList<>();
+            for (Membership membership : localMembersArrayList) {
+                if (membership.getName().toLowerCase(Locale.ROOT).contains(searchString.toLowerCase(Locale.ROOT))) {
+                    searchLocalMembersArrayList.add(membership);
+                }
+            }
+            if (searchLocalMembersArrayList.isEmpty())
+                Toast.makeText(requireContext(), "No data Found...", Toast.LENGTH_SHORT).show();
+            else
+                localAdapter.updateList(searchLocalMembersArrayList);
+        } else {
+            ArrayList<Membership> searchMembersArrayList = new ArrayList<>();
+            for (Membership membership : membersArrayList) {
+                if (membership.getName().toLowerCase(Locale.ROOT).contains(searchString.toLowerCase(Locale.ROOT))) {
+                    searchMembersArrayList.add(membership);
+                }
+            }
+            if (searchMembersArrayList.isEmpty())
+                Toast.makeText(requireContext(), "No data Found...", Toast.LENGTH_SHORT).show();
+            else
+                globalAdapter.updateList(searchMembersArrayList);
+
+        }
+
+
+    }
+
+    @Override
+    public void viewMemberDetails(Membership member) {
         if (onLocalList) {
 //            NavDirections action = member_fragDirections.actionMemberFragToMemberDetails(localMembersArrayList.get(position).getId());
 //            Navigation.findNavController(binding.getRoot()).navigate(action);
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new MemberDetails()).commit();
-            member_id = localMembersArrayList.get(position).getId();
-        }
-        else {
+            member_id = member.getId();
+        } else {
 //            NavDirections action = member_fragDirections.actionMemberFragToMemberDetails(membersArrayList.get(position).getId());
 //            Navigation.findNavController(binding.getRoot()).navigate(action);
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new MemberDetails()).commit();
-            member_id = localMembersArrayList.get(position).getId();
+            member_id = member.getId();
         }
+
     }
 }

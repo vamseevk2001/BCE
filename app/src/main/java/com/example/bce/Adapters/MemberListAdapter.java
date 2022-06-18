@@ -2,6 +2,7 @@ package com.example.bce.Adapters;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +43,13 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
         this.viewMemberDetailInterface = viewMemberDetailInterface;
     }
 
+    public void updateList(ArrayList<Membership> newList){
+//        MemberItemList.clear();
+//        MemberItemList.addAll(newList);
+        MemberItemList = newList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public MemberListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,10 +60,18 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MemberListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MemberListViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.memberName.setText(MemberItemList.get(position).getName().toString());
         holder.memberClub.setText(MemberItemList.get(position).getClubName());
         holder.memberDesig.setText(MemberItemList.get(position).getCategory() + "-" + MemberItemList.get(position).getSubCategory());
+
+        holder.viewDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewMemberDetailInterface.viewMemberDetails(MemberItemList.get(position));
+            }
+        });
+
         //Picasso.get().load(MemberItemList.get(position).getProfilePic()).into(holder.profilePic);
 //        holder.viewDetails.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -64,8 +80,8 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
 //            }
 //        });
 
-        ApiCalls apiCalls = new ApiCalls();
-        ProfileModalClass profileModalClass = apiCalls.getProfile(MemberItemList.get(position).getId(), this);
+//        ApiCalls apiCalls = new ApiCalls();
+//        ProfileModalClass profileModalClass = apiCalls.getProfile(MemberItemList.get(position).getId(), this);
       //Picasso.get().load(profile).into(holder.profilePic);
 
 //        if (!profile.isEmpty())
@@ -90,6 +106,8 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
         notifyDataSetChanged();
     }
 
+
+
     @Override
     public void success(ProfileModalClass profileModalClass) {
         this.profile = profileModalClass.getImg();
@@ -100,7 +118,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
 
     }
 
-    public static class MemberListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class MemberListViewHolder extends RecyclerView.ViewHolder{
 
         public CircleImageView profilePic;
         public TextView memberName, memberClub, memberDesig;
@@ -115,19 +133,14 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
             this.memberDesig = itemView.findViewById(R.id.memberDesig);
             this.viewDetails = itemView.findViewById(R.id.viewMemberDetails);
             this.viewMemberDetailInterface = viewMemberDetailInterface;
-            viewDetails.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-
-            viewMemberDetailInterface.viewMemberDetails(getAdapterPosition());
 
         }
+
+
     }
 
     public interface ViewMemberDetailInterface{
-        void viewMemberDetails(int position);
+        void viewMemberDetails(Membership member);
     }
 
 
