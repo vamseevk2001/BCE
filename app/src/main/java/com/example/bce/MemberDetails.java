@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import static com.example.bce.MainActivity.member_id;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -279,11 +280,16 @@ public class MemberDetails extends Fragment {
         SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         Map<String, String> params = new HashMap<>();
         params.put("user_id", memberId);
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.show();
         Call<ProfileModalClass> call = simpleApi.getProfile(params);
         call.enqueue(new Callback<ProfileModalClass>() {
             @Override
             public void onResponse(Call<ProfileModalClass> call, Response<ProfileModalClass> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
+
 
                     ProfileModalClass profileModalClass = response.body();
 
@@ -310,6 +316,7 @@ public class MemberDetails extends Fragment {
 
             @Override
             public void onFailure(Call<ProfileModalClass> call, Throwable t) {
+                progressDialog.dismiss();
                 call.cancel();
             }
         });

@@ -63,6 +63,7 @@ public class more_frag extends Fragment {
             public void onClick(View view) {
 //                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_more_frag_to_memberAsk2);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new memberAsk()).commit();
+
             }
         });
 

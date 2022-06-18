@@ -79,6 +79,7 @@ public class GuestList extends Fragment {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", user_id);
 
+
         Call<GuestListModalClass> call = simpleApi.guestList(params);
         call.enqueue(new Callback<GuestListModalClass>() {
             @Override

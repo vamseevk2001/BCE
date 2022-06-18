@@ -3,6 +3,7 @@ package com.example.bce;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -81,11 +82,15 @@ public class memberAsk extends Fragment {
         Map<String, String> params = new HashMap<>();
         params.put("ur_clb_id", "1");
         Call<MemberAskListModal> call = simpleApi.memberAsk(params);
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.show();
 
         call.enqueue(new Callback<MemberAskListModal>() {
             @Override
             public void onResponse(Call<MemberAskListModal> call, Response<MemberAskListModal> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
                     for (MemberAskListModal.MemberAsk memberAsk : response.body().getMemberAskList()) {
                         memberAskList.add(memberAsk);
                         mAdapter.updateMemberAskList(memberAsk);
@@ -95,6 +100,7 @@ public class memberAsk extends Fragment {
 
             @Override
             public void onFailure(Call<MemberAskListModal> call, Throwable t) {
+                progressDialog.dismiss();
                 call.cancel();
             }
         });

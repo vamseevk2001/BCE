@@ -20,7 +20,6 @@
         android:id="@+id/meetingDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Meeting Date : 24 jun 2022"
         android:textColor="@color/blue"
         android:textStyle="bold"
         android:textSize="18sp"

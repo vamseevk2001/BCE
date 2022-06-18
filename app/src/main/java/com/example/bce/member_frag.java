@@ -2,6 +2,7 @@ package com.example.bce;
 
 import static com.example.bce.MainActivity.member_id;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -118,7 +119,9 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     void localMemberList() {
         onLocalList = true;
         RecyclerView recyclerView = binding.memberListRecyclerView;
-
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.show();
         MemberListAdapter mAdapter = new MemberListAdapter(localMembersArrayList, getContext(), binding.getRoot(), this);
 
         simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
@@ -129,6 +132,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
             @Override
             public void onResponse(Call<MembersList> call, Response<MembersList> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
                     for (Membership member : response.body().getMembershipList()) {
                         //Log.d("listsize", String.valueOf(response.body().getMembershipList().size()));
                         localMembersArrayList.add(member);
@@ -139,6 +143,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
 
             @Override
             public void onFailure(Call<MembersList> call, Throwable t) {
+                progressDialog.dismiss();
                 call.cancel();
             }
         });
@@ -151,7 +156,9 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     void globalMemberList() {
         onLocalList = false;
         RecyclerView recyclerView = binding.memberListRecyclerView;
-
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.show();
         MemberListAdapter mAdapter = new MemberListAdapter(membersArrayList, getContext(), binding.getRoot(), this);
 
         simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
@@ -161,6 +168,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
             @Override
             public void onResponse(Call<MembersList> call, Response<MembersList> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
                     for (Membership member : response.body().getMembershipList()) {
                         //Log.d("listsize", String.valueOf(response.body().getMembershipList().size()));
                         membersArrayList.add(member);
@@ -171,6 +179,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
 
             @Override
             public void onFailure(Call<MembersList> call, Throwable t) {
+                progressDialog.dismiss();
                 call.cancel();
             }
         });

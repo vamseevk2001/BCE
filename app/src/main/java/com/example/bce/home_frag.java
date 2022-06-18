@@ -66,6 +66,7 @@ public class home_frag extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         setData();
         String img_url1 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiTVNHhNbyNuGl2NnIeaC72wk4zvapPEYOjcu6Wf3xYjPUaNpdWWdp-EI80NUsvVSzLw&usqp=CAU";
         String img_url2 = "https://thumbs.dreamstime.com/b/business-development-to-success-growth-banking-financial-global-network-businessman-hold-pointing-arrow-up-graph-227718315.jpg";

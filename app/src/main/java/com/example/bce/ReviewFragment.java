@@ -1,5 +1,6 @@
 package com.example.bce;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,7 +42,6 @@ public class ReviewFragment extends Fragment {
     SimpleApi simpleApi;
     String user_id;
     ReviewListAdapter mReviewAdapter;
-
 
 
     public ReviewFragment() {
@@ -91,6 +91,9 @@ public class ReviewFragment extends Fragment {
     }
 
     void sentReviewList() {
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.show();
         ArrayList<ReviewItem> reviewList = new ArrayList<>();
         RecyclerView recyclerView = binding.reviewsRecyclerView;
         mReviewAdapter = new ReviewListAdapter(reviewList);
@@ -105,6 +108,7 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onResponse(Call<ReviewListModalClass> call, Response<ReviewListModalClass> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
                     for (ReviewItem reviewItem : response.body().getSendList()) {
                         reviewList.add(reviewItem);
                         mReviewAdapter.updateReview(reviewItem);
@@ -114,6 +118,7 @@ public class ReviewFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ReviewListModalClass> call, Throwable t) {
+                progressDialog.dismiss();
                 call.cancel();
             }
         });
@@ -124,6 +129,9 @@ public class ReviewFragment extends Fragment {
     }
 
     void receivedReviewList() {
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.show();
         ArrayList<ReviewItem> reviewList = new ArrayList<>();
         RecyclerView recyclerView = binding.reviewsRecyclerView;
         mReviewAdapter = new ReviewListAdapter(reviewList);
@@ -138,6 +146,7 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onResponse(Call<ReviewListModalClass> call, Response<ReviewListModalClass> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
                     for (ReviewItem reviewItem : response.body().getReceiveList()) {
                         reviewList.add(reviewItem);
                         mReviewAdapter.updateReview(reviewItem);
@@ -147,6 +156,7 @@ public class ReviewFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ReviewListModalClass> call, Throwable t) {
+                progressDialog.dismiss();
                 call.cancel();
             }
         });
@@ -171,8 +181,8 @@ public class ReviewFragment extends Fragment {
             public void onClick(View v) {
                 //getActivity().onBackPressed();
 
-               /* FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment, new home_frag()).commit();*/
+               FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment, new home_frag()).commit();
             }
         });
         return binding.getRoot();

@@ -1,6 +1,7 @@
 package com.example.bce;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -74,11 +75,15 @@ public class HelpDesk extends Fragment {
         SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         Map<String, String> params = new HashMap<>();
         params.put("user_id", user_id);
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.show();
         Call<HelpDeskModalClass> call = simpleApi.helpdesklist(params);
         call.enqueue(new Callback<HelpDeskModalClass>() {
             @Override
             public void onResponse(Call<HelpDeskModalClass> call, Response<HelpDeskModalClass> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
                     for (HelpDeskModalClass.HelpDesk helpDesk : response.body().getHelpDeskList()) {
                         helpDeskList.add(helpDesk);
                         mAdapter.updateHelpDesk(helpDesk);
@@ -89,6 +94,7 @@ public class HelpDesk extends Fragment {
 
             @Override
             public void onFailure(Call<HelpDeskModalClass> call, Throwable t) {
+                progressDialog.dismiss();
                 call.cancel();
             }
         });

@@ -1,5 +1,6 @@
 package com.example.bce;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -85,6 +86,9 @@ public class TenderList extends Fragment {
 
         SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         Call<TenderListModalClass> call = simpleApi.tenderList();
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.show();
         call.enqueue(new Callback<TenderListModalClass>() {
             @Override
             public void onResponse(Call<TenderListModalClass> call, Response<TenderListModalClass> response) {
@@ -97,7 +101,7 @@ public class TenderList extends Fragment {
 //                            1
 //
 //                    );
-
+                    progressDialog.dismiss();
 
                     for (TenderListModalClass.Tender tender : response.body().getTenderList()) {
                         TableRow tbrow = new TableRow(getContext());
@@ -137,6 +141,7 @@ public class TenderList extends Fragment {
 
             @Override
             public void onFailure(Call<TenderListModalClass> call, Throwable t) {
+                progressDialog.dismiss();
                 call.cancel();
             }
         });
