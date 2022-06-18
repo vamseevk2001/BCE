@@ -16,11 +16,12 @@ import com.example.SessionManager;
 import com.example.bce.databinding.FragmentHomeFragBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private Boolean exit = false;
 
     SessionManager sessionManager;
+    BottomNavigationView bottomNavigationView;
     String userId;
 
     static String member_id;
@@ -30,12 +31,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home_frag);
 //        NavController navController = Navigation.findNavController(this, R.id.fragment);
 //        NavigationUI.setupWithNavController(bottomNavigationView, navController);
-
 
 
 //        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -53,32 +53,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         userId = sessionManager.getUSERID();
     }
 
-    public String getUserId(){
+    public String getUserId() {
         return userId;
     }
 
-        @Override
-        public void onBackPressed() {
-            //super.onBackPressed();
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
 
-            if (exit) {
-                finish(); // finish activity
-            } else {
-                Toast.makeText(this, "Press Back again to Exit.",
-                        Toast.LENGTH_SHORT).show();
-                exit = true;
-                new Handler().postDelayed(new Runnable() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        // TODO Auto-generated method stub
-                        Intent a = new Intent(Intent.ACTION_MAIN);
-                        a.addCategory(Intent.CATEGORY_HOME);
-                        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(a);
-                    }
-                }, 2 * 1000);
-            }
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    Intent a = new Intent(Intent.ACTION_MAIN);
+                    a.addCategory(Intent.CATEGORY_HOME);
+                    a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(a);
+                }
+            }, 2 * 1000);
+        }
 
        /* Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
