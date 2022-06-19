@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bce.Models.MemberShipListModalClass;
 import com.example.bce.Models.Members;
 import com.example.bce.Models.Membership;
 import com.example.bce.Models.ProfileModalClass;
@@ -29,21 +30,21 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.MemberListViewHolder> implements ApiCalls.APIResult {
 
-    private ArrayList<Membership> MemberItemList = new ArrayList<Membership>();
+    private ArrayList<MemberShipListModalClass> MemberItemList = new ArrayList<MemberShipListModalClass>();
     private ViewMemberDetailInterface viewMemberDetailInterface;
 
     private String profile = "";
     private Context con;
     private View fragmentView;
 
-    public MemberListAdapter(ArrayList<Membership> memberItemList, Context con, View fragmentView, ViewMemberDetailInterface viewMemberDetailInterface) {
+    public MemberListAdapter(ArrayList<MemberShipListModalClass> memberItemList, Context con, View fragmentView, ViewMemberDetailInterface viewMemberDetailInterface) {
         this.MemberItemList = memberItemList;
         this.con = con;
         this.fragmentView = fragmentView;
         this.viewMemberDetailInterface = viewMemberDetailInterface;
     }
 
-    public void updateList(ArrayList<Membership> newList){
+    public void updateList(ArrayList<MemberShipListModalClass> newList){
 //        MemberItemList.clear();
 //        MemberItemList.addAll(newList);
         MemberItemList = newList;
@@ -61,18 +62,22 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
 
     @Override
     public void onBindViewHolder(@NonNull MemberListViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.memberName.setText(MemberItemList.get(position).getName().toString());
-        holder.memberClub.setText(MemberItemList.get(position).getClubName());
-        holder.memberDesig.setText(MemberItemList.get(position).getCategory() + "-" + MemberItemList.get(position).getSubCategory());
+        holder.memberName.setText(MemberItemList.get(position).getMembership().getName().toString());
+        holder.memberClub.setText(MemberItemList.get(position).getMembership().getClubName());
+        holder.memberDesig.setText(MemberItemList.get(position).getMembership().getCategory() + "-" + MemberItemList.get(position).getMembership().getSubCategory());
 
         holder.viewDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewMemberDetailInterface.viewMemberDetails(MemberItemList.get(position));
+                viewMemberDetailInterface.viewMemberDetails(MemberItemList.get(position).getMembership());
             }
         });
 
         //Picasso.get().load(MemberItemList.get(position).getProfilePic()).into(holder.profilePic);
+        if (!MemberItemList.get(position).getProfilePic().isEmpty())
+            Picasso.get().load(MemberItemList.get(position).getProfilePic()).into(holder.profilePic);
+        else
+            Picasso.get().load("https://www.freeiconspng.com/uploads/customers-icon-3.png").into(holder.profilePic);
 //        holder.viewDetails.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -84,10 +89,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
 //        ProfileModalClass profileModalClass = apiCalls.getProfile(MemberItemList.get(position).getId(), this);
       //Picasso.get().load(profile).into(holder.profilePic);
 
-//        if (!profile.isEmpty())
-//            Picasso.get().load(profile).into(holder.profilePic);
-//        else
-//            Picasso.get().load("https://www.freeiconspng.com/uploads/customers-icon-3.png").into(holder.profilePic);
+
 //
 //        Log.d("VAMSEE KRISHANANAAANANA", "onBindViewHolder: "+profile.toString());
 
@@ -99,7 +101,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
         return MemberItemList.size();
     }
 
-    public void updateMemberList(Membership members) {
+    public void updateMemberList(MemberShipListModalClass members) {
         //MemberItemList.clear();
         if (!MemberItemList.contains(members))
             MemberItemList.add(members);

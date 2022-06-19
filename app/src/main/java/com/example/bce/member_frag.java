@@ -26,9 +26,11 @@ import android.widget.Toast;
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
 import com.example.bce.Adapters.MemberListAdapter;
+import com.example.bce.Models.MemberShipListModalClass;
 import com.example.bce.Models.Members;
 import com.example.bce.Models.MembersList;
 import com.example.bce.Models.Membership;
+import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.databinding.FragmentBusinessLeadDetailBinding;
 import com.example.bce.databinding.FragmentMemberFragBinding;
 
@@ -47,8 +49,8 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     private FragmentMemberFragBinding binding;
     SimpleApi simpleApi;
     String user_id;
-    ArrayList<Membership> membersArrayList = new ArrayList<>();
-    ArrayList<Membership> localMembersArrayList = new ArrayList<>();
+    ArrayList<MemberShipListModalClass> membersArrayList = new ArrayList<>();
+    ArrayList<MemberShipListModalClass> localMembersArrayList = new ArrayList<>();
     MemberListAdapter globalAdapter;
     MemberListAdapter localAdapter;
 
@@ -151,12 +153,24 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
             @Override
             public void onResponse(Call<MembersList> call, Response<MembersList> response) {
                 if (response.isSuccessful()) {
-                    progressDialog.dismiss();
                     for (Membership member : response.body().getMembershipList()) {
-                        //Log.d("listsize", String.valueOf(response.body().getMembershipList().size()));
-                        localMembersArrayList.add(member);
-                        localAdapter.updateMemberList(member);
+                        getProfile(member.getId(), new OnGetProfileListner() {
+                            @Override
+                            public void onGetProfileSuccess(ProfileModalClass profileModalClass) {
+                                MemberShipListModalClass memberShipListModalClass = new MemberShipListModalClass(member, profileModalClass.getImg());
+                                localMembersArrayList.add(memberShipListModalClass);
+                                localAdapter.updateMemberList(memberShipListModalClass);
+                            }
+
+                            @Override
+                            public void onGetProfileError(String errorMsg) {
+                                Toast.makeText(getContext(),"error getting your profile", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+//                        localMembersArrayList.add(member);
+//                        localAdapter.updateMemberList(member);
                     }
+                    progressDialog.dismiss();
                 }
             }
 
@@ -187,12 +201,26 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
             @Override
             public void onResponse(Call<MembersList> call, Response<MembersList> response) {
                 if (response.isSuccessful()) {
-                    progressDialog.dismiss();
                     for (Membership member : response.body().getMembershipList()) {
                         //Log.d("listsize", String.valueOf(response.body().getMembershipList().size()));
-                        membersArrayList.add(member);
-                        globalAdapter.updateMemberList(member);
+                        getProfile(member.getId(), new OnGetProfileListner() {
+                            @Override
+                            public void onGetProfileSuccess(ProfileModalClass profileModalClass) {
+                                MemberShipListModalClass memberShipListModalClass = new MemberShipListModalClass(member, profileModalClass.getImg());
+                                membersArrayList.add(memberShipListModalClass);
+                                globalAdapter.updateMemberList(memberShipListModalClass);
+                            }
+
+                            @Override
+                            public void onGetProfileError(String errorMsg) {
+
+                            }
+                        });
+
+//                        membersArrayList.add(member);
+//                        globalAdapter.updateMemberList(member);
                     }
+                    progressDialog.dismiss();
                 }
             }
 
@@ -208,30 +236,35 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
         recyclerView.setAdapter(globalAdapter);
     }
 
+    public void getProfile(String member_id, OnGetProfileListner onGetProfileListner){
+        SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", member_id);
+        Call<ProfileModalClass> call = simpleApi.getProfile(params);
+        call.enqueue(new Callback<ProfileModalClass>() {
+            @Override
+            public void onResponse(Call<ProfileModalClass> call, Response<ProfileModalClass> response) {
+                if (response.isSuccessful()) {
+                    response.body().getImg();
+                    onGetProfileListner.onGetProfileSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileModalClass> call, Throwable t) {
+                call.cancel();
+                onGetProfileListner.onGetProfileError(t.getMessage());
+            }
+        });
+    }
 
 
-//    @Override
-//    public boolean onQueryTextSubmit(String query) {
-//        if (query != null) {
-//            applySearch(query);
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean onQueryTextChange(String newText) {
-//        if (newText != null) {
-//            applySearch(newText);
-//        }
-//        return true;
-//    }
 
     void applySearch(String searchString) {
         if (onLocalList) {
-            ArrayList<Membership> searchLocalMembersArrayList = new ArrayList<>();
-            for (Membership membership : localMembersArrayList) {
-                if (membership.getName().toLowerCase(Locale.ROOT).contains(searchString.toLowerCase(Locale.ROOT))) {
+            ArrayList<MemberShipListModalClass> searchLocalMembersArrayList = new ArrayList<>();
+            for (MemberShipListModalClass membership : localMembersArrayList) {
+                if (membership.getMembership().getName().toLowerCase(Locale.ROOT).contains(searchString.toLowerCase(Locale.ROOT))) {
                     searchLocalMembersArrayList.add(membership);
                 }
             }
@@ -240,9 +273,9 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
             else
                 localAdapter.updateList(searchLocalMembersArrayList);
         } else {
-            ArrayList<Membership> searchMembersArrayList = new ArrayList<>();
-            for (Membership membership : membersArrayList) {
-                if (membership.getName().toLowerCase(Locale.ROOT).contains(searchString.toLowerCase(Locale.ROOT))) {
+            ArrayList<MemberShipListModalClass> searchMembersArrayList = new ArrayList<>();
+            for (MemberShipListModalClass membership : membersArrayList) {
+                if (membership.getMembership().getName().toLowerCase(Locale.ROOT).contains(searchString.toLowerCase(Locale.ROOT))) {
                     searchMembersArrayList.add(membership);
                 }
             }
@@ -252,7 +285,6 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
                 globalAdapter.updateList(searchMembersArrayList);
 
         }
-
 
     }
 
@@ -270,5 +302,10 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
             member_id = member.getId();
         }
 
+    }
+
+    public interface OnGetProfileListner{
+        void onGetProfileSuccess(ProfileModalClass profileModalClass);
+        void onGetProfileError(String errorMsg);
     }
 }
