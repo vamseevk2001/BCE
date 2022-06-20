@@ -34,6 +34,7 @@ import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.databinding.FragmentBusinessLeadDetailBinding;
 import com.example.bce.databinding.FragmentMemberFragBinding;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -153,6 +154,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
             @Override
             public void onResponse(Call<MembersList> call, Response<MembersList> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
                     for (Membership member : response.body().getMembershipList()) {
                         getProfile(member.getId(), new OnGetProfileListner() {
                             @Override
@@ -170,7 +172,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
 //                        localMembersArrayList.add(member);
 //                        localAdapter.updateMemberList(member);
                     }
-                    progressDialog.dismiss();
+
                 }
             }
 
@@ -201,6 +203,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
             @Override
             public void onResponse(Call<MembersList> call, Response<MembersList> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
                     for (Membership member : response.body().getMembershipList()) {
                         //Log.d("listsize", String.valueOf(response.body().getMembershipList().size()));
                         getProfile(member.getId(), new OnGetProfileListner() {
@@ -220,7 +223,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
 //                        membersArrayList.add(member);
 //                        globalAdapter.updateMemberList(member);
                     }
-                    progressDialog.dismiss();
+
                 }
             }
 

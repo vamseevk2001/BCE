@@ -1,7 +1,10 @@
 package com.example.bce;
 
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Environment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +22,14 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
 import com.example.bce.Models.TenderListModalClass;
 import com.example.bce.databinding.FragmentTenderListBinding;
+
+import java.io.File;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +47,7 @@ public class TenderList extends Fragment {
     }
 
     FragmentTenderListBinding binding;
+    DownloadManager manager;
 
     public static TenderList newInstance(String param1, String param2) {
         TenderList fragment = new TenderList();
@@ -75,7 +83,7 @@ public class TenderList extends Fragment {
                 //getActivity().onBackPressed();
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment,new more_frag()).commit();
+                ft.replace(R.id.fragment, new more_frag()).commit();
             }
         });
         return binding.getRoot();
@@ -127,10 +135,22 @@ public class TenderList extends Fragment {
                         Button info = new Button(getContext());
                         info.setText("Download");
                         info.setGravity(Gravity.CENTER);
+
 //                        info.setBackgroundColor(getResources().getColor(R.color.red));
 //                        info.setTextColor(getResources().getColor(R.color.white));
                         info.setLayoutParams(binding.sno.getLayoutParams());
                         tbrow.addView(info);
+
+                        info.setOnClickListener(view -> {
+//                            manager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+//                            Uri uri = Uri.parse(tender.getInfoFile());
+//                            DownloadManager.Request request = new DownloadManager.Request(uri);
+//                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+//                            manager.enqueue(request);
+                            downloadFile(tender.getInfoFile());
+
+                            //Toast.makeText(getContext(), "Downloading...", Toast.LENGTH_SHORT).show();
+                        });
 
                         tableLayout.addView(tbrow);
                         i++;
@@ -145,5 +165,26 @@ public class TenderList extends Fragment {
                 call.cancel();
             }
         });
+    }
+
+
+    void downloadFile(String url){
+        File direct = new File(getActivity().getExternalFilesDir(null), "/Tender");
+        if(!direct.exists()){
+            direct.mkdir();
+        }
+
+        DownloadManager mgr = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+
+        Uri downloadUri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(downloadUri);
+
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI)
+                .setAllowedOverRoaming(false).setTitle("Tender File")
+                .setDescription("Downloading...")
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOCUMENTS, "/Tender");
+
+        mgr.enqueue(request);
+
     }
 }

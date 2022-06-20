@@ -123,5 +123,9 @@ public interface SimpleApi {
     @FormUrlEncoded
     Call<DialogBoxModalClass> submitAsk(@FieldMap Map<String,String> params);
 
+    @POST(AppUrls.sendRequest)
+    @FormUrlEncoded
+    Call<DialogBoxModalClass> sendRequest(@FieldMap Map<String,String> params);
+
 
 }

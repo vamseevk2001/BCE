@@ -105,6 +105,31 @@ public class MemberDetails extends Fragment {
         member_ID = member_id;
         setData(member_ID);
 
+        binding.connectionRequestLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+                Map<String, String> params = new HashMap<>();
+                params.put("member_id", member_ID);
+                params.put("user_id", user_id);
+                Call<DialogBoxModalClass> call = simpleApi.sendRequest(params);
+                call.enqueue(new Callback<DialogBoxModalClass>() {
+                    @Override
+                    public void onResponse(Call<DialogBoxModalClass> call, Response<DialogBoxModalClass> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<DialogBoxModalClass> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
+
+            }
+        });
+
         binding.businessLeadLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
