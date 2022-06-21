@@ -133,7 +133,6 @@ public class MemberDetails extends Fragment {
         binding.businessLeadLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 final AlertDialog.Builder sendNewBusinessLeadAlert = new AlertDialog.Builder(getContext());
                 View newBusinessLeadView = getLayoutInflater().inflate(R.layout.new_business_lead_dialog_box, null);
                 name = newBusinessLeadView.findViewById(R.id.nameInp);
@@ -319,7 +318,17 @@ public class MemberDetails extends Fragment {
                     ProfileModalClass profileModalClass = response.body();
 
                     if (!profileModalClass.getImg().isEmpty())
-                        Picasso.get().load(profileModalClass.getImg()).into(binding.memberProfilePic);
+                        Picasso.get().load(profileModalClass.getImg()).into(binding.memberProfilePic, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                binding.progressBar.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+
+                            }
+                        });
                     else
                         Picasso.get().load("https://www.freeiconspng.com/uploads/customers-icon-3.png").into(binding.memberProfilePic);
                     binding.nameProfile.setText(profileModalClass.getUserInfo().get(0).getUrName());

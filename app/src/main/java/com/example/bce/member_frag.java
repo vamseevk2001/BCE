@@ -52,6 +52,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
     String user_id;
     ArrayList<MemberShipListModalClass> membersArrayList = new ArrayList<>();
     ArrayList<MemberShipListModalClass> localMembersArrayList = new ArrayList<>();
+    ArrayList<ProfileModalClass> profile = new ArrayList<>();
     MemberListAdapter globalAdapter;
     MemberListAdapter localAdapter;
 

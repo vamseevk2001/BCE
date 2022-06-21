@@ -46,14 +46,12 @@ public class verifyOTP extends AppCompatActivity {
         binding.updatePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                ProgressDialog progressDialog = new ProgressDialog(verifyOTP.this);
-                progressDialog.setMessage("Processing...");
-                progressDialog.show();
-
                 closeKeyboard();
                 isAllFieldsChecked = CheckFeilds();
                 if (isAllFieldsChecked) {
+                    ProgressDialog progressDialog = new ProgressDialog(verifyOTP.this);
+                    progressDialog.setMessage("Processing...");
+                    progressDialog.show();
                     simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
 
                     Map<String, String> params = new HashMap<>();
@@ -69,8 +67,6 @@ public class verifyOTP extends AppCompatActivity {
                             progressDialog.dismiss();
 
                             if (response.isSuccessful()) {
-
-
                                 //Toast.makeText(getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                                 otpVerified = true;
                                 finish();
@@ -92,41 +88,50 @@ public class verifyOTP extends AppCompatActivity {
 
                     if (otpVerified) {
 
+                        if(binding.newPassword.getText().toString().equals(binding.confirmPassword.getText().toString())) {
 
-                        ProgressDialog progressDialog1 = new ProgressDialog(verifyOTP.this);
-                        progressDialog.setMessage("Processing...");
-                        progressDialog.show();
+                            ProgressDialog progressDialog1 = new ProgressDialog(verifyOTP.this);
+                            progressDialog.setMessage("Processing...");
+                            progressDialog.show();
 
-                        Map<String, String> params2 = new HashMap<>();
-                        params2.put("type", "update_password");
-                        params2.put("email", email);
-                        params2.put("pass", binding.newPassword.getText().toString());
-                        Call<ResponseModalClass> call2 = simpleApi.forgotPass(params2);
-                        call2.enqueue(new Callback<ResponseModalClass>() {
-                            @Override
-                            public void onResponse(Call<ResponseModalClass> call, Response<ResponseModalClass> response) {
+                            Map<String, String> params2 = new HashMap<>();
 
-                                progressDialog1.dismiss();
+                            params2.put("type", "update_password");
+                            params2.put("email", email);
+                            params2.put("pass", binding.newPassword.getText().toString());
+                            Call<ResponseModalClass> call2 = simpleApi.forgotPass(params2);
+                            call2.enqueue(new Callback<ResponseModalClass>() {
+                                @Override
+                                public void onResponse(Call<ResponseModalClass> call, Response<ResponseModalClass> response) {
 
-                                if (response.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), Login.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Gson gson = new Gson();
-                                    ResponseModalClass responseModalClass = gson.fromJson(response.errorBody().charStream(), ResponseModalClass.class);
-                                    Toast.makeText(getApplicationContext(), responseModalClass.getMsg(), Toast.LENGTH_SHORT).show();
+                                    progressDialog1.dismiss();
+
+                                    if (response.isSuccessful()) {
+                                        Toast.makeText(getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), Login.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Gson gson = new Gson();
+                                        ResponseModalClass responseModalClass = gson.fromJson(response.errorBody().charStream(), ResponseModalClass.class);
+                                        Toast.makeText(getApplicationContext(), responseModalClass.getMsg(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<ResponseModalClass> call, Throwable t) {
-                                call.cancel();
+                                @Override
+                                public void onFailure(Call<ResponseModalClass> call, Throwable t) {
+                                    call.cancel();
 
-                                progressDialog1.dismiss();
-                            }
-                        });
+                                    progressDialog1.dismiss();
+                                }
+                            });
+
+                        }
+
+                        else {
+                            Toast.makeText(getApplicationContext(), "confirm password should be same as the new password", Toast.LENGTH_SHORT).show();
+                            binding.confirmPassword.setError("does not match new password!");
+                        }
 
                     }
 
@@ -159,6 +164,10 @@ public class verifyOTP extends AppCompatActivity {
         }
         if (binding.newPassword.length() == 0) {
             binding.newPassword.setError("This field is required");
+            return false;
+        }
+        if (binding.confirmPassword.length() == 0) {
+            binding.confirmPassword.setError("This field is required");
             return false;
         }
         return true;

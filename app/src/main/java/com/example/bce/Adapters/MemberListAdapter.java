@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,17 +17,25 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bce.API.RetrofitInstance;
+import com.example.bce.API.SimpleApi;
 import com.example.bce.Models.MemberShipListModalClass;
 import com.example.bce.Models.Members;
 import com.example.bce.Models.Membership;
 import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.R;
 import com.example.bce.Utils.ApiCalls;
+import com.example.bce.member_frag;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.MemberListViewHolder> implements ApiCalls.APIResult {
 
@@ -44,7 +53,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
         this.viewMemberDetailInterface = viewMemberDetailInterface;
     }
 
-    public void updateList(ArrayList<MemberShipListModalClass> newList){
+    public void updateList(ArrayList<MemberShipListModalClass> newList) {
 //        MemberItemList.clear();
 //        MemberItemList.addAll(newList);
         MemberItemList = newList;
@@ -75,9 +84,32 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
 
         //Picasso.get().load(MemberItemList.get(position).getProfilePic()).into(holder.profilePic);
         if (!MemberItemList.get(position).getProfilePic().isEmpty())
-            Picasso.get().load(MemberItemList.get(position).getProfilePic()).into(holder.profilePic);
+            Picasso.get().load(MemberItemList.get(position).getProfilePic()).into(holder.profilePic, new com.squareup.picasso.Callback() {
+                @Override
+                public void onSuccess() {
+                    holder.progressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    holder.progressBar.setVisibility(View.GONE);
+                }
+            });
         else
-            Picasso.get().load("https://www.freeiconspng.com/uploads/customers-icon-3.png").into(holder.profilePic);
+            Picasso.get().load("https://www.freeiconspng.com/uploads/customers-icon-3.png").into(holder.profilePic, new com.squareup.picasso.Callback() {
+                @Override
+                public void onSuccess() {
+                    holder.progressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    holder.progressBar.setVisibility(View.GONE);
+
+                }
+            });
+
+
 //        holder.viewDetails.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -87,7 +119,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
 
 //        ApiCalls apiCalls = new ApiCalls();
 //        ProfileModalClass profileModalClass = apiCalls.getProfile(MemberItemList.get(position).getId(), this);
-      //Picasso.get().load(profile).into(holder.profilePic);
+        //Picasso.get().load(profile).into(holder.profilePic);
 
 
 //
@@ -109,7 +141,6 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
     }
 
 
-
     @Override
     public void success(ProfileModalClass profileModalClass) {
         this.profile = profileModalClass.getImg();
@@ -120,12 +151,13 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
 
     }
 
-    public static class MemberListViewHolder extends RecyclerView.ViewHolder{
+    public static class MemberListViewHolder extends RecyclerView.ViewHolder {
 
         public CircleImageView profilePic;
         public TextView memberName, memberClub, memberDesig;
         public TextView viewDetails;
         ViewMemberDetailInterface viewMemberDetailInterface;
+        ProgressBar progressBar;
 
         public MemberListViewHolder(@NonNull View itemView, ViewMemberDetailInterface viewMemberDetailInterface) {
             super(itemView);
@@ -134,14 +166,38 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Me
             this.memberClub = itemView.findViewById(R.id.memberClub);
             this.memberDesig = itemView.findViewById(R.id.memberDesig);
             this.viewDetails = itemView.findViewById(R.id.viewMemberDetails);
+            this.progressBar = itemView.findViewById(R.id.progressBar);
             this.viewMemberDetailInterface = viewMemberDetailInterface;
+
 
         }
 
 
     }
 
-    public interface ViewMemberDetailInterface{
+    public void getProfile(String member_id, member_frag.OnGetProfileListner onGetProfileListner) {
+        SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", member_id);
+        Call<ProfileModalClass> call = simpleApi.getProfile(params);
+        call.enqueue(new Callback<ProfileModalClass>() {
+            @Override
+            public void onResponse(Call<ProfileModalClass> call, Response<ProfileModalClass> response) {
+                if (response.isSuccessful()) {
+                    response.body().getImg();
+                    onGetProfileListner.onGetProfileSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileModalClass> call, Throwable t) {
+                call.cancel();
+                onGetProfileListner.onGetProfileError(t.getMessage());
+            }
+        });
+    }
+
+    public interface ViewMemberDetailInterface {
         void viewMemberDetails(Membership member);
     }
 
