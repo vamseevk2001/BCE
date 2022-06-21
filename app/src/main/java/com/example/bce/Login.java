@@ -55,15 +55,17 @@ public class Login extends AppCompatActivity {
 
                     if (str_MobileNumber.length() == 10) {
 
-                        progressDialog = new ProgressDialog(Login.this);
-                        progressDialog.setMessage("Login Please Wait...");
-                        progressDialog.show();
+
 
                         closeKeyboard();
 
                         if (validateFields()) {
 
                             if (isNetworkConnected()) {
+                                progressDialog = new ProgressDialog(Login.this);
+                                progressDialog.setMessage("Login Please Wait...");
+                                progressDialog.setCanceledOnTouchOutside(false);
+                                progressDialog.show();
                                 simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put("user_id", binding.Phone.getText().toString());
@@ -127,12 +129,14 @@ public class Login extends AppCompatActivity {
 
                 } else {
 
-                    progressDialog = new ProgressDialog(Login.this);
-                    progressDialog.setMessage("Login Please Wait...");
-                    progressDialog.show();
+
 
                     closeKeyboard();
                     if (validateFields()) {
+                        progressDialog = new ProgressDialog(Login.this);
+                        progressDialog.setMessage("Login Please Wait...");
+                        progressDialog.setCanceledOnTouchOutside(false);
+                        progressDialog.show();
 
                         if (isNetworkConnected()) {
                             simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
