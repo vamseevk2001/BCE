@@ -51,6 +51,7 @@ public class verifyOTP extends AppCompatActivity {
                 if (isAllFieldsChecked) {
                     ProgressDialog progressDialog = new ProgressDialog(verifyOTP.this);
                     progressDialog.setMessage("Processing...");
+                    progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
                     simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
 
@@ -92,6 +93,7 @@ public class verifyOTP extends AppCompatActivity {
 
                             ProgressDialog progressDialog1 = new ProgressDialog(verifyOTP.this);
                             progressDialog.setMessage("Processing...");
+                            progressDialog.setCanceledOnTouchOutside(false);
                             progressDialog.show();
 
                             Map<String, String> params2 = new HashMap<>();

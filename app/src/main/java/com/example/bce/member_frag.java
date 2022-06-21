@@ -144,6 +144,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
         RecyclerView recyclerView = binding.memberListRecyclerView;
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         localAdapter = new MemberListAdapter(localMembersArrayList, getContext(), binding.getRoot(), this);
 
@@ -194,6 +195,7 @@ public class member_frag extends Fragment implements MemberListAdapter.ViewMembe
         RecyclerView recyclerView = binding.memberListRecyclerView;
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         globalAdapter = new MemberListAdapter(membersArrayList, getContext(), binding.getRoot(), this);
 

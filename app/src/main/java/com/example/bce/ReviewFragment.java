@@ -93,6 +93,7 @@ public class ReviewFragment extends Fragment {
     void sentReviewList() {
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         ArrayList<ReviewItem> reviewList = new ArrayList<>();
         RecyclerView recyclerView = binding.reviewsRecyclerView;
@@ -131,6 +132,7 @@ public class ReviewFragment extends Fragment {
     void receivedReviewList() {
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         ArrayList<ReviewItem> reviewList = new ArrayList<>();
         RecyclerView recyclerView = binding.reviewsRecyclerView;

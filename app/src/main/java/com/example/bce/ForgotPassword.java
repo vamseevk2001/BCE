@@ -51,6 +51,7 @@ public class ForgotPassword extends AppCompatActivity {
 
                 ProgressDialog progressDialog = new ProgressDialog(ForgotPassword.this);
                 progressDialog.setMessage("Processing...");
+                progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
 
                 closeKeyboard();
@@ -113,6 +114,12 @@ public class ForgotPassword extends AppCompatActivity {
 
     }
 
+    Boolean validateFeild(){
+        if(binding.PhoneForgotPwd.getText().toString().isEmpty()){
+            binding.PhoneForgotPwd.setError("This Field is required !");
+        }
+        return true;
+    }
     private void closeKeyboard() {
 
         View view = this.getCurrentFocus();

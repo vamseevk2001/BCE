@@ -75,6 +75,7 @@ public class BusinessLeadDetailFragment extends Fragment {
 
                 ProgressDialog progressDialog = new ProgressDialog(getContext());
                 progressDialog.setMessage("Data Retrived Please Wait...");
+                progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
 
                 recyclerView.setVisibility(View.GONE);
@@ -126,6 +127,7 @@ public class BusinessLeadDetailFragment extends Fragment {
 
                 ProgressDialog progressDialog = new ProgressDialog(getContext());
                 progressDialog.setMessage("Data Retrived Please Wait...");
+                progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
 
                 recyclerView2.setVisibility(View.GONE);
@@ -197,6 +199,7 @@ public class BusinessLeadDetailFragment extends Fragment {
     void businessLeadSendList(){
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrived Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         binding.businessLeadDetailRecyclerView.setVisibility(View.GONE);

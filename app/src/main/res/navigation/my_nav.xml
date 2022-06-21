@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_home_frag_to_businessLeadDetailFragment"
             app:destination="@id/businessLeadDetailFragment" />
+        <action
+            android:id="@+id/action_home_frag_to_requestAlert2"
+            app:destination="@id/requestAlert2" />
     </fragment>
     <fragment
         android:id="@+id/member_frag"
@@ -113,4 +116,9 @@
         android:name="com.example.bce.memberAsk"
         android:label="fragment_member_ask"
         tools:layout="@layout/fragment_member_ask" />
+    <fragment
+        android:id="@+id/requestAlert2"
+        android:name="com.example.bce.RequestAlert"
+        android:label="fragment_request_alert"
+        tools:layout="@layout/fragment_request_alert" />
 </navigation>

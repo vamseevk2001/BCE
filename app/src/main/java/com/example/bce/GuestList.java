@@ -70,6 +70,7 @@ public class GuestList extends Fragment {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Retrive Guest List Please Wait....");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         RecyclerView recyclerView = binding.guestListRecyclerView;

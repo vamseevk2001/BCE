@@ -108,6 +108,7 @@ public class AddGuest extends Fragment {
 
                     ProgressDialog progressDialog = new ProgressDialog(getActivity());
                     progressDialog.setMessage("Please Wait...");
+                    progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
 
 
@@ -133,7 +134,8 @@ public class AddGuest extends Fragment {
 
                             if (response.isSuccessful()) {
                                 Toast.makeText(getContext(), response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
-                                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_addGuest_to_guestList);
+                                //Navigation.findNavController(binding.getRoot()).navigate(R.id.action_addGuest_to_guestList);
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new GuestList()).commit();
                             }
                             else {
                                 Toast.makeText(getContext(), response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();

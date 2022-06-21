@@ -77,6 +77,8 @@ public class HelpDesk extends Fragment {
         params.put("user_id", user_id);
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
+
         progressDialog.show();
         Call<HelpDeskModalClass> call = simpleApi.helpdesklist(params);
         call.enqueue(new Callback<HelpDeskModalClass>() {

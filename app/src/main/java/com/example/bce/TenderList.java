@@ -96,6 +96,7 @@ public class TenderList extends Fragment {
         Call<TenderListModalClass> call = simpleApi.tenderList();
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         call.enqueue(new Callback<TenderListModalClass>() {
             @Override

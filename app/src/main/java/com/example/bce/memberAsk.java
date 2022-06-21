@@ -84,6 +84,7 @@ public class memberAsk extends Fragment {
         Call<MemberAskListModal> call = simpleApi.memberAsk(params);
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         call.enqueue(new Callback<MemberAskListModal>() {

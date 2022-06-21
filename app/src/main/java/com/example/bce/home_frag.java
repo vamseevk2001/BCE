@@ -130,6 +130,7 @@ public class home_frag extends Fragment {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Home Page Details Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);

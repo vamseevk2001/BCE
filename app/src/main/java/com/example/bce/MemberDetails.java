@@ -306,6 +306,7 @@ public class MemberDetails extends Fragment {
         params.put("user_id", memberId);
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         Call<ProfileModalClass> call = simpleApi.getProfile(params);
         call.enqueue(new Callback<ProfileModalClass>() {
