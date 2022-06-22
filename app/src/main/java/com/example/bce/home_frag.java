@@ -128,6 +128,14 @@ public class home_frag extends Fragment {
             }
         });
 
+        binding.requestAlertLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new RequestAlert()).addToBackStack(null).commit();
+
+            }
+        });
+
         binding.logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

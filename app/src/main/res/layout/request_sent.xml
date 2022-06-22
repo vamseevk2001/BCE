@@ -40,7 +40,6 @@
                 app:layout_constraintStart_toEndOf="@id/calenderImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="11sp"
                 android:textColor="@color/blue"
                 android:text="03-04-2022"/>
 
@@ -63,13 +62,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Send To"
-                android:textSize="11sp"
                 android:textColor="@color/purpleFont"
                 android:textStyle="bold" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/companyName"
@@ -79,8 +74,8 @@
                     android:layout_marginTop="4dp"
                     android:text="Shanaya Gas"
                     android:textStyle="bold"
+                    android:textColor="@color/black"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
                     />
 
@@ -91,21 +86,17 @@
                     android:layout_marginStart="4dp"
                     android:text="BCE - Bhubaneswar"
                     android:textSize="12sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/companyName"
                     />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <TextView
                 android:id="@+id/Address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"
                 android:layout_marginStart="4dp"
-                android:textStyle="bold"
+                android:textSize="12sp"
                 android:text="Khordha, Bhubanesawar"/>
 
             <LinearLayout
@@ -116,7 +107,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Request Status : "
-                    android:textSize="11sp"
                     android:layout_marginEnd="4dp"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/purpleFont"
@@ -127,8 +117,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Request Pending"
-                    android:textSize="12sp"
                     android:layout_marginTop="8dp"
+                    android:textSize="13sp"
                     android:textColor="@color/red"
                     android:textStyle="bold" />
             </LinearLayout>

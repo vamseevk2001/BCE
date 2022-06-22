@@ -1,6 +1,7 @@
 package com.example.bce.API;
 
 import com.example.bce.Models.BusinessLeadDetailModalClass;
+import com.example.bce.Models.ConnectionListModalClass;
 import com.example.bce.Models.DialogBoxModalClass;
 import com.example.bce.Models.FavouriteConnectionModalClass;
 import com.example.bce.Models.GuestListModalClass;
@@ -135,6 +136,10 @@ public interface SimpleApi {
     @POST(AppUrls.favoriteConnection)
     @FormUrlEncoded
     Call<FavouriteConnectionModalClass> favouriteconnection(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.connectionlist)
+    @FormUrlEncoded
+    Call<ConnectionListModalClass> connectionlist(@FieldMap Map<String,String> params);
 
 
 }

@@ -110,6 +110,7 @@ public class ReviewFragment extends Fragment {
             public void onResponse(Call<ReviewListModalClass> call, Response<ReviewListModalClass> response) {
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
+                    reviewList.clear();
                     for (ReviewItem reviewItem : response.body().getSendList()) {
                         reviewList.add(reviewItem);
                         mReviewAdapter.updateReview(reviewItem);
@@ -149,6 +150,7 @@ public class ReviewFragment extends Fragment {
             public void onResponse(Call<ReviewListModalClass> call, Response<ReviewListModalClass> response) {
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
+                    reviewList.clear();
                     for (ReviewItem reviewItem : response.body().getReceiveList()) {
                         reviewList.add(reviewItem);
                         mReviewAdapter.updateReview(reviewItem);
