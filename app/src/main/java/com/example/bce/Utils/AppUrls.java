@@ -33,6 +33,7 @@ public class AppUrls {
     public static final String submitAsk = "api.php?method=asksubmit";
     public static final String home = "api.php?method=gethome";
     public static final String sendRequest = "api.php?method=sendrequest";
+    public static final String acceptRequest = "api.php?method=acceptrequest";
 
 
 }

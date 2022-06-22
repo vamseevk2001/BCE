@@ -1,7 +1,13 @@
 package com.example.bce.Utils;
 
+import android.app.ProgressDialog;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.example.bce.API.RetrofitInstance;
 import com.example.bce.API.SimpleApi;
+import com.example.bce.Models.DialogBoxModalClass;
+import com.example.bce.Models.FavouriteConnectionModalClass;
 import com.example.bce.Models.PaymentModalClass;
 import com.example.bce.Models.ProfileModalClass;
 import com.example.bce.Models.TenderListModalClass;
@@ -83,6 +89,64 @@ public class ApiCalls {
             }
         });
     }
+
+    void acceptRequest(String user_id, String request_id) {
+        SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", user_id);
+        params.put("request_id", request_id);
+        Call<DialogBoxModalClass> call = simpleApi.acceptRequest(params);
+//        ProgressDialog progressDialog = new ProgressDialog(getContext());
+//        progressDialog.setMessage("Data Retrieved Please Wait...");
+//        progressDialog.setCanceledOnTouchOutside(false);
+//        progressDialog.show();
+       call.enqueue(new Callback<DialogBoxModalClass>() {
+           @Override
+           public void onResponse(Call<DialogBoxModalClass> call, Response<DialogBoxModalClass> response) {
+               if (response.isSuccessful()){
+                  // progressDialog.dismiss();
+                   //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+               }
+           }
+
+           @Override
+           public void onFailure(Call<DialogBoxModalClass> call, Throwable t) {
+               //progressDialog.dismiss();
+               call.cancel();
+           }
+       });
+    }
+
+    void favouriteConnection(String user_id) {
+        SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", user_id);
+        Call<FavouriteConnectionModalClass> call = simpleApi.favouriteconnection(params);
+//        ProgressDialog progressDialog = new ProgressDialog(getContext());
+//        progressDialog.setMessage("Data Retrieved Please Wait...");
+//        progressDialog.setCanceledOnTouchOutside(false);
+//        progressDialog.show();
+        call.enqueue(new Callback<FavouriteConnectionModalClass>() {
+            @Override
+            public void onResponse(Call<FavouriteConnectionModalClass> call, Response<FavouriteConnectionModalClass> response) {
+                if (response.isSuccessful()){
+                    // progressDialog.dismiss();
+                    //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    for(FavouriteConnectionModalClass.RequestConnection requestConnection : response.body().getRequestConnection()){
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavouriteConnectionModalClass> call, Throwable t) {
+                //progressDialog.dismiss();
+                call.cancel();
+            }
+        });
+    }
+
+
 
 
 }

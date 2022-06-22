@@ -2,6 +2,7 @@ package com.example.bce.API;
 
 import com.example.bce.Models.BusinessLeadDetailModalClass;
 import com.example.bce.Models.DialogBoxModalClass;
+import com.example.bce.Models.FavouriteConnectionModalClass;
 import com.example.bce.Models.GuestListModalClass;
 import com.example.bce.Models.HelpDeskModalClass;
 import com.example.bce.Models.HomeModalClass;
@@ -126,6 +127,14 @@ public interface SimpleApi {
     @POST(AppUrls.sendRequest)
     @FormUrlEncoded
     Call<DialogBoxModalClass> sendRequest(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.acceptRequest)
+    @FormUrlEncoded
+    Call<DialogBoxModalClass> acceptRequest(@FieldMap Map<String,String> params);
+
+    @POST(AppUrls.favoriteConnection)
+    @FormUrlEncoded
+    Call<FavouriteConnectionModalClass> favouriteconnection(@FieldMap Map<String,String> params);
 
 
 }

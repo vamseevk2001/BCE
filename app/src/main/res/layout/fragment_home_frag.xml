@@ -311,52 +311,52 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/leadReceivedLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                app:cardBackgroundColor="#2ec0ff"
-                app:cardCornerRadius="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guideline1"
-                app:layout_constraintTop_toBottomOf="@id/businessReceivedLayout">
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/leadReceivedLayout"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                app:cardBackgroundColor="#2ec0ff"-->
+<!--                app:cardCornerRadius="5dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toEndOf="@id/guideline1"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/businessReceivedLayout">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="vertical">-->
 
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/ic_lead_recieved" />
+<!--                    <ImageView-->
+<!--                        android:layout_width="60dp"-->
+<!--                        android:layout_height="60dp"-->
+<!--                        android:layout_margin="10dp"-->
+<!--                        android:src="@drawable/ic_lead_recieved" />-->
 
 
-                    <TextView
-                        android:id="@+id/leadReceived"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="08"
-                        android:textColor="@color/white2"
-                        android:textSize="@dimen/thirty"
-                        android:textStyle="bold" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/leadReceived"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="10dp"-->
+<!--                        android:text="08"-->
+<!--                        android:textColor="@color/white2"-->
+<!--                        android:textSize="@dimen/thirty"-->
+<!--                        android:textStyle="bold" />-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="Lead Received"
-                        android:textColor="@color/white" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="10dp"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:text="Lead Received"-->
+<!--                        android:textColor="@color/white" />-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
-            </androidx.cardview.widget.CardView>
+<!--            </androidx.cardview.widget.CardView>-->
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/reviewLayout"
@@ -416,7 +416,7 @@
                 app:cardCornerRadius="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideline1"
-                app:layout_constraintTop_toBottomOf="@id/leadReceivedLayout">
+                app:layout_constraintTop_toBottomOf="@id/businessReceivedLayout">
 
                 <LinearLayout
                     android:layout_width="match_parent"

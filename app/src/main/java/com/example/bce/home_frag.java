@@ -100,6 +100,14 @@ public class home_frag extends Fragment {
             }
         });
 
+        binding.leadGivenLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_businessLeadDetailFragment);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new BusinessLeadDetailFragment()).commit();
+            }
+        });
+
         binding.guestLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +116,14 @@ public class home_frag extends Fragment {
 
                 GuestList guestList = new GuestList();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, guestList).addToBackStack(null).commit();
+
+            }
+        });
+
+        binding.connectionLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new FavouriteConnections()).addToBackStack(null).commit();
 
             }
         });

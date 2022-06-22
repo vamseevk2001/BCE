@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_home_frag_to_requestAlert2"
             app:destination="@id/requestAlert2" />
+        <action
+            android:id="@+id/action_home_frag_to_favouriteConnections"
+            app:destination="@id/favouriteConnections" />
     </fragment>
     <fragment
         android:id="@+id/member_frag"
@@ -121,4 +124,9 @@
         android:name="com.example.bce.RequestAlert"
         android:label="fragment_request_alert"
         tools:layout="@layout/fragment_request_alert" />
+    <fragment
+        android:id="@+id/favouriteConnections"
+        android:name="com.example.bce.FavouriteConnections"
+        android:label="fragment_favourite_connections"
+        tools:layout="@layout/fragment_favourite_connections" />
 </navigation>
