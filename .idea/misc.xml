@@ -19,11 +19,13 @@
         <entry key="app/src/main/res/layout/add_help_dialog_box.xml" value="0.5" />
         <entry key="app/src/main/res/layout/business_lead_item.xml" value="0.45290745290745293" />
         <entry key="app/src/main/res/layout/business_lead_send_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/business_send_item.xml" value="0.5" />
         <entry key="app/src/main/res/layout/custom_home_action_bar.xml" value="0.6055625790139064" />
         <entry key="app/src/main/res/layout/dropdown_menu_popup_item.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/favourite_connection_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_add_guest.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_ask_help.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/fragment_business_given.xml" value="0.547378104875805" />
         <entry key="app/src/main/res/layout/fragment_business_lead_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_favourite_connections.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_guest_list.xml" value="0.25" />

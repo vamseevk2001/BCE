@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_home_frag_to_favouriteConnections"
             app:destination="@id/favouriteConnections" />
+        <action
+            android:id="@+id/action_home_frag_to_businessGiven2"
+            app:destination="@id/businessGiven2" />
     </fragment>
     <fragment
         android:id="@+id/member_frag"
@@ -129,4 +132,9 @@
         android:name="com.example.bce.FavouriteConnections"
         android:label="fragment_favourite_connections"
         tools:layout="@layout/fragment_favourite_connections" />
+    <fragment
+        android:id="@+id/businessGiven2"
+        android:name="com.example.bce.BusinessGiven"
+        android:label="fragment_business_given"
+        tools:layout="@layout/fragment_business_given" />
 </navigation>

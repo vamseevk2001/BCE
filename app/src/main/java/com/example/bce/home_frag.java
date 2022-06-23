@@ -120,6 +120,17 @@ public class home_frag extends Fragment {
             }
         });
 
+        binding.businessGivenLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_home_frag_to_guestList);
+//                getActivity().getSupportFragmentManager().popBackStack();
+
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new BusinessGiven()).addToBackStack(null).commit();
+
+            }
+        });
+
         binding.connectionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
