@@ -98,7 +98,7 @@ public class BusinessGiven extends Fragment {
 
         Call<BusinessGivenModalClass> call = simpleApi.BusinessGiven(params);
 
-        mAdapter = new BusinessGivenAdapter(businessGivenList);
+        mAdapter = new BusinessGivenAdapter(businessGivenList, getActivity(), false);
 
         call.enqueue(new Callback<BusinessGivenModalClass>() {
             @Override
@@ -145,7 +145,7 @@ public class BusinessGiven extends Fragment {
 
         Call<BusinessGivenModalClass> call = simpleApi.BusinessGiven(params);
 
-        mAdapter = new BusinessGivenAdapter(businessSendList);
+        mAdapter = new BusinessGivenAdapter(businessSendList, getActivity(), true);
 
         call.enqueue(new Callback<BusinessGivenModalClass>() {
             @Override

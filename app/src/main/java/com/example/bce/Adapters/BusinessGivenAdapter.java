@@ -1,10 +1,17 @@
 package com.example.bce.Adapters;
 
+import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,17 +21,23 @@ import com.example.bce.Models.BusinessLeadDetailModalClass;
 import com.example.bce.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BusinessGivenAdapter extends RecyclerView.Adapter<BusinessGivenAdapter.BusinessGivenViewholder> {
 
     ArrayList<BusinessGivenModalClass.Receive> businessGivenList = new ArrayList<>();
+    Context con;
+    Boolean send;
 
-    public BusinessGivenAdapter(ArrayList<BusinessGivenModalClass.Receive> businessGivenList) {
+    public BusinessGivenAdapter(ArrayList<BusinessGivenModalClass.Receive> businessGivenList, Context con, Boolean send) {
         this.businessGivenList = businessGivenList;
+        this.con = con;
+        this.send = send;
     }
 
     @NonNull
@@ -37,13 +50,25 @@ public class BusinessGivenAdapter extends RecyclerView.Adapter<BusinessGivenAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BusinessGivenViewholder holder, int position) {
+    public void onBindViewHolder(@NonNull BusinessGivenViewholder holder, @SuppressLint("RecyclerView") int position) {
         holder.date.setText(businessGivenList.get(position).getDate());
         holder.remark.setText("Remarks : "+businessGivenList.get(position).getSlipDetails().getRemark());
         holder.amt.setText("Amount : "+businessGivenList.get(position).getSlipDetails().getAmount());
         holder.memberName.setText(businessGivenList.get(position).getReceiveFrom().getName());
         holder.memberClub.setText(businessGivenList.get(position).getReceiveFrom().getClubName());
         holder.memberDesig.setText(businessGivenList.get(position).getReceiveFrom().getCategory());
+        if(send){
+            holder.label.setText("Send to");
+        }
+        else {
+            holder.label.setText("Received From");
+        }
+//        holder.invoice.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                downloadFile(businessGivenList.get(position).getSlipDetails().getInvoice());
+//            }
+//        });
 
         if (!businessGivenList.get(position).getReceiveFrom().getImage().isEmpty())
             Picasso.get().load(businessGivenList.get(position).getReceiveFrom().getImage()).into(holder.profilePic);
@@ -60,6 +85,31 @@ public class BusinessGivenAdapter extends RecyclerView.Adapter<BusinessGivenAdap
         if (!businessGivenList.contains(item))
             businessGivenList.add(item);
         notifyDataSetChanged();
+    }
+
+    public void downloadFile(String DownloadUrl) {
+
+        File direct = new File(con.getExternalFilesDir(null), "/Invoice");
+        if(!direct.exists()){
+            direct.mkdir();
+        }
+
+        DownloadManager.Request request1 = new DownloadManager.Request(Uri.parse(DownloadUrl));
+        request1.setDescription("Invoice Downloading..");   //appears the same in Notification bar while downloading
+        request1.setTitle("Invoice");
+        request1.setVisibleInDownloadsUi(false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            request1.allowScanningByMediaScanner();
+            request1.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
+        }
+        request1.setDestinationInExternalFilesDir(con, "/File", "/Invoice");
+
+        DownloadManager manager1 = (DownloadManager) con.getSystemService(Context.DOWNLOAD_SERVICE);
+        Objects.requireNonNull(manager1).enqueue(request1);
+        if (DownloadManager.STATUS_SUCCESSFUL == 8) {
+            Toast.makeText(con, "Downloaded successfully...", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
