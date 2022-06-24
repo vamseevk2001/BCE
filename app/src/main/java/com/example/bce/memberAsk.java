@@ -44,7 +44,7 @@ public class memberAsk extends Fragment {
 
     FragmentMemberAskBinding binding;
     SimpleApi simpleApi;
-    ArrayList<MemberAskListModal.MemberAsk> memberAskList = new ArrayList<>();
+    ArrayList<MemberAskListModal.AskHistory> memberAskList = new ArrayList<>();
 
     TextInputEditText name, department, company, reason;
     Button askNewSubmitBtn;
@@ -80,8 +80,8 @@ public class memberAsk extends Fragment {
 
         simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
         Map<String, String> params = new HashMap<>();
-        params.put("ur_clb_id", "1");
-        Call<MemberAskListModal> call = simpleApi.memberAsk(params);
+        params.put("user_id", user_id);
+        Call<MemberAskListModal> call = simpleApi.askHistoryList(params);
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Data Retrieved Please Wait...");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -92,7 +92,7 @@ public class memberAsk extends Fragment {
             public void onResponse(Call<MemberAskListModal> call, Response<MemberAskListModal> response) {
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
-                    for (MemberAskListModal.MemberAsk memberAsk : response.body().getMemberAskList()) {
+                    for (MemberAskListModal.AskHistory memberAsk : response.body().getAskHistory()) {
                         memberAskList.add(memberAsk);
                         mAdapter.updateMemberAskList(memberAsk);
                     }

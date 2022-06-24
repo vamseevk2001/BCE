@@ -146,11 +146,8 @@ public class GuestList extends Fragment {
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                getActivity().finish();
-
-               /*  FragmentTransaction ft = getFragmentManager().beginTransaction();
-                 ft.replace(R.id.fragment, new home_frag()).commit();*/
+               FragmentTransaction ft = getFragmentManager().beginTransaction();
+                 ft.replace(R.id.fragment, new home_frag()).commit();
             }
         });
         return binding.getRoot();

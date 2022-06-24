@@ -21,9 +21,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class memberAskAdapter extends RecyclerView.Adapter<memberAskAdapter.memberAskViewHolder> {
 
 
-    ArrayList<MemberAskListModal.MemberAsk> memberAskList = new ArrayList<>();
+    ArrayList<MemberAskListModal.AskHistory> memberAskList = new ArrayList<>();
 
-    public memberAskAdapter(ArrayList<MemberAskListModal.MemberAsk> memberAskList) {
+    public memberAskAdapter(ArrayList<MemberAskListModal.AskHistory> memberAskList) {
         this.memberAskList = memberAskList;
     }
 
@@ -38,19 +38,11 @@ public class memberAskAdapter extends RecyclerView.Adapter<memberAskAdapter.memb
 
     @Override
     public void onBindViewHolder(@NonNull memberAskViewHolder holder, int position) {
-        holder.memberName.setText(memberAskList.get(position).getFrom().getName());
-        holder.memberClub.setText(memberAskList.get(position).getFrom().getClubName());
-        holder.memberDesig.setText(memberAskList.get(position).getFrom().getCategory());
         holder.date.setText(memberAskList.get(position).getMeetingDate());
         holder.name.setText(memberAskList.get(position).getName());
         holder.department.setText(memberAskList.get(position).getDeparment());
         holder.company.setText(memberAskList.get(position).getConmpany());
         holder.reason.setText(memberAskList.get(position).getReason());
-
-        if (!memberAskList.get(position).getFrom().getImage().isEmpty())
-            Picasso.get().load(memberAskList.get(position).getFrom().getImage()).into(holder.profilePic);
-        else
-            Picasso.get().load("https://www.freeiconspng.com/uploads/customers-icon-3.png").into(holder.profilePic);
 
     }
 
@@ -59,30 +51,23 @@ public class memberAskAdapter extends RecyclerView.Adapter<memberAskAdapter.memb
         return memberAskList.size();
     }
 
-    public void updateMemberAskList(MemberAskListModal.MemberAsk memberAsk) {
+    public void updateMemberAskList(MemberAskListModal.AskHistory memberAsk) {
         if (!memberAskList.contains(memberAsk))
             memberAskList.add(memberAsk);
         notifyDataSetChanged();
     }
 
     class memberAskViewHolder extends RecyclerView.ViewHolder {
-        TextView date, memberName, memberClub, memberDesig;
+        TextView date;
         TextInputEditText name, department, company, reason;
-        CircleImageView profilePic;
 
         public memberAskViewHolder(@NonNull View itemView) {
             super(itemView);
             this.date = itemView.findViewById(R.id.date);
-            this.memberName = itemView.findViewById(R.id.memberName);
-            this.memberClub = itemView.findViewById(R.id.memberClub);
-            this.memberDesig = itemView.findViewById(R.id.memberDesig);
             this.name = itemView.findViewById(R.id.askName);
             this.department = itemView.findViewById(R.id.askDepartment);
             this.company = itemView.findViewById(R.id.askCompany);
             this.reason = itemView.findViewById(R.id.askReason);
-            this.profilePic = itemView.findViewById(R.id.profilePicMember);
-
-
         }
     }
 }

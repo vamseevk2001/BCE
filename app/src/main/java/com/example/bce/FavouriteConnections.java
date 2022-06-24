@@ -80,6 +80,7 @@ public class FavouriteConnections extends Fragment {
             public void onResponse(Call<FavouriteConnectionModalClass> call, Response<FavouriteConnectionModalClass> response) {
                 if(response.isSuccessful()){
                     progressDialog.dismiss();
+                    favList.clear();
                     if(!response.body().getRequestConnection().isEmpty()) {
 
                         for (FavouriteConnectionModalClass.RequestConnection requestConnection : response.body().getRequestConnection()) {
