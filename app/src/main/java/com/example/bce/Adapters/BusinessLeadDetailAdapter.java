@@ -131,13 +131,16 @@ public class BusinessLeadDetailAdapter extends RecyclerView.Adapter<BusinessLead
                     holder.status.setError("Please select status !");
                 } else {
                     if (holder.status.getText().toString().equals("Business Closed")) {
-                        if (!(holder.amount.length() == 0))
-                            submitStatus("", holder.amount.getText().toString(), holder.status.getText().toString(), view);
-                        else
-                            holder.amt.setError("This feild is required !");
-                    } else
-                        submitStatus("", "", holder.status.getText().toString(), view);
+                        if (!(holder.amount.length() == 0)) {
+                            submitStatus(businessLead.get(position).getRef_id(), holder.amount.getText().toString(), holder.status.getText().toString(), view);
+                        } else
+                            holder.amt.setError("This field is required !");
+                    } else {
+                        submitStatus(businessLead.get(position).getRef_id(), "", holder.status.getText().toString(), view);
+                    }
                 }
+
+
             }
         });
 
@@ -177,7 +180,7 @@ public class BusinessLeadDetailAdapter extends RecyclerView.Adapter<BusinessLead
         params.put("ref_work_sts", ref_work_sts);
         Call<DialogBoxModalClass> call = simpleApi.leadstatusupdate(params);
         ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.setMessage("Please Wait...");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         call.enqueue(new Callback<DialogBoxModalClass>() {

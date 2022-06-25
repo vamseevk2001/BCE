@@ -73,6 +73,8 @@ public class BusinessLeadDetailModalClass {
 
     public class Receive {
 
+        @SerializedName("ref_id")
+        private String ref_id;
         @SerializedName("date_info")
         private DateInfo dateInfo;
         @SerializedName("business_lead_details")
@@ -114,6 +116,13 @@ public class BusinessLeadDetailModalClass {
             this.leadStatus = leadStatus;
         }
 
+        public String getRef_id() {
+            return ref_id;
+        }
+
+        public void setRef_id(String ref_id) {
+            this.ref_id = ref_id;
+        }
     }
 
     public class ReceiveFrom {
