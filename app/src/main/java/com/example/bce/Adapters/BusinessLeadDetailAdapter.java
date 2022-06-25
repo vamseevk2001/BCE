@@ -3,6 +3,7 @@ package com.example.bce.Adapters;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,21 +11,38 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.BoolRes;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bce.API.RetrofitInstance;
+import com.example.bce.API.SimpleApi;
 import com.example.bce.Models.BusinessLeadDetailModalClass;
+import com.example.bce.Models.DialogBoxModalClass;
 import com.example.bce.Models.ReviewItem;
 import com.example.bce.R;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BusinessLeadDetailAdapter extends RecyclerView.Adapter<BusinessLeadDetailAdapter.BusinessLeadDetailViewHolder> {
 
@@ -50,6 +68,23 @@ public class BusinessLeadDetailAdapter extends RecyclerView.Adapter<BusinessLead
     @Override
     public void onBindViewHolder(@NonNull BusinessLeadDetailViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
+        String[] type = new String[]{"Not connected", "Connected business not done", "Business Closed"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.dropdown_menu_popup_item, type);
+        holder.status.setAdapter(adapter);
+
+        holder.status.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (type[i] == ("Business Closed")) {
+                    holder.invoice.setVisibility(View.VISIBLE);
+                    holder.amount.setVisibility(View.VISIBLE);
+                } else {
+                    holder.invoice.setVisibility(View.GONE);
+                    holder.amount.setVisibility(View.GONE);
+                }
+            }
+        });
+
         holder.date.setText(businessLead.get(position).getDateInfo().getDate());
         holder.stars.setText(businessLead.get(position).getDateInfo().getRating());
         holder.title.setText(businessLead.get(position).getDateInfo().getTitle());
@@ -58,8 +93,53 @@ public class BusinessLeadDetailAdapter extends RecyclerView.Adapter<BusinessLead
         holder.phone.setText(businessLead.get(position).getBusinessLeadDetails().getMobile());
         holder.remark.setText(businessLead.get(position).getBusinessLeadDetails().getRemark());
 
-        holder.status.setText(businessLead.get(position).getLeadStatus().getStatus());
-        holder.amt.setText("Amount: "+businessLead.get(position).getLeadStatus().getAmount());
+        //holder.status.setText(businessLead.get(position).getLeadStatus().getStatus());
+
+        if (businessLead.get(position).getLeadStatus().getStatus() == null) {
+            businessLead.get(position).getLeadStatus().setStatus("");
+        }
+
+        switch (businessLead.get(position).getLeadStatus().getStatus()) {
+            case "":
+                holder.statusText.setVisibility(View.GONE);
+                holder.amt.setVisibility(View.GONE);
+                holder.layout.setVisibility(View.VISIBLE);
+                break;
+            case "Business Closed":
+                holder.statusText.setVisibility(View.VISIBLE);
+                holder.layout.setVisibility(View.GONE);
+                holder.submit.setVisibility(View.GONE);
+                holder.status.setText(businessLead.get(position).getLeadStatus().getStatus());
+                holder.amt.setText("Amount: " + businessLead.get(position).getLeadStatus().getAmount());
+                break;
+            default:
+                holder.statusText.setVisibility(View.VISIBLE);
+                holder.layout.setVisibility(View.GONE);
+                holder.submit.setVisibility(View.GONE);
+                holder.amt.setVisibility(View.GONE);
+                holder.status.setText(businessLead.get(position).getLeadStatus().getStatus());
+
+        }
+
+        holder.statusText.setText(businessLead.get(position).getLeadStatus().getStatus());
+
+
+        holder.submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.status.length() == 0) {
+                    holder.status.setError("Please select status !");
+                } else {
+                    if (holder.status.getText().toString().equals("Business Closed")) {
+                        if (!(holder.amount.length() == 0))
+                            submitStatus("", holder.amount.getText().toString(), holder.status.getText().toString(), view);
+                        else
+                            holder.amt.setError("This feild is required !");
+                    } else
+                        submitStatus("", "", holder.status.getText().toString(), view);
+                }
+            }
+        });
 
         holder.imageCalling.setOnClickListener(new View.OnClickListener() {
 
@@ -67,13 +147,11 @@ public class BusinessLeadDetailAdapter extends RecyclerView.Adapter<BusinessLead
             public void onClick(View view) {
 
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
-                }
-                else
-                {
+                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                } else {
                     String number = businessLead.get(position).getBusinessLeadDetails().getMobile();
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:"+number));
+                    callIntent.setData(Uri.parse("tel:" + number));
                     context.startActivity(callIntent);
                 }
             }
@@ -85,17 +163,51 @@ public class BusinessLeadDetailAdapter extends RecyclerView.Adapter<BusinessLead
         return businessLead.size();
     }
 
-    public void updateBusinessLead(BusinessLeadDetailModalClass.Receive item){
+    public void updateBusinessLead(BusinessLeadDetailModalClass.Receive item) {
         if (!businessLead.contains(item))
             businessLead.add(item);
         notifyDataSetChanged();
     }
 
-    static class BusinessLeadDetailViewHolder extends RecyclerView.ViewHolder{
+    void submitStatus(String ref_id, String ref_wrk_amount, String ref_work_sts, View view) {
+        SimpleApi simpleApi = RetrofitInstance.getClient().create(SimpleApi.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("ref_id", ref_id);
+        params.put("ref_wrk_amount", ref_wrk_amount);
+        params.put("ref_work_sts", ref_work_sts);
+        Call<DialogBoxModalClass> call = simpleApi.leadstatusupdate(params);
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Data Retrieved Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        call.enqueue(new Callback<DialogBoxModalClass>() {
+            @Override
+            public void onResponse(Call<DialogBoxModalClass> call, Response<DialogBoxModalClass> response) {
+                if (response.isSuccessful()) {
+                    progressDialog.dismiss();
+                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    view.setVisibility(View.GONE);
+                }
+            }
 
-        TextView date, title, name, stars, phone, remark, amt;
-        TextInputEditText status;
+            @Override
+            public void onFailure(Call<DialogBoxModalClass> call, Throwable t) {
+                progressDialog.dismiss();
+                view.setVisibility(View.GONE);
+                call.cancel();
+            }
+        });
+    }
+
+    static class BusinessLeadDetailViewHolder extends RecyclerView.ViewHolder {
+
+        TextView date, title, name, stars, phone, remark, amt, statusText;
+        AutoCompleteTextView status;
         ImageView imageCalling;
+        TextInputEditText amount, invoice;
+        Button submit;
+        TextInputLayout layout;
+
         public BusinessLeadDetailViewHolder(@NonNull View itemView) {
             super(itemView);
             this.date = itemView.findViewById(R.id.date);
@@ -106,7 +218,12 @@ public class BusinessLeadDetailAdapter extends RecyclerView.Adapter<BusinessLead
             this.remark = itemView.findViewById(R.id.remark);
             this.amt = itemView.findViewById(R.id.amount);
             this.status = itemView.findViewById(R.id.BusinessStatus);
+            this.statusText = itemView.findViewById(R.id.status);
             this.imageCalling = itemView.findViewById(R.id.imageCalling);
+            this.amount = itemView.findViewById(R.id.amountInp);
+            this.invoice = itemView.findViewById(R.id.invoiceInp);
+            this.submit = itemView.findViewById(R.id.submitStatus);
+            this.layout = itemView.findViewById(R.id.spinnerLayout);
         }
     }
 }

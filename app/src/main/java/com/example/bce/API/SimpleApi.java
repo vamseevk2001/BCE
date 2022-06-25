@@ -146,5 +146,9 @@ public interface SimpleApi {
     @FormUrlEncoded
     Call<BusinessGivenModalClass> BusinessGiven(@FieldMap Map<String,String> params);
 
+    @POST(AppUrls.leadstatusupdate)
+    @FormUrlEncoded
+    Call<DialogBoxModalClass> leadstatusupdate(@FieldMap Map<String,String> params);
+
 
 }

@@ -35,6 +35,7 @@ public class AppUrls {
     public static final String sendRequest = "api.php?method=sendrequest";
     public static final String acceptRequest = "api.php?method=acceptrequest";
     public static final String connectionlist = "api.php?method=connectionlist";
+    public static final String leadstatusupdate = "api.php?method=leadstatusupdate";
 
 
 
